@@ -161,13 +161,25 @@ class Vector2(Wrapper):
         """
         pt_x = self.x - center.x
         pt_y = self.y - center.y
-        rotation = normalize_angle_radians(angle.to_radians())
+        degrees = angle.degrees % 360
 
-        sin_angle = math.sin(rotation)
-        cos_angle = math.cos(rotation)
+        if degrees == 0:
+            x, y = pt_x, pt_y
+        elif degrees == 90:
+            x, y = pt_y, -pt_x
+        elif degrees == 180:
+            x, y = -pt_x, -pt_y
+        elif degrees == 270:
+            x, y = -pt_y, pt_x
+        else:
+            rotation = math.radians(degrees)
+            sin_angle = math.sin(rotation)
+            cos_angle = math.cos(rotation)
+            x = _round_half_away(pt_y * sin_angle + pt_x * cos_angle)
+            y = _round_half_away(pt_y * cos_angle - pt_x * sin_angle)
 
-        self.x = int(pt_y * sin_angle + pt_x * cos_angle) + center.x
-        self.y = int(pt_y * cos_angle - pt_x * sin_angle) + center.y
+        self.x = x + center.x
+        self.y = y + center.y
 
         return self
 
@@ -781,6 +793,10 @@ def normalize_angle_degrees(angle: float) -> float:
         angle -= 360.0
 
     return angle
+
+
+def _round_half_away(value: float) -> int:
+    return int(math.copysign(math.floor(abs(value) + 0.5), value))
 
 
 def normalize_angle_radians(angle: float) -> float:
