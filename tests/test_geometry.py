@@ -503,3 +503,26 @@ def test_angle_iadd_isub():
     view -= Angle.from_degrees(30)
     assert view.degrees == pytest.approx(60)
     assert holder.value_degrees == pytest.approx(60)
+
+
+@pytest.mark.parametrize(
+    ("degrees", "expected"),
+    [
+        (0, (-107836, -360000)),
+        (90, (-360000, 107836)),
+        (180, (107836, 360000)),
+        (270, (360000, -107836)),
+        (-90, (360000, -107836)),
+        (450, (-360000, 107836)),
+    ],
+)
+def test_vector2_rotate_quarter_turns_are_exact(degrees, expected):
+    v = Vector2.from_xy(-107836, -360000).rotate(
+        Angle.from_degrees(degrees), Vector2.from_xy(0, 0)
+    )
+    assert (v.x, v.y) == expected
+
+
+def test_vector2_rotate_rounds_other_angles():
+    v = Vector2.from_xy(1000000, 0).rotate(Angle.from_degrees(45), Vector2.from_xy(0, 0))
+    assert (v.x, v.y) == (707107, -707107)
