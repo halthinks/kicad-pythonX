@@ -27,7 +27,7 @@ class ConnectionError(Exception):
 
 
 class ApiError(Exception):
-    """Raised when KiCad returns an error from an API call.  This indicates that the communcation
+    """Raised when KiCad returns an error from an API call.  This indicates that the communication
     was successful, but the API call failed for some reason."""
 
     def __init__(

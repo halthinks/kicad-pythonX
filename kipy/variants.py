@@ -60,7 +60,7 @@ class VariantsCommandHandler:
         self._kicad.send(command, Empty)
 
     def delete_variant(self, name: str) -> None:
-        """Deletes a variant and all its per-item records
+        """Deletes a variant and all its per-instance records
 
         Deleting the current variant resets the active variant to the default.
 

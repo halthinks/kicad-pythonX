@@ -243,7 +243,7 @@ class KiCad:
         self.close()
 
     def get_version(self) -> KiCadVersion:
-        """Returns the KiCad version as a string, including any package-specific info"""
+        """Returns the version of KiCad the API client is connected to"""
         response = self._client.send(commands.GetVersion(), commands.GetVersionResponse)
         return KiCadVersion.from_proto(response.version)
 
@@ -252,7 +252,10 @@ class KiCad:
         return KiCadVersion.from_git_describe(KICAD_API_VERSION)
 
     def check_version(self) -> bool:
-        """Checks if the connected KiCad version matches the version this library was built against"""
+        """Checks if the connected KiCad version matches the version this library was built against
+
+        :raise: ``FutureVersionError`` if the version of KiCad the API client is connected to is
+                newer than the version known by the client."""
         kicad_version = self.get_version()
         api_version = self.get_api_version()
 
@@ -314,7 +317,7 @@ class KiCad:
         than by API developers. KiCad does not guarantee the stability of
         action names, and running actions may have unintended side effects.
         :param action: the name of a KiCad TOOL_ACTION
-        :return: a value from the KIAPI.COMMON.COMMANDS.RUN_ACTION_STATUS enum
+        :return: a ``RunActionResponse``
         """
         command = commands.RunAction()
         command.action = action

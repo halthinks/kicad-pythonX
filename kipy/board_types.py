@@ -2417,7 +2417,7 @@ class Footprint3DModel(Wrapper):
     def __repr__(self) -> str:
         return (
             f"Footprint3DModel(filename='{self.filename}', "
-            f"visisble={self.visible}, opacity={self.opacity}, "
+            f"visible={self.visible}, opacity={self.opacity}, "
             f"rotation=({self.rotation.x}, {self.rotation.y}, {self.rotation.z}), "
             f"scale=({self.scale.x}, {self.scale.y}, {self.scale.z}))"
         )

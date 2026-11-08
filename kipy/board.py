@@ -404,7 +404,7 @@ class BoardStackupLayer(Wrapper):
     def __repr__(self) -> str:
         return (
             f"BoardStackupLayer(layer={BoardLayer.Name(self.layer)}, user_name={self.user_name},"
-            f"thickness={self.thickness}, enabled={self.enabled}, type={self.type},"
+            f"thickness={self.thickness}, enabled={self.enabled}, type={self.type}, "
             f"material_name={self.material_name})"
         )
 
