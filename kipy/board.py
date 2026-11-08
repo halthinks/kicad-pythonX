@@ -1710,9 +1710,8 @@ class Board(EditorCommandsHandler["BoardItem"], VariantsCommandHandler):
 
         item_to_bbox = {item.value: bbox for item, bbox in zip(response.items, response.boxes)}
         return [
-            Box2.from_proto(box)
-            for box in (item_to_bbox.get(item.id.value, None) for item in items)
-            if box is not None
+            Box2.from_proto(item_to_bbox[item.id.value]) if item.id.value in item_to_bbox else None
+            for item in items
         ]
 
     @overload
@@ -1748,9 +1747,10 @@ class Board(EditorCommandsHandler["BoardItem"], VariantsCommandHandler):
             pad.value: polygon for pad, polygon in zip(response.pads, response.polygons)
         }
         return [
-            PolygonWithHoles(p)
-            for p in (pad_to_polygon.get(pad.id.value, None) for pad in pads)
-            if p is not None
+            PolygonWithHoles(pad_to_polygon[pad.id.value])
+            if pad.id.value in pad_to_polygon
+            else None
+            for pad in pads
         ]
 
     def check_padstack_presence_on_layers(
