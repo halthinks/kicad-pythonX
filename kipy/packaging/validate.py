@@ -171,7 +171,10 @@ def _validate_requirements(root: Path, report: ValidationReport):
 def _validate_plugin_schema(plugin: dict[str, Any], report: ValidationReport):
     if "$schema" not in plugin:
         report.add_error("plugin.json must include a $schema reference")
-    elif "https://go.kicad.org/api/schemas/v" not in plugin["$schema"]:
+    elif (
+        not isinstance(plugin["$schema"], str)
+        or "https://go.kicad.org/api/schemas/v" not in plugin["$schema"]
+    ):
         report.add_error(f"unexpected schema URI: {plugin['$schema']}")
 
     try:
@@ -281,7 +284,10 @@ def _validate_pcm_schema(metadata: dict[str, Any], report: ValidationReport) -> 
 
     if "$schema" not in metadata:
         report.add_error("metadata.json must include a $schema reference")
-    elif "https://go.kicad.org/pcm/schemas/v" not in metadata["$schema"]:
+    elif (
+        not isinstance(metadata["$schema"], str)
+        or "https://go.kicad.org/pcm/schemas/v" not in metadata["$schema"]
+    ):
         report.add_error(f"unexpected schema URI: {metadata['$schema']}")
 
     for schema_version in _PCM_SCHEMAS:
