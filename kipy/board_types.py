@@ -1116,6 +1116,17 @@ class ReferenceImage(BoardItem):
         self._proto.position.CopyFrom(value.proto)
 
     @property
+    def orientation(self) -> Angle:
+        """The rotation of the image
+
+        .. versionadded:: 0.x.0 (KiCad 11)"""
+        return Angle(proto_ref=self._proto.orientation)
+
+    @orientation.setter
+    def orientation(self, orientation: Angle):
+        self._proto.orientation.CopyFrom(orientation.proto)
+
+    @property
     def transform_origin_offset(self) -> Vector2:
         return Vector2(self._proto.transform_origin_offset)
 
@@ -2815,7 +2826,7 @@ class FootprintInstance(BoardItem):
             elif isinstance(item, BoardTextBox):
                 item.top_left += delta
                 item.bottom_right += delta
-            elif isinstance(item, (Barcode, ReferencePoint)):
+            elif isinstance(item, (Barcode, ReferencePoint, ReferenceImage, GridItem)):
                 item.position += delta
             elif isinstance(item, Dimension):
                 dimension = to_concrete_dimension(item)
@@ -2891,6 +2902,15 @@ class FootprintInstance(BoardItem):
                     cell.text.bottom_right = cell.text.bottom_right.rotate(delta, self.position)
                     cell.text.attributes.angle += delta.degrees
             elif isinstance(item, Barcode):
+                item.position = item.position.rotate(delta, self.position)
+                item.orientation += delta
+            elif isinstance(item, ReferenceImage):
+                item.position = item.position.rotate(delta, self.position)
+                item.transform_origin_offset = item.transform_origin_offset.rotate(
+                    delta, Vector2.from_xy(0, 0)
+                )
+                item.orientation += delta
+            elif isinstance(item, GridItem):
                 item.position = item.position.rotate(delta, self.position)
                 item.orientation += delta
             elif isinstance(item, ReferencePoint):
