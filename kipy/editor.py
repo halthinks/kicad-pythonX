@@ -30,9 +30,10 @@ from google.protobuf.empty_pb2 import Empty
 
 from kipy.client import KiCadClient
 from kipy.common_types import Commit
+from kipy.errors import ApiError
 from kipy.proto.common.commands import editor_commands_pb2, project_commands_pb2
-from kipy.proto.common.types import KIID, DocumentSpecifier, KiCadObjectType
-from kipy.util import pack_any
+from kipy.proto.common.types import KIID, DocumentSpecifier, KiCadObjectType, base_types_pb2
+from kipy.util import pack_any, unpack_any
 from kipy.wrapper import Item, Wrapper
 
 _ItemT_co = TypeVar("_ItemT_co", bound=Item, covariant=True)
@@ -125,12 +126,25 @@ class EditorCommandsHandler(Generic[_ItemT_co]):
         else:
             command.items.extend(pack_any(item.proto) for item in items)
 
-        return [
-            self._item_from_message(result.item)
-            for result in self._kicad.send(
-                command, editor_commands_pb2.CreateItemsResponse
-            ).created_items
-        ]
+        response = self._kicad.send(command, editor_commands_pb2.CreateItemsResponse)
+
+        if response.status != base_types_pb2.ItemRequestStatus.IRS_OK:
+            raise ApiError(f"Failed to create items: {response.status}")
+
+        failures: list[str] = []
+        results: list[_ItemT_co] = []
+        for result in response.created_items:
+            status = result.status
+            if status.code != editor_commands_pb2.ItemStatusCode.ISC_OK:
+                failures.append(
+                    f"{status.error_message} ({editor_commands_pb2.ItemStatusCode.Name(status.code)})"
+                )
+            else:
+                results.append(self._item_from_message(unpack_any(result.item)))
+
+        if len(failures) > 0:
+            raise ApiError(f"Failed to create items: {'; '.join(failures)}")
+        return results
 
     def get_items(
         self,
@@ -197,12 +211,25 @@ class EditorCommandsHandler(Generic[_ItemT_co]):
         if len(command.items) == 0:
             return []
 
-        return [
-            self._item_from_message(result.item)
-            for result in self._kicad.send(
-                command, editor_commands_pb2.UpdateItemsResponse
-            ).updated_items
-        ]
+        response = self._kicad.send(command, editor_commands_pb2.UpdateItemsResponse)
+
+        if response.status != base_types_pb2.ItemRequestStatus.IRS_OK:
+            raise ApiError(f"Failed to update items: {response.status}")
+
+        failures: list[str] = []
+        results: list[_ItemT_co] = []
+        for result in response.updated_items:
+            status = result.status
+            if status.code != editor_commands_pb2.ItemStatusCode.ISC_OK:
+                failures.append(
+                    f"{status.error_message} ({editor_commands_pb2.ItemStatusCode.Name(status.code)})"
+                )
+            else:
+                results.append(self._item_from_message(unpack_any(result.item)))
+
+        if len(failures) > 0:
+            raise ApiError(f"Failed to update items: {'; '.join(failures)}")
+        return results
 
     def remove_items(self, items: _ItemT_co | Sequence[_ItemT_co]):
         """Deletes one or more items from the document"""
@@ -217,7 +244,22 @@ class EditorCommandsHandler(Generic[_ItemT_co]):
         if len(command.item_ids) == 0:
             return
 
-        self._kicad.send(command, editor_commands_pb2.DeleteItemsResponse)
+        response = self._kicad.send(command, editor_commands_pb2.DeleteItemsResponse)
+
+        if response.status != base_types_pb2.ItemRequestStatus.IRS_OK:
+            raise ApiError(f"Failed to delete items: {response.status}")
+
+        failed_items: dict[str, editor_commands_pb2.ItemDeletionStatus.ValueType] = {}
+        for result in response.deleted_items:
+            if result.status != editor_commands_pb2.ItemDeletionStatus.IDS_OK:
+                failed_items[result.id.value] = result.status
+
+        if len(failed_items) > 0:
+            failures = "; ".join(
+                f"{item_id}: {editor_commands_pb2.ItemDeletionStatus.Name(status)}"
+                for item_id, status in failed_items.items()
+            )
+            raise ApiError(f"Failed to delete items: {failures}")
 
     def remove_items_by_id(self, items: KIID | Sequence[KIID]):
         """
