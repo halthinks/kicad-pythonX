@@ -196,9 +196,9 @@ class KiCad:
 
             cli_path = find_kicad_cli(kicad_cli_path)
             server = KiCadServer(cli_path, file_path=file_path)
+            self._server = server
             server.start()
             server.wait_for_ready(timeout_s=max(float(timeout_ms) / 1000.0, 5.0))
-            self._server = server
             socket_path = server.socket_url
 
         if socket_path is None:
