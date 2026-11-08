@@ -1847,27 +1847,27 @@ class PostMachiningProperties(Wrapper):
 
     @property
     def size(self) -> int:
-        return self._proto.size
+        return self._proto.size.value_nm
 
     @size.setter
     def size(self, size: int):
-        self._proto.size = size
+        self._proto.size.value_nm = size
 
     @property
     def depth(self) -> int:
-        return self._proto.depth
+        return self._proto.depth.value_nm
 
     @depth.setter
     def depth(self, depth: int):
-        self._proto.depth = depth
+        self._proto.depth.value_nm = depth
 
     @property
-    def angle(self) -> int:
-        return self._proto.angle
+    def angle(self) -> Angle:
+        return Angle(proto_ref=self._proto.angle)
 
     @angle.setter
-    def angle(self, angle: int):
-        self._proto.angle = angle
+    def angle(self, angle: Angle):
+        self._proto.angle.CopyFrom(angle.proto)
 
 
 class PadStackOuterLayer(Wrapper):
