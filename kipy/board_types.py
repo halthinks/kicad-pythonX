@@ -34,6 +34,7 @@ from kipy.common_types import (
     EmbeddedFiles,
     GraphicAttributes,
     LibraryIdentifier,
+    MinOptMax,
     Polygon,
     Rectangle,
     Segment,
@@ -47,6 +48,7 @@ from kipy.geometry import (
     Angle,
     Box2,
     PolygonWithHoles,
+    PolyLine,
     PolyLineNode,
     Vector2,
     Vector3D,
@@ -89,12 +91,20 @@ from kipy.proto.board.board_types_pb2 import (  # noqa
     SolderPasteMode,
     TableStrokeMode,
     ThievingPattern,
+    TuningPatternCornerStyle,
+    TuningPatternMeanderSide,
+    TuningPatternMode,
+    TuningPatternStatus,
+    TuningPatternTargetMode,
     UnconnectedLayerRemoval,
     ViaCoveringMode,
     ViaDrillCappingMode,
     ViaDrillFillingMode,
     ViaDrillPostMachiningMode,
     ViaPluggingMode,
+    ViaStackStyle,
+    ViaStitchLayout,
+    ViaStitchMode,
     ViaType,
     ZoneBorderStyle,
     ZoneConnectionStyle,
@@ -5555,6 +5565,829 @@ class DrillMap(BoardItem):
         self._proto.symbol_size.value_nm = size_nm
 
 
+class TimeRange(Wrapper):
+    """A minimum/optimum/maximum range of time values, in attoseconds
+
+    .. versionadded:: 0.x.0 (KiCad 11)"""
+
+    def __init__(
+        self,
+        proto: board_types_pb2.TimeRange | None = None,
+        proto_ref: board_types_pb2.TimeRange | None = None,
+    ):
+        self._proto = proto_ref if proto_ref is not None else board_types_pb2.TimeRange()
+
+        if proto is not None:
+            self._proto.CopyFrom(proto)
+
+    def __repr__(self) -> str:
+        return f"TimeRange(min={self.min}, opt={self.opt}, max={self.max})"
+
+    @property
+    def min(self) -> int | None:
+        """Minimum time in attoseconds, or None if unconstrained"""
+        return self._proto.min_as if self._proto.HasField("min_as") else None
+
+    @min.setter
+    def min(self, value: int | None):
+        if value is None:
+            self._proto.ClearField("min_as")
+        else:
+            self._proto.min_as = value
+
+    @property
+    def opt(self) -> int | None:
+        """Optimum time in attoseconds, or None if unconstrained"""
+        return self._proto.opt_as if self._proto.HasField("opt_as") else None
+
+    @opt.setter
+    def opt(self, value: int | None):
+        if value is None:
+            self._proto.ClearField("opt_as")
+        else:
+            self._proto.opt_as = value
+
+    @property
+    def max(self) -> int | None:
+        """Maximum delay in attoseconds, or None if unconstrained"""
+        return self._proto.max_as if self._proto.HasField("max_as") else None
+
+    @max.setter
+    def max(self, value: int | None):
+        if value is None:
+            self._proto.ClearField("max_as")
+        else:
+            self._proto.max_as = value
+
+
+class TuningPatternSettings(Wrapper):
+    """Options that control how a tuning pattern generates tracks
+
+    .. versionadded:: 0.x.0 (KiCad 11)"""
+
+    def __init__(
+        self,
+        proto: board_types_pb2.TuningPatternSettings | None = None,
+        proto_ref: board_types_pb2.TuningPatternSettings | None = None,
+    ):
+        self._proto = (
+            proto_ref if proto_ref is not None else board_types_pb2.TuningPatternSettings()
+        )
+
+        if proto is not None:
+            self._proto.CopyFrom(proto)
+
+    def __repr__(self) -> str:
+        return (
+            f"TuningPatternSettings(side={TuningPatternMeanderSide.Name(self.initial_side)}, "
+            f"corner_style={TuningPatternCornerStyle.Name(self.corner_style)}, "
+            f"single_sided={self.single_sided})"
+        )
+
+    @property
+    def initial_side(self) -> TuningPatternMeanderSide.ValueType:
+        """Initial side of the base track to place meanders on"""
+        return self._proto.initial_side
+
+    @initial_side.setter
+    def initial_side(self, side: TuningPatternMeanderSide.ValueType):
+        self._proto.initial_side = side
+
+    @property
+    def corner_style(self) -> TuningPatternCornerStyle.ValueType:
+        return self._proto.corner_style
+
+    @corner_style.setter
+    def corner_style(self, style: TuningPatternCornerStyle.ValueType):
+        self._proto.corner_style = style
+
+    @property
+    def corner_radius_percent(self) -> int:
+        """Rounding percentage of rounded corners (0 - 100)"""
+        return self._proto.corner_radius_percent
+
+    @corner_radius_percent.setter
+    def corner_radius_percent(self, percent: int):
+        self._proto.corner_radius_percent = percent
+
+    @property
+    def single_sided(self) -> bool:
+        """Whether meanders are only placed on one side of the tuned line"""
+        return self._proto.single_sided
+
+    @single_sided.setter
+    def single_sided(self, single_sided: bool):
+        self._proto.single_sided = single_sided
+
+    @property
+    def max_amplitude(self) -> int:
+        """Maximum meander amplitude in nanometers"""
+        return self._proto.max_amplitude.value_nm
+
+    @max_amplitude.setter
+    def max_amplitude(self, amplitude_nm: int):
+        self._proto.max_amplitude.value_nm = amplitude_nm
+
+    @property
+    def min_amplitude(self) -> int:
+        """Minimum meander amplitude in nanometers"""
+        return self._proto.min_amplitude.value_nm
+
+    @min_amplitude.setter
+    def min_amplitude(self, amplitude_nm: int):
+        self._proto.min_amplitude.value_nm = amplitude_nm
+
+    @property
+    def min_spacing(self) -> int:
+        """Meandering period/spacing in nanometers"""
+        return self._proto.min_spacing.value_nm
+
+    @min_spacing.setter
+    def min_spacing(self, spacing_nm: int):
+        self._proto.min_spacing.value_nm = spacing_nm
+
+
+class TuningPatternState(Wrapper):
+    """The resulting state of the last generation of a tuning pattern.
+
+    All properties are read-only.
+
+    .. versionadded:: 0.x.0 (KiCad 11)"""
+
+    def __init__(
+        self,
+        proto: board_types_pb2.TuningPatternState | None = None,
+        proto_ref: board_types_pb2.TuningPatternState | None = None,
+    ):
+        self._proto = proto_ref if proto_ref is not None else board_types_pb2.TuningPatternState()
+
+        if proto is not None:
+            self._proto.CopyFrom(proto)
+
+    def __repr__(self) -> str:
+        return (
+            f"TuningPatternState(status={TuningPatternStatus.Name(self.status)}, "
+            f"tuning_value={self.tuning_value})"
+        )
+
+    @property
+    def status(self) -> TuningPatternStatus.ValueType:
+        return self._proto.status
+
+    @property
+    def tuning_value(self) -> int | None:
+        """The length (or delay) produced by the last tuning operation, or None if not
+        calculated.  In nanometers, or attoseconds when the pattern is in the time domain."""
+        return self._proto.tuning_value if self._proto.HasField("tuning_value") else None
+
+
+class TuningPattern(BoardItem):
+    """A tuning pattern: an item generator that generates serpentine copper tracks to meet a
+    target length or propagation delay on a routed track or differential pair.
+
+    .. versionadded:: 0.x.0 (KiCad 11)"""
+
+    def __init__(
+        self,
+        proto: board_types_pb2.TuningPattern | None = None,
+        proto_ref: board_types_pb2.TuningPattern | None = None,
+    ):
+        self._proto = proto_ref if proto_ref is not None else board_types_pb2.TuningPattern()
+
+        if proto is not None:
+            self._proto.CopyFrom(proto)
+
+    def __repr__(self) -> str:
+        return (
+            f"TuningPattern(layer={BoardLayer.Name(self.layer)}, "
+            f"mode={TuningPatternMode.Name(self.mode)}, origin={self.origin}, "
+            f"end={self.end})"
+        )
+
+    @property
+    def id(self) -> KIID:
+        return self._proto.id
+
+    @property
+    def layer(self) -> BoardLayer.ValueType:
+        return self._proto.layer
+
+    @layer.setter
+    def layer(self, layer: BoardLayer.ValueType):
+        self._proto.layer = layer
+
+    @property
+    def origin(self) -> Vector2:
+        """Start point of the tuning pattern"""
+        return Vector2(proto_ref=self._proto.origin)
+
+    @origin.setter
+    def origin(self, origin: Vector2):
+        self._proto.origin.CopyFrom(origin.proto)
+
+    @property
+    def end(self) -> Vector2:
+        """End point of the tuning pattern"""
+        return Vector2(proto_ref=self._proto.end)
+
+    @end.setter
+    def end(self, end: Vector2):
+        self._proto.end.CopyFrom(end.proto)
+
+    @property
+    def mode(self) -> TuningPatternMode.ValueType:
+        """Whether to tune a single track, diff pair length, or diff pair skew"""
+        return self._proto.mode
+
+    @mode.setter
+    def mode(self, mode: TuningPatternMode.ValueType):
+        self._proto.mode = mode
+
+    @property
+    def settings(self) -> TuningPatternSettings:
+        return TuningPatternSettings(proto_ref=self._proto.settings)
+
+    @settings.setter
+    def settings(self, settings: TuningPatternSettings):
+        self._proto.settings.CopyFrom(settings.proto)
+
+    @property
+    def target_mode(self) -> TuningPatternTargetMode.ValueType:
+        """Whether to tune in the time domain (delay) or the length domain"""
+        return self._proto.target_mode
+
+    @target_mode.setter
+    def target_mode(self, target_mode: TuningPatternTargetMode.ValueType):
+        self._proto.target_mode = target_mode
+
+    @property
+    def target_length(self) -> MinOptMax | None:
+        """Target length range in nanometers, or None if not the active target"""
+        if self._proto.WhichOneof("target") == "target_length":
+            return MinOptMax(proto_ref=self._proto.target_length)
+        return None
+
+    @target_length.setter
+    def target_length(self, target: MinOptMax | None):
+        if target is None:
+            if self._proto.WhichOneof("target") == "target_length":
+                self._proto.ClearField("target_length")
+        else:
+            self._proto.target_length.CopyFrom(target.proto)
+
+    @property
+    def target_delay(self) -> TimeRange | None:
+        """Target propagation delay range in attoseconds, or None if not the active target"""
+        if self._proto.WhichOneof("target") == "target_delay":
+            return TimeRange(proto_ref=self._proto.target_delay)
+        return None
+
+    @target_delay.setter
+    def target_delay(self, target: TimeRange | None):
+        if target is None:
+            if self._proto.WhichOneof("target") == "target_delay":
+                self._proto.ClearField("target_delay")
+        else:
+            self._proto.target_delay.CopyFrom(target.proto)
+
+    @property
+    def target_skew(self) -> MinOptMax | None:
+        """Target length skew range in nanometers, or None if not the active target"""
+        if self._proto.WhichOneof("target") == "target_skew":
+            return MinOptMax(proto_ref=self._proto.target_skew)
+        return None
+
+    @target_skew.setter
+    def target_skew(self, target: MinOptMax | None):
+        if target is None:
+            if self._proto.WhichOneof("target") == "target_skew":
+                self._proto.ClearField("target_skew")
+        else:
+            self._proto.target_skew.CopyFrom(target.proto)
+
+    @property
+    def target_skew_delay(self) -> TimeRange | None:
+        """Target propagation delay skew range in attoseconds, or None if not the active
+        target"""
+        if self._proto.WhichOneof("target") == "target_skew_delay":
+            return TimeRange(proto_ref=self._proto.target_skew_delay)
+        return None
+
+    @target_skew_delay.setter
+    def target_skew_delay(self, target: TimeRange | None):
+        if target is None:
+            if self._proto.WhichOneof("target") == "target_skew_delay":
+                self._proto.ClearField("target_skew_delay")
+        else:
+            self._proto.target_skew_delay.CopyFrom(target.proto)
+
+    @property
+    def override_custom_rules(self) -> bool:
+        """Whether the pattern's targets override length-matching custom design rules"""
+        return self._proto.override_custom_rules
+
+    @override_custom_rules.setter
+    def override_custom_rules(self, override: bool):
+        self._proto.override_custom_rules = override
+
+    @property
+    def state(self) -> TuningPatternState:
+        """The results of the most recent generation of the tuning pattern (read-only)"""
+        return TuningPatternState(proto_ref=self._proto.state)
+
+    @property
+    def locked(self) -> bool:
+        return self._proto.locked == LockedState.LS_LOCKED
+
+    @locked.setter
+    def locked(self, locked: bool):
+        self._proto.locked = LockedState.LS_LOCKED if locked else LockedState.LS_UNLOCKED
+
+    @property
+    def parent(self) -> KIID | None:
+        """The ID of the parent container for this item (such as a Board or Footprint), if any.
+        Read-only; item parents can only be changed by add/remove calls on the parent container.
+        """
+        return self._proto.parent if self._proto.HasField("parent") else None
+
+    @property
+    def members(self) -> Sequence[KIID]:
+        """IDs of the items generated by this pattern (tracks, vias, arcs)"""
+        return self._proto.members
+
+    @property
+    def custom_properties(self) -> MutableWrapperSequence[CustomProperty]:
+        return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
+
+    @custom_properties.setter
+    def custom_properties(self, properties: list[CustomProperty]):
+        del self._proto.custom_properties[:]
+        self._proto.custom_properties.extend(p.proto for p in properties)
+
+
+class GridCell(Wrapper):
+    """A grid cell index (column, row) used by via stitching patterns.  Unitless.
+
+    .. versionadded:: 0.x.0 (KiCad 11)"""
+
+    def __init__(
+        self,
+        proto: board_types_pb2.GridCell | None = None,
+        proto_ref: board_types_pb2.GridCell | None = None,
+    ):
+        self._proto = proto_ref if proto_ref is not None else board_types_pb2.GridCell()
+
+        if proto is not None:
+            self._proto.CopyFrom(proto)
+
+    def __repr__(self) -> str:
+        return f"GridCell(i={self.i}, j={self.j})"
+
+    @property
+    def i(self) -> int:
+        """Column index"""
+        return self._proto.i
+
+    @i.setter
+    def i(self, i: int):
+        self._proto.i = i
+
+    @property
+    def j(self) -> int:
+        """Row index"""
+        return self._proto.j
+
+    @j.setter
+    def j(self, j: int):
+        self._proto.j = j
+
+
+class ViaStitchGridSettings(Wrapper):
+    """Settings for a grid-based via stitching pattern
+
+    .. versionadded:: 0.x.0 (KiCad 11)"""
+
+    def __init__(
+        self,
+        proto: board_types_pb2.ViaStitchGridSettings | None = None,
+        proto_ref: board_types_pb2.ViaStitchGridSettings | None = None,
+    ):
+        self._proto = (
+            proto_ref if proto_ref is not None else board_types_pb2.ViaStitchGridSettings()
+        )
+
+        if proto is not None:
+            self._proto.CopyFrom(proto)
+
+    def __repr__(self) -> str:
+        return (
+            f"ViaStitchGridSettings(origin_offset={self.origin_offset}, seed={self.seed}, "
+            f"excluded_cells={len(self.excluded_cells)})"
+        )
+
+    @property
+    def origin_offset(self) -> Vector2:
+        """Offset of the placement grid relative to the global origin, in [0, pitch) on
+        each axis"""
+        return Vector2(proto_ref=self._proto.origin_offset)
+
+    @origin_offset.setter
+    def origin_offset(self, offset: Vector2):
+        self._proto.origin_offset.CopyFrom(offset.proto)
+
+    @property
+    def seed(self) -> int | None:
+        """Seed for the Poisson tile shift, or None if not set"""
+        return self._proto.seed if self._proto.HasField("seed") else None
+
+    @seed.setter
+    def seed(self, seed: int | None):
+        if seed is None:
+            self._proto.ClearField("seed")
+        else:
+            self._proto.seed = seed
+
+    @property
+    def excluded_cells(self) -> MutableWrapperSequence[GridCell]:
+        """Grid cells (column, row) explicitly excluded from via placement"""
+        return MutableWrapperSequence(self._proto.excluded_cells, GridCell)
+
+    @excluded_cells.setter
+    def excluded_cells(self, cells: list[GridCell]):
+        del self._proto.excluded_cells[:]
+        self._proto.excluded_cells.extend(cell.proto for cell in cells)
+
+
+class ViaStitchGuardSettings(Wrapper):
+    """Settings for a via guard ring pattern
+
+    .. versionadded:: 0.x.0 (KiCad 11)"""
+
+    def __init__(
+        self,
+        proto: board_types_pb2.ViaStitchGuardSettings | None = None,
+        proto_ref: board_types_pb2.ViaStitchGuardSettings | None = None,
+    ):
+        self._proto = (
+            proto_ref if proto_ref is not None else board_types_pb2.ViaStitchGuardSettings()
+        )
+
+        if proto is not None:
+            self._proto.CopyFrom(proto)
+
+    def __repr__(self) -> str:
+        return f"ViaStitchGuardSettings(guarded_net={self.guarded_net.name})"
+
+    @property
+    def guarded_net(self) -> Net:
+        """The net whose items are surrounded by guard vias"""
+        return Net(self._proto.guarded_net)
+
+    @guarded_net.setter
+    def guarded_net(self, net: Net):
+        self._proto.guarded_net.CopyFrom(net.proto)
+
+
+class ViaStitchArea(BoardItem):
+    """A via stitch area: an item generator that fills a region with stitching vias, or
+    places guard vias around a net.
+
+    .. versionadded:: 0.x.0 (KiCad 11)"""
+
+    def __init__(
+        self,
+        proto: board_types_pb2.ViaStitchArea | None = None,
+        proto_ref: board_types_pb2.ViaStitchArea | None = None,
+    ):
+        self._proto = proto_ref if proto_ref is not None else board_types_pb2.ViaStitchArea()
+
+        if proto is not None:
+            self._proto.CopyFrom(proto)
+
+    def __repr__(self) -> str:
+        return (
+            f"ViaStitchArea(layer={BoardLayer.Name(self.layer)}, "
+            f"layout={ViaStitchLayout.Name(self.layout)}, "
+            f"mode={ViaStitchMode.Name(self.mode)}, pitch={self.pitch})"
+        )
+
+    @property
+    def id(self) -> KIID:
+        return self._proto.id
+
+    @property
+    def layer(self) -> BoardLayer.ValueType:
+        return self._proto.layer
+
+    @layer.setter
+    def layer(self, layer: BoardLayer.ValueType):
+        self._proto.layer = layer
+
+    @property
+    def outline(self) -> PolygonWithHoles:
+        """Region to fill with vias: a single outline with optional holes"""
+        if len(self._proto.outline.polygons) == 0:
+            self._proto.outline.polygons.add()
+        return PolygonWithHoles(proto_ref=self._proto.outline.polygons[0])
+
+    @outline.setter
+    def outline(self, outline: PolygonWithHoles):
+        """Sets the outline.  The outline and all holes are forced closed."""
+        p = base_types_pb2.PolygonWithHoles()
+        p.CopyFrom(outline.proto)
+        p.outline.closed = True
+
+        for hole in p.holes:
+            hole.closed = True
+
+        del self._proto.outline.polygons[:]
+        self._proto.outline.polygons.append(p)
+
+    @property
+    def pitch(self) -> int:
+        """Center-to-center spacing between vias in nanometers"""
+        return self._proto.pitch.value_nm
+
+    @pitch.setter
+    def pitch(self, pitch_nm: int):
+        self._proto.pitch.value_nm = pitch_nm
+
+    @property
+    def layout(self) -> ViaStitchLayout.ValueType:
+        return self._proto.layout
+
+    @layout.setter
+    def layout(self, layout: ViaStitchLayout.ValueType):
+        self._proto.layout = layout
+
+    @property
+    def mode(self) -> ViaStitchMode.ValueType:
+        return self._proto.mode
+
+    @mode.setter
+    def mode(self, mode: ViaStitchMode.ValueType):
+        self._proto.mode = mode
+
+    @property
+    def grid_settings(self) -> ViaStitchGridSettings | None:
+        """Grid settings, or None if the area is in guard mode"""
+        if self._proto.WhichOneof("mode_specific_settings") == "grid_settings":
+            return ViaStitchGridSettings(proto_ref=self._proto.grid_settings)
+        return None
+
+    @grid_settings.setter
+    def grid_settings(self, settings: ViaStitchGridSettings | None):
+        if settings is None:
+            if self._proto.WhichOneof("mode_specific_settings") == "grid_settings":
+                self._proto.ClearField("grid_settings")
+        else:
+            self._proto.grid_settings.CopyFrom(settings.proto)
+
+    @property
+    def guard_settings(self) -> ViaStitchGuardSettings | None:
+        """Guard settings, or None if the area is in stitch mode"""
+        if self._proto.WhichOneof("mode_specific_settings") == "guard_settings":
+            return ViaStitchGuardSettings(proto_ref=self._proto.guard_settings)
+        return None
+
+    @guard_settings.setter
+    def guard_settings(self, settings: ViaStitchGuardSettings | None):
+        if settings is None:
+            if self._proto.WhichOneof("mode_specific_settings") == "guard_settings":
+                self._proto.ClearField("guard_settings")
+        else:
+            self._proto.guard_settings.CopyFrom(settings.proto)
+
+    @property
+    def net(self) -> Net:
+        """Net assigned to the stitching vias"""
+        return Net(self._proto.net)
+
+    @net.setter
+    def net(self, net: Net):
+        self._proto.net.CopyFrom(net.proto)
+
+    @property
+    def excluded_positions(self) -> MutableWrapperSequence[Vector2]:
+        """Absolute board positions explicitly excluded from via placement"""
+        return MutableWrapperSequence(self._proto.excluded_positions, Vector2)
+
+    @excluded_positions.setter
+    def excluded_positions(self, positions: list[Vector2]):
+        del self._proto.excluded_positions[:]
+        self._proto.excluded_positions.extend(position.proto for position in positions)
+
+    @property
+    def via_template(self) -> Via:
+        """The via definition used for each generated via"""
+        return Via(proto_ref=self._proto.via_template)
+
+    @via_template.setter
+    def via_template(self, via: Via):
+        self._proto.via_template.CopyFrom(via.proto)
+
+    @property
+    def locked(self) -> bool:
+        return self._proto.locked == LockedState.LS_LOCKED
+
+    @locked.setter
+    def locked(self, locked: bool):
+        self._proto.locked = LockedState.LS_LOCKED if locked else LockedState.LS_UNLOCKED
+
+    @property
+    def parent(self) -> KIID | None:
+        """The ID of the parent container for this item (such as a Board or Footprint), if any.
+        Read-only; item parents can only be changed by add/remove calls on the parent container.
+        """
+        return self._proto.parent if self._proto.HasField("parent") else None
+
+    @property
+    def members(self) -> Sequence[KIID]:
+        """IDs of the vias generated by this stitch area"""
+        return self._proto.members
+
+    @property
+    def custom_properties(self) -> MutableWrapperSequence[CustomProperty]:
+        return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
+
+    @custom_properties.setter
+    def custom_properties(self, properties: list[CustomProperty]):
+        del self._proto.custom_properties[:]
+        self._proto.custom_properties.extend(p.proto for p in properties)
+
+
+class ViaStack(BoardItem):
+    """A via stack: an item generator that creates a stack of microvias (and optional
+    connecting traces) forming a connection across several layers.
+
+    .. versionadded:: 0.x.0 (KiCad 11)"""
+
+    def __init__(
+        self,
+        proto: board_types_pb2.ViaStack | None = None,
+        proto_ref: board_types_pb2.ViaStack | None = None,
+    ):
+        self._proto = proto_ref if proto_ref is not None else board_types_pb2.ViaStack()
+
+        if proto is not None:
+            self._proto.CopyFrom(proto)
+
+    def __repr__(self) -> str:
+        return (
+            f"ViaStack(start_layer={BoardLayer.Name(self.start_layer)}, "
+            f"end_layer={BoardLayer.Name(self.end_layer)}, "
+            f"style={ViaStackStyle.Name(self.style)})"
+        )
+
+    @property
+    def id(self) -> KIID:
+        return self._proto.id
+
+    @property
+    def start_layer(self) -> BoardLayer.ValueType:
+        """The start (top) layer of the stack"""
+        return self._proto.start_layer
+
+    @start_layer.setter
+    def start_layer(self, layer: BoardLayer.ValueType):
+        self._proto.start_layer = layer
+
+    @property
+    def end_layer(self) -> BoardLayer.ValueType:
+        """The end (bottom) layer of the stack"""
+        return self._proto.end_layer
+
+    @end_layer.setter
+    def end_layer(self, layer: BoardLayer.ValueType):
+        self._proto.end_layer = layer
+
+    @property
+    def style(self) -> ViaStackStyle.ValueType:
+        return self._proto.style
+
+    @style.setter
+    def style(self, style: ViaStackStyle.ValueType):
+        self._proto.style = style
+
+    @property
+    def pitch(self) -> int:
+        """Center-to-center distance between hops.  Staggered style only."""
+        return self._proto.pitch.value_nm
+
+    @pitch.setter
+    def pitch(self, pitch_nm: int):
+        self._proto.pitch.value_nm = pitch_nm
+
+    @property
+    def filled(self) -> bool:
+        """Whether hops are copper-filled"""
+        return self._proto.filled
+
+    @filled.setter
+    def filled(self, filled: bool):
+        self._proto.filled = filled
+
+    @property
+    def capped(self) -> bool:
+        """Whether the outermost hop is capped"""
+        return self._proto.capped
+
+    @capped.setter
+    def capped(self, capped: bool):
+        self._proto.capped = capped
+
+    @property
+    def via_size(self) -> int:
+        """Via diameter.  Ignored when :attr:`use_netclass` is true."""
+        return self._proto.via_size.value_nm
+
+    @via_size.setter
+    def via_size(self, size_nm: int):
+        self._proto.via_size.value_nm = size_nm
+
+    @property
+    def via_drill(self) -> int:
+        """Via drill diameter.  Ignored when :attr:`use_netclass` is true."""
+        return self._proto.via_drill.value_nm
+
+    @via_drill.setter
+    def via_drill(self, drill_nm: int):
+        self._proto.via_drill.value_nm = drill_nm
+
+    @property
+    def use_netclass(self) -> bool:
+        """Whether via size and drill are taken from the netclass instead of the explicit
+        values"""
+        return self._proto.use_netclass
+
+    @use_netclass.setter
+    def use_netclass(self, use_netclass: bool):
+        self._proto.use_netclass = use_netclass
+
+    @property
+    def preset_name(self) -> str | None:
+        """Name of the preset this stack was placed from, or None if not from a preset"""
+        return self._proto.preset_name if self._proto.HasField("preset_name") else None
+
+    @preset_name.setter
+    def preset_name(self, name: str | None):
+        if name is None:
+            self._proto.ClearField("preset_name")
+        else:
+            self._proto.preset_name = name
+
+    @property
+    def hops(self) -> PolyLine | None:
+        """Hop center positions for a staggered stack, or None for a stacked (coaxial) stack"""
+        if self._proto.HasField("hops"):
+            return PolyLine(proto_ref=self._proto.hops)
+        return None
+
+    @hops.setter
+    def hops(self, hops: PolyLine | None):
+        if hops is None:
+            self._proto.ClearField("hops")
+        else:
+            self._proto.hops.CopyFrom(hops.proto)
+
+    @property
+    def net(self) -> Net:
+        return Net(self._proto.net)
+
+    @net.setter
+    def net(self, net: Net):
+        self._proto.net.CopyFrom(net.proto)
+
+    @property
+    def locked(self) -> bool:
+        return self._proto.locked == LockedState.LS_LOCKED
+
+    @locked.setter
+    def locked(self, locked: bool):
+        self._proto.locked = LockedState.LS_LOCKED if locked else LockedState.LS_UNLOCKED
+
+    @property
+    def parent(self) -> KIID | None:
+        """The ID of the parent container for this item (such as a Board or Footprint), if any.
+        Read-only; item parents can only be changed by add/remove calls on the parent container.
+        """
+        return self._proto.parent if self._proto.HasField("parent") else None
+
+    @property
+    def members(self) -> Sequence[KIID]:
+        """IDs of the vias and traces generated by this stack"""
+        return self._proto.members
+
+    @property
+    def custom_properties(self) -> MutableWrapperSequence[CustomProperty]:
+        return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
+
+    @custom_properties.setter
+    def custom_properties(self, properties: list[CustomProperty]):
+        del self._proto.custom_properties[:]
+        self._proto.custom_properties.extend(p.proto for p in properties)
+
+
 _proto_to_object: dict[type[Message], type[Wrapper]] = {
     board_types_pb2.Arc: ArcTrack,
     board_types_pb2.Barcode: Barcode,
@@ -5579,6 +6412,9 @@ _proto_to_object: dict[type[Message], type[Wrapper]] = {
     board_types_pb2.Constraint: Constraint,
     board_types_pb2.DrillChart: DrillChart,
     board_types_pb2.DrillMap: DrillMap,
+    board_types_pb2.TuningPattern: TuningPattern,
+    board_types_pb2.ViaStitchArea: ViaStitchArea,
+    board_types_pb2.ViaStack: ViaStack,
 }
 
 
