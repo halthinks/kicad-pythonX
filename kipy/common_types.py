@@ -1038,7 +1038,7 @@ class EllipseArc(GraphicShape):
         assert self._graphic_proto.WhichOneof("geometry") == "ellipse_arc"
 
     def __repr__(self) -> str:
-        rotation = self._graphic_proto.ellipse.rotation.value_degrees
+        rotation = self._graphic_proto.ellipse_arc.rotation.value_degrees
         return (
             f"EllipseArc(center={Vector2(self._graphic_proto.ellipse_arc.center)}, "
             f"major_radius={to_mm(self._graphic_proto.ellipse_arc.major_radius.value_nm)}, "
