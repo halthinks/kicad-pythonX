@@ -74,11 +74,13 @@ class KiCadClient:
         try:
             self._conn.send(envelope.SerializeToString())
         except pynng.exceptions.NNGException as e:
+            self._connected = False
             raise ConnectionError(f"Failed to send command to KiCad: {e}") from None
 
         try:
             reply_data = self._conn.recv_msg()
         except pynng.exceptions.NNGException as e:
+            self._connected = False
             raise ConnectionError(f"Error receiving reply from KiCad: {e}") from None
 
         reply = ApiResponse()
