@@ -19,6 +19,19 @@
 # SOFTWARE.
 
 
+from __future__ import annotations
+
+import math
+
+
+def round_half_away(value: float) -> int:
+    """Rounds to the nearest integer, with halfway cases rounding away from zero.
+
+    Matches KiCad's ``KiROUND``.
+    """
+    return int(math.copysign(math.floor(abs(value) + 0.5), value))
+
+
 def from_mm(value_mm: float) -> int:
     """
     KiCad uses several internal unit systems, but for the IPC API, all distance units are defined as
@@ -26,7 +39,7 @@ def from_mm(value_mm: float) -> int:
     :param value_mm: a quantity in millimeters
     :return: the quantity in KiCad API units
     """
-    return int(value_mm * 1_000_000)
+    return round_half_away(value_mm * 1_000_000)
 
 
 def to_mm(value_nm: int) -> float:
@@ -40,14 +53,14 @@ def from_mils(value_mils: float) -> int:
     """
     KiCad uses several internal unit systems, but for the IPC API, all distance units are defined
     as 64-bit nanometers
-    :param value_mils: a quantity in mils (thousanths of an inch)
+    :param value_mils: a quantity in mils (thousandths of an inch)
     :return: the quantity in KiCad API units
     """
-    return int(value_mils * 25_400)
+    return round_half_away(value_mils * 25_400)
 
 
-def to_mils(value_mils: int) -> float:
+def to_mils(value_nm: int) -> float:
     """
-    Converts a KiCad API length/distance value (in nanometers) to mils (thousanths of an inch)
+    Converts a KiCad API length/distance value (in nanometers) to mils (thousandths of an inch)
     """
-    return float(value_mils) / 25_400
+    return float(value_nm) / 25_400
