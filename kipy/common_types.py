@@ -122,6 +122,58 @@ class SheetPath(Wrapper):
         return self._proto.path_human_readable
 
 
+class MinOptMax(Wrapper):
+    """A minimum/optimal/maximum range of integer values.
+
+    .. versionadded:: 0.x.0 (KiCad 11)"""
+
+    def __init__(
+        self,
+        proto: base_types_pb2.MinOptMax | None = None,
+        proto_ref: base_types_pb2.MinOptMax | None = None,
+    ):
+        self._proto = proto_ref if proto_ref is not None else base_types_pb2.MinOptMax()
+
+        if proto is not None:
+            self._proto.CopyFrom(proto)
+
+    def __repr__(self) -> str:
+        return f"MinOptMax(min={self.min}, opt={self.opt}, max={self.max})"
+
+    @property
+    def min(self) -> int | None:
+        return self._proto.min if self._proto.HasField("min") else None
+
+    @min.setter
+    def min(self, value: int | None):
+        if value is None:
+            self._proto.ClearField("min")
+        else:
+            self._proto.min = value
+
+    @property
+    def opt(self) -> int | None:
+        return self._proto.opt if self._proto.HasField("opt") else None
+
+    @opt.setter
+    def opt(self, value: int | None):
+        if value is None:
+            self._proto.ClearField("opt")
+        else:
+            self._proto.opt = value
+
+    @property
+    def max(self) -> int | None:
+        return self._proto.max if self._proto.HasField("max") else None
+
+    @max.setter
+    def max(self, value: int | None):
+        if value is None:
+            self._proto.ClearField("max")
+        else:
+            self._proto.max = value
+
+
 class Color(Wrapper):
     def __init__(
         self,
