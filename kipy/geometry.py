@@ -839,7 +839,9 @@ def arc_start_angle(start: Vector2, mid: Vector2, end: Vector2) -> float | None:
 def arc_end_angle(start: Vector2, mid: Vector2, end: Vector2) -> float | None:
     """Calculates the arc's ending angle in radians, normalized to [0, 2*pi)
 
-    :return: The ending angle of the arc, or None if the arc is degenerate"""
+    For a full-circle arc (start == end), returns the start angle plus 2*pi to
+    represent the wraparound.
+    """
     center = arc_center(start, mid, end)
     if center is None:
         return None
@@ -850,7 +852,7 @@ def arc_end_angle(start: Vector2, mid: Vector2, end: Vector2) -> float | None:
     assert start_angle is not None
 
     if angle == start_angle:
-        angle += 2 * math.pi
+        return start_angle + 2 * math.pi
 
     return normalize_angle_radians(angle)
 
@@ -940,7 +942,8 @@ def arc_start_angle_degrees(start: Vector2, mid: Vector2, end: Vector2) -> float
 def arc_end_angle_degrees(start: Vector2, mid: Vector2, end: Vector2) -> float | None:
     """Calculates the arc's ending angle in degrees, normalized to [0, 360)
 
-    .. versionadded:: 0.3.0
+    For a full-circle arc (start == end), returns the start angle plus 360 to
+    represent the wraparound.
     """
     center = arc_center(start, mid, end)
     if center is None:
@@ -948,10 +951,10 @@ def arc_end_angle_degrees(start: Vector2, mid: Vector2, end: Vector2) -> float |
 
     angle = (end - center).angle_degrees()
 
-    start_angle = arc_start_angle(start, mid, end)
+    start_angle = arc_start_angle_degrees(start, mid, end)
     assert start_angle is not None
 
     if angle == start_angle:
-        angle += 360
+        return start_angle + 360
 
     return normalize_angle_degrees(angle)
