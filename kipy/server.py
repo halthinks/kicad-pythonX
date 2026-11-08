@@ -217,7 +217,8 @@ class KiCadServer:
 
                 if line.startswith(_READY_PREFIX):
                     self._ready_line = line
-                    self._socket_path = line[len(_READY_PREFIX) :].strip()
+                    socket = line[len(_READY_PREFIX) :].strip().removeprefix("ipc://")
+                    self._socket_path = socket
 
             now = time.monotonic()
 
@@ -298,7 +299,7 @@ class KiCadServer:
 
         self._process = None
 
-        socket = Path(self._socket_path)
+        socket = Path(self._socket_path.removeprefix("ipc://"))
         if socket.exists():
             try:
                 socket.unlink()
