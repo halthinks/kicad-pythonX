@@ -23,7 +23,7 @@ from __future__ import annotations
 import os
 import reprlib
 from collections.abc import Iterable, Sequence
-from time import sleep
+from time import monotonic, sleep
 from typing import Any, Union, cast, overload
 
 from google.protobuf.empty_pb2 import Empty
@@ -66,7 +66,7 @@ from kipy.board_types import (
     to_concrete_dimension,
     unwrap,
 )
-from kipy.client import ApiError, KiCadClient
+from kipy.client import ApiError, ConnectionError, KiCadClient
 from kipy.common_types import (
     Color,
     EmbeddedFile,
@@ -1853,14 +1853,15 @@ class Board(EditorCommandsHandler["BoardItem"], VariantsCommandHandler):
             return
 
         # Zone fill is a blocking operation that can block the entire event loop.
-        # To hide this from API users somewhat, do an initial busy loop here
-        sleeps = 0
+        # To hide this from API users somewhat, poll until the fill is done or the
+        # deadline expires.
+        deadline = monotonic() + max_poll_seconds
 
-        while sleeps < max_poll_seconds:
+        while monotonic() < deadline:
             sleep(poll_interval_seconds)
             try:
                 self._kicad.send(Ping(), Empty)
-            except OSError:
+            except ConnectionError:
                 # transport-layer timeout
                 continue
             except ApiError as e:
