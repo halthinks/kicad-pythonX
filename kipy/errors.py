@@ -22,11 +22,24 @@ from kipy.proto.common import ApiStatusCode
 from kipy.proto.common.types.library_types_pb2 import LibraryCommandStatus
 
 
-class ConnectionError(Exception):
+class KiCadError(Exception):
+    """Base class for all exceptions raised by kicad-python"""
+
+    def __init__(self, message: str, raw_message: str = ""):
+        super().__init__(message)
+        self._raw_message = raw_message
+
+    @property
+    def raw_message(self) -> str:
+        """The original error message returned from KiCad, if any"""
+        return self._raw_message
+
+
+class ConnectionError(KiCadError):
     """Raised when a connection to KiCad cannot be established"""
 
 
-class ApiError(Exception):
+class ApiError(KiCadError):
     """Raised when KiCad returns an error from an API call.  This indicates that the communication
     was successful, but the API call failed for some reason."""
 
@@ -36,25 +49,20 @@ class ApiError(Exception):
         raw_message: str = "",
         code: ApiStatusCode.ValueType = ApiStatusCode.AS_BAD_REQUEST,
     ):
-        super().__init__(message)
-        self._raw_message = raw_message
+        super().__init__(message, raw_message)
         self._code = code
 
     @property
     def code(self) -> ApiStatusCode.ValueType:
         return self._code
 
-    @property
-    def raw_message(self) -> str:
-        return self._raw_message
 
-
-class FutureVersionError(Exception):
+class FutureVersionError(KiCadError):
     """Raised when a version check shows that kicad-python is talking to a version of KiCad
     newer than the one it was built against"""
 
 
-class LibraryCommandError(Exception):
+class LibraryCommandError(ApiError):
     """Raised when KiCad returns an error from a library command"""
 
     def __init__(
@@ -63,14 +71,9 @@ class LibraryCommandError(Exception):
         raw_message: str = "",
         code: LibraryCommandStatus.Code.ValueType = LibraryCommandStatus.Code.LCS_ERROR,
     ):
-        super().__init__(message)
-        self._raw_message = raw_message
-        self._code = code
+        super().__init__(message, raw_message)
+        self._code = code  # type: ignore[assignment]
 
     @property
-    def code(self) -> LibraryCommandStatus.Code.ValueType:
-        return self._code
-
-    @property
-    def raw_message(self) -> str:
-        return self._raw_message
+    def code(self) -> LibraryCommandStatus.Code.ValueType:  # type: ignore[override,misc]
+        return self._code  # type: ignore[return-value]
