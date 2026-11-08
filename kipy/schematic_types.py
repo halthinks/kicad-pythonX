@@ -2068,14 +2068,15 @@ class SchematicSymbol(Wrapper):
         if proto is not None:
             self._proto.CopyFrom(proto)
 
-        self._unwrapped_items = [
-            SchematicSymbolChild(proto_ref=item) for item in self._proto.items
-        ]
+        self._unwrapped_items: list[SchematicSymbolChild] = []
+        self._items_dirty = False
 
     def _pack(self):
-        """Packs all child items back into the proto"""
-        del self._proto.items[:]
-        self._proto.items.extend(child.proto for child in self._unwrapped_items)
+        """Packs wrapper-held child items back into the proto, if the wrapper owns any"""
+        if self._items_dirty:
+            del self._proto.items[:]
+            self._proto.items.extend(child.proto for child in self._unwrapped_items)
+            self._items_dirty = False
 
     @property
     def proto(self):
@@ -2162,11 +2163,16 @@ class SchematicSymbol(Wrapper):
 
     @property
     def items(self) -> Sequence[SchematicSymbolChild]:
+        if not self._unwrapped_items:
+            self._unwrapped_items = [
+                SchematicSymbolChild(proto_ref=item) for item in self._proto.items
+            ]
         return self._unwrapped_items
 
     @items.setter
     def items(self, value: Sequence[SchematicSymbolChild]):
         self._unwrapped_items = list(value)
+        self._items_dirty = True
 
     def add_item(
         self,
@@ -2197,6 +2203,7 @@ class SchematicSymbol(Wrapper):
             if is_private:
                 item.is_private = True
             self._unwrapped_items.append(item)
+            self._items_dirty = True
         elif isinstance(item, _child_item_types):
             child = SchematicSymbolChild()
             child.item = item
@@ -2205,6 +2212,7 @@ class SchematicSymbol(Wrapper):
             if is_private:
                 child.is_private = True
             self._unwrapped_items.append(child)
+            self._items_dirty = True
         else:
             allowed = ", ".join(t.__name__ for t in _child_item_types)
             raise TypeError(
