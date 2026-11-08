@@ -258,6 +258,17 @@ class Track(BoardItem):
         .. versionadded:: 0.9.0 (KiCad 10.0.7)"""
         return SolderMaskOverrides(proto_ref=self._proto.solder_mask)
 
+    @property
+    def custom_properties(self) -> MutableWrapperSequence[CustomProperty]:
+        """
+        .. versionadded:: 0.x.0 (KiCad 11)"""
+        return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
+
+    @custom_properties.setter
+    def custom_properties(self, properties: list[CustomProperty]):
+        del self._proto.custom_properties[:]
+        self._proto.custom_properties.extend(p.proto for p in properties)
+
 
 class ArcTrack(BoardItem):
     """Represents an arc track segment"""
@@ -355,6 +366,17 @@ class ArcTrack(BoardItem):
         .. versionadded:: 0.9.0 (KiCad 10.0.7)"""
         return SolderMaskOverrides(proto_ref=self._proto.solder_mask)
 
+    @property
+    def custom_properties(self) -> MutableWrapperSequence[CustomProperty]:
+        """
+        .. versionadded:: 0.x.0 (KiCad 11)"""
+        return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
+
+    @custom_properties.setter
+    def custom_properties(self, properties: list[CustomProperty]):
+        del self._proto.custom_properties[:]
+        self._proto.custom_properties.extend(p.proto for p in properties)
+
     def center(self) -> Vector2 | None:
         """
         Calculates the center of the arc.  Uses a different algorithm than KiCad so may have
@@ -408,6 +430,51 @@ class ArcTrack(BoardItem):
 
     def bounding_box(self) -> Box2:
         return arc_bounding_box(self.start, self.mid, self.end)
+
+
+class PadCustomShapeOptions(Wrapper):
+    """Options that only apply to custom shape (primitive) items within a pad's padstack
+
+    .. versionadded:: 0.x.0 (KiCad 11)"""
+
+    def __init__(
+        self,
+        proto: board_types_pb2.PadCustomShapeOptions | None = None,
+        proto_ref: board_types_pb2.PadCustomShapeOptions | None = None,
+    ):
+        self._proto = (
+            proto_ref if proto_ref is not None else board_types_pb2.PadCustomShapeOptions()
+        )
+
+        if proto is not None:
+            self._proto.CopyFrom(proto)
+
+    def __repr__(self) -> str:
+        return f"PadCustomShapeOptions(role={self._proto.WhichOneof('role')})"
+
+    @property
+    def is_number_box(self) -> bool:
+        """True if this shape is the rectangle in which the pad number and net name are drawn"""
+        return self._proto.WhichOneof("role") == "is_number_box"
+
+    @is_number_box.setter
+    def is_number_box(self, value: bool):
+        if value:
+            self._proto.is_number_box = True
+        elif self._proto.WhichOneof("role") == "is_number_box":
+            self._proto.ClearField("is_number_box")
+
+    @property
+    def is_thermal_spoke_template(self) -> bool:
+        """True if this shape is a custom thermal spoke template for zone filling"""
+        return self._proto.WhichOneof("role") == "is_thermal_spoke_template"
+
+    @is_thermal_spoke_template.setter
+    def is_thermal_spoke_template(self, value: bool):
+        if value:
+            self._proto.is_thermal_spoke_template = True
+        elif self._proto.WhichOneof("role") == "is_thermal_spoke_template":
+            self._proto.ClearField("is_thermal_spoke_template")
 
 
 class BoardShape(BoardItem):
@@ -483,6 +550,34 @@ class BoardShape(BoardItem):
 
         .. versionadded:: 0.8.0 (KiCad 10.0.6)"""
         return self._proto.parent if self._proto.HasField("parent") else None
+
+    @property
+    def custom_properties(self) -> MutableWrapperSequence[CustomProperty]:
+        """
+        .. versionadded:: 0.x.0 (KiCad 11)"""
+        return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
+
+    @custom_properties.setter
+    def custom_properties(self, properties: list[CustomProperty]):
+        del self._proto.custom_properties[:]
+        self._proto.custom_properties.extend(p.proto for p in properties)
+
+    @property
+    def pad_custom_shape_options(self) -> PadCustomShapeOptions | None:
+        """Options that only apply to custom shape (primitive) items within a pad's padstack,
+        or None if this shape has no special role in a custom-shape pad
+
+        .. versionadded:: 0.x.0 (KiCad 11)"""
+        if self._proto.HasField("pad_custom_shape_options"):
+            return PadCustomShapeOptions(proto_ref=self._proto.pad_custom_shape_options)
+        return None
+
+    @pad_custom_shape_options.setter
+    def pad_custom_shape_options(self, options: PadCustomShapeOptions | None):
+        if options is not None:
+            self._proto.pad_custom_shape_options.CopyFrom(options.proto)
+        else:
+            self._proto.ClearField("pad_custom_shape_options")
 
     def move(self, delta: Vector2):
         raise NotImplementedError(f"move() not implemented for {self.__class__.__name__}")
@@ -829,6 +924,16 @@ class BoardText(BoardItem):
         }.get(locked, LockedState.LS_UNLOCKED)
 
     @property
+    def knockout(self) -> bool:
+        """
+        .. versionadded:: 0.x.0"""
+        return self._proto.knockout
+
+    @knockout.setter
+    def knockout(self, knockout: bool):
+        self._proto.knockout = knockout
+
+    @property
     def position(self) -> Vector2:
         return Vector2(self._proto.text.position)
 
@@ -902,6 +1007,16 @@ class BoardTextBox(BoardItem):
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
         }.get(locked, LockedState.LS_UNLOCKED)
+
+    @property
+    def knockout(self) -> bool:
+        """
+        .. versionadded:: 0.x.0"""
+        return self._proto.knockout
+
+    @knockout.setter
+    def knockout(self, knockout: bool):
+        self._proto.knockout = knockout
 
     @property
     def top_left(self) -> Vector2:
@@ -1077,6 +1192,17 @@ class Barcode(BoardItem):
         .. versionadded:: 0.8.0 (KiCad 10.0.6)"""
         return self._proto.parent if self._proto.HasField("parent") else None
 
+    @property
+    def custom_properties(self) -> MutableWrapperSequence[CustomProperty]:
+        """
+        .. versionadded:: 0.x.0 (KiCad 11)"""
+        return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
+
+    @custom_properties.setter
+    def custom_properties(self, properties: list[CustomProperty]):
+        del self._proto.custom_properties[:]
+        self._proto.custom_properties.extend(p.proto for p in properties)
+
 
 class ReferenceImage(BoardItem):
     """Represents a reference image on a board (a non-plotting bitmap)
@@ -1166,6 +1292,17 @@ class ReferenceImage(BoardItem):
         .. versionadded:: 0.8.0 (KiCad 10.0.6)"""
         return self._proto.parent if self._proto.HasField("parent") else None
 
+    @property
+    def custom_properties(self) -> MutableWrapperSequence[CustomProperty]:
+        """
+        .. versionadded:: 0.x.0 (KiCad 11)"""
+        return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
+
+    @custom_properties.setter
+    def custom_properties(self, properties: list[CustomProperty]):
+        del self._proto.custom_properties[:]
+        self._proto.custom_properties.extend(p.proto for p in properties)
+
 
 class Field(Wrapper):
     """Represents a footprint field"""
@@ -1228,6 +1365,17 @@ class Field(Wrapper):
     @visible.setter
     def visible(self, visible: bool):
         self._proto.visible = visible
+
+    @property
+    def custom_properties(self) -> MutableWrapperSequence[CustomProperty]:
+        """
+        .. versionadded:: 0.x.0 (KiCad 11)"""
+        return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
+
+    @custom_properties.setter
+    def custom_properties(self, properties: list[CustomProperty]):
+        del self._proto.custom_properties[:]
+        self._proto.custom_properties.extend(p.proto for p in properties)
 
 
 class ThermalSpokeSettings(Wrapper):
@@ -2019,6 +2167,19 @@ class Pad(BoardItem):
         return self._proto.id
 
     @property
+    def locked(self) -> bool:
+        """
+        .. versionadded:: 0.x.0"""
+        return self._proto.locked == LockedState.LS_LOCKED
+
+    @locked.setter
+    def locked(self, locked: bool):
+        self._proto.locked = {
+            True: LockedState.LS_LOCKED,
+            False: LockedState.LS_UNLOCKED,
+        }.get(locked, LockedState.LS_UNLOCKED)
+
+    @property
     def number(self) -> str:
         return self._proto.number
 
@@ -2763,6 +2924,73 @@ class Footprint(Wrapper):
         self._proto.jumpers.CopyFrom(settings.proto)
 
 
+class FootprintVariant(Wrapper):
+    """Per-variant data for a footprint instance
+
+    .. versionadded:: 0.x.0 (KiCad 10.0.7)"""
+
+    def __init__(
+        self,
+        proto: board_types_pb2.FootprintVariant | None = None,
+        proto_ref: board_types_pb2.FootprintVariant | None = None,
+    ):
+        self._proto = proto_ref if proto_ref is not None else board_types_pb2.FootprintVariant()
+
+        if proto is not None:
+            self._proto.CopyFrom(proto)
+
+    @property
+    def name(self) -> str:
+        """The name of the variant these overrides apply to"""
+        return self._proto.name
+
+    @name.setter
+    def name(self, name: str):
+        self._proto.name = name
+
+    @property
+    def do_not_populate(self) -> bool:
+        return self._proto.do_not_populate
+
+    @do_not_populate.setter
+    def do_not_populate(self, do_not_populate: bool):
+        self._proto.do_not_populate = do_not_populate
+
+    @property
+    def exclude_from_bill_of_materials(self) -> bool:
+        return self._proto.exclude_from_bill_of_materials
+
+    @exclude_from_bill_of_materials.setter
+    def exclude_from_bill_of_materials(self, exclude: bool):
+        self._proto.exclude_from_bill_of_materials = exclude
+
+    @property
+    def exclude_from_position_files(self) -> bool:
+        return self._proto.exclude_from_position_files
+
+    @exclude_from_position_files.setter
+    def exclude_from_position_files(self, exclude: bool):
+        self._proto.exclude_from_position_files = exclude
+
+    @property
+    def exclude_from_simulation(self) -> bool:
+        return self._proto.exclude_from_simulation
+
+    @exclude_from_simulation.setter
+    def exclude_from_simulation(self, exclude: bool):
+        self._proto.exclude_from_simulation = exclude
+
+    @property
+    def fields(self) -> dict[str, str]:
+        """Per-variant overrides of field values, keyed by field name"""
+        return dict(self._proto.fields)
+
+    @fields.setter
+    def fields(self, fields: dict[str, str]):
+        self._proto.fields.clear()
+        self._proto.fields.update(fields)
+
+
 class FootprintInstance(BoardItem):
     """Represents a footprint instance on a board"""
 
@@ -3063,6 +3291,14 @@ class FootprintInstance(BoardItem):
         return self._proto.symbol_sheet_filename
 
     @property
+    def symbol_footprint_filters(self) -> str:
+        """The footprint filters given by the symbol this footprint is associated with, or the
+        empty string if there is no associated symbol.
+
+        .. versionadded:: 0.x.0"""
+        return self._proto.symbol_footprint_filters
+
+    @property
     def embedded_files(self) -> EmbeddedFiles | None:
         """Files embedded in this footprint instance
 
@@ -3088,6 +3324,18 @@ class FootprintInstance(BoardItem):
     def custom_properties(self, properties: list[CustomProperty]):
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(p.proto for p in properties)
+
+    @property
+    def variants(self) -> MutableWrapperSequence[FootprintVariant]:
+        """Per-variant data for this footprint instance
+
+        .. versionadded:: 0.x.0 (KiCad 10.0.7)"""
+        return MutableWrapperSequence(self._proto.variants, FootprintVariant)
+
+    @variants.setter
+    def variants(self, variants: list[FootprintVariant]):
+        del self._proto.variants[:]
+        self._proto.variants.extend(variant.proto for variant in variants)
 
     @property
     def parent(self) -> KIID | None:
@@ -3865,6 +4113,17 @@ class Dimension(BoardItem):
 
         .. versionadded:: 0.8.0 (KiCad 10.0.6)"""
         return self._proto.parent if self._proto.HasField("parent") else None
+
+    @property
+    def custom_properties(self) -> MutableWrapperSequence[CustomProperty]:
+        """
+        .. versionadded:: 0.x.0 (KiCad 11)"""
+        return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
+
+    @custom_properties.setter
+    def custom_properties(self, properties: list[CustomProperty]):
+        del self._proto.custom_properties[:]
+        self._proto.custom_properties.extend(p.proto for p in properties)
 
 
 class AlignedDimension(Dimension):
@@ -5185,6 +5444,16 @@ class DrillChart(BoardItem):
     @symbol_column.setter
     def symbol_column(self, symbol_column: int):
         self._proto.symbol_column = symbol_column
+
+    @property
+    def row_keys(self) -> dict[int, str]:
+        """Map of row index to stable row key"""
+        return dict(self._proto.row_keys)
+
+    @row_keys.setter
+    def row_keys(self, row_keys: dict[int, str]):
+        self._proto.row_keys.clear()
+        self._proto.row_keys.update(row_keys)
 
 
 class DrillMap(BoardItem):
