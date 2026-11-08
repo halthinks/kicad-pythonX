@@ -3388,6 +3388,8 @@ class Zone(BoardItem):
 
     @property
     def outline(self) -> PolygonWithHoles:
+        if len(self._proto.outline.polygons) == 0:
+            self._proto.outline.polygons.add()
         return PolygonWithHoles(proto_ref=self._proto.outline.polygons[0])
 
     @outline.setter
