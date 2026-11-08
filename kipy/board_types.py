@@ -642,7 +642,7 @@ class BoardRectangle(BoardShape, Rectangle):
         )
         return (
             f"BoardRectangle(top_left={self.top_left}, bottom_right={self.bottom_right}, "
-            f"layer={BoardLayer.Name(self.layer)}{net_repr}"
+            f"layer={BoardLayer.Name(self.layer)}{net_repr})"
         )
 
     def move(self, delta: Vector2):
@@ -850,7 +850,6 @@ class BoardText(BoardItem):
 
     @attributes.setter
     def attributes(self, attributes: TextAttributes):
-        self._proto.text.attributes.CopyFrom(attributes.proto)
         self._proto.text.attributes.CopyFrom(attributes.proto)
 
     @property
@@ -1157,7 +1156,7 @@ class ReferenceImage(BoardItem):
         return self._proto.parent if self._proto.HasField("parent") else None
 
 
-class Field(BoardItem):
+class Field(Wrapper):
     """Represents a footprint field"""
 
     def __init__(
@@ -1176,6 +1175,10 @@ class Field(BoardItem):
     @property
     def field_id(self) -> int:
         return self._proto.id.id
+
+    @property
+    def id(self) -> int:
+        return self.field_id
 
     @property
     def name(self) -> str:
@@ -2831,6 +2834,10 @@ class FootprintInstance(BoardItem):
                 dimension.text.position += delta
             elif isinstance(item, Table):
                 for cell in item.cells:
+                    cell.text.top_left += delta
+                    cell.text.bottom_right += delta
+            elif isinstance(item, DrillChart):
+                for cell in item.table.cells:
                     cell.text.top_left += delta
                     cell.text.bottom_right += delta
             elif isinstance(item, BoardShape):
