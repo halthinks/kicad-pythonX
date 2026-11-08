@@ -152,7 +152,10 @@ class NetClass(Wrapper):
         if diameter is None:
             self._proto.board.via_stack.ClearField("copper_layers")
         else:
+            if len(self._proto.board.via_stack.copper_layers) == 0:
+                self._proto.board.via_stack.copper_layers.add()
             self._proto.board.via_stack.copper_layers[0].size.x_nm = diameter
+            self._proto.board.via_stack.copper_layers[0].size.y_nm = diameter
 
     @property
     def via_drill(self) -> int | None:
@@ -168,19 +171,26 @@ class NetClass(Wrapper):
             self._proto.board.via_stack.ClearField("drill")
         else:
             self._proto.board.via_stack.drill.diameter.x_nm = diameter
+            self._proto.board.via_stack.drill.diameter.y_nm = diameter
 
     @property
     def microvia_diameter(self) -> int | None:
-        if self._proto.board.HasField("microvia_stack"):
+        if (
+            self._proto.board.HasField("microvia_stack")
+            and len(self._proto.board.microvia_stack.copper_layers) > 0
+        ):
             return self._proto.board.microvia_stack.copper_layers[0].size.x_nm
         return None
 
     @microvia_diameter.setter
     def microvia_diameter(self, diameter: int | None):
         if diameter is None:
-            self._proto.board.ClearField("microvia_stack")
+            self._proto.board.microvia_stack.ClearField("copper_layers")
         else:
+            if len(self._proto.board.microvia_stack.copper_layers) == 0:
+                self._proto.board.microvia_stack.copper_layers.add()
             self._proto.board.microvia_stack.copper_layers[0].size.x_nm = diameter
+            self._proto.board.microvia_stack.copper_layers[0].size.y_nm = diameter
 
     @property
     def microvia_drill(self) -> int | None:
@@ -196,6 +206,7 @@ class NetClass(Wrapper):
             self._proto.board.microvia_stack.ClearField("drill")
         else:
             self._proto.board.microvia_stack.drill.diameter.x_nm = diameter
+            self._proto.board.microvia_stack.drill.diameter.y_nm = diameter
 
     @property
     def board_color(self) -> Color | None:
