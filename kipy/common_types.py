@@ -997,6 +997,38 @@ class Ellipse(GraphicShape):
             self._graphic_proto.ellipse.SetInParent()
         assert self._graphic_proto.WhichOneof("geometry") == "ellipse"
 
+    @property
+    def center(self) -> Vector2:
+        return Vector2(proto_ref=self._graphic_proto.ellipse.center)
+
+    @center.setter
+    def center(self, center: Vector2):
+        self._graphic_proto.ellipse.center.CopyFrom(center.proto)
+
+    @property
+    def major_radius(self) -> int:
+        return self._graphic_proto.ellipse.major_radius.value_nm
+
+    @major_radius.setter
+    def major_radius(self, radius: int):
+        self._graphic_proto.ellipse.major_radius.value_nm = radius
+
+    @property
+    def minor_radius(self) -> int:
+        return self._graphic_proto.ellipse.minor_radius.value_nm
+
+    @minor_radius.setter
+    def minor_radius(self, radius: int):
+        self._graphic_proto.ellipse.minor_radius.value_nm = radius
+
+    @property
+    def rotation(self) -> Angle:
+        return Angle(proto_ref=self._graphic_proto.ellipse.rotation)
+
+    @rotation.setter
+    def rotation(self, rotation: Angle):
+        self._graphic_proto.ellipse.rotation.CopyFrom(rotation.proto)
+
     def __repr__(self) -> str:
         rotation = self._graphic_proto.ellipse.rotation.value_degrees
         return (
@@ -1036,6 +1068,54 @@ class EllipseArc(GraphicShape):
         elif proto_ref is None:
             self._graphic_proto.ellipse_arc.SetInParent()
         assert self._graphic_proto.WhichOneof("geometry") == "ellipse_arc"
+
+    @property
+    def center(self) -> Vector2:
+        return Vector2(proto_ref=self._graphic_proto.ellipse_arc.center)
+
+    @center.setter
+    def center(self, center: Vector2):
+        self._graphic_proto.ellipse_arc.center.CopyFrom(center.proto)
+
+    @property
+    def major_radius(self) -> int:
+        return self._graphic_proto.ellipse_arc.major_radius.value_nm
+
+    @major_radius.setter
+    def major_radius(self, radius: int):
+        self._graphic_proto.ellipse_arc.major_radius.value_nm = radius
+
+    @property
+    def minor_radius(self) -> int:
+        return self._graphic_proto.ellipse_arc.minor_radius.value_nm
+
+    @minor_radius.setter
+    def minor_radius(self, radius: int):
+        self._graphic_proto.ellipse_arc.minor_radius.value_nm = radius
+
+    @property
+    def rotation(self) -> Angle:
+        return Angle(proto_ref=self._graphic_proto.ellipse_arc.rotation)
+
+    @rotation.setter
+    def rotation(self, rotation: Angle):
+        self._graphic_proto.ellipse_arc.rotation.CopyFrom(rotation.proto)
+
+    @property
+    def start_angle(self) -> Angle:
+        return Angle(proto_ref=self._graphic_proto.ellipse_arc.start_angle)
+
+    @start_angle.setter
+    def start_angle(self, angle: Angle):
+        self._graphic_proto.ellipse_arc.start_angle.CopyFrom(angle.proto)
+
+    @property
+    def end_angle(self) -> Angle:
+        return Angle(proto_ref=self._graphic_proto.ellipse_arc.end_angle)
+
+    @end_angle.setter
+    def end_angle(self, angle: Angle):
+        self._graphic_proto.ellipse_arc.end_angle.CopyFrom(angle.proto)
 
     def __repr__(self) -> str:
         rotation = self._graphic_proto.ellipse_arc.rotation.value_degrees
