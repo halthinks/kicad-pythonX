@@ -75,7 +75,6 @@ from kipy.proto.board.board_types_pb2 import (  # noqa
     ChamferedRectCorners,
     ConstraintAnchor,
     ConstraintType,
-    DrillChartAlign,
     DrillChartColumnId,
     DrillShape,
     IslandRemovalMode,
@@ -107,7 +106,7 @@ from kipy.proto.board.board_types_pb2 import (  # noqa
 )
 from kipy.proto.common.types import KIID, base_types_pb2
 from kipy.proto.common.types.base_types_pb2 import LockedState
-from kipy.proto.common.types.enums_pb2 import Units
+from kipy.proto.common.types.enums_pb2 import HorizontalAlignment, Units
 from kipy.util import unpack_any
 from kipy.util.board_layer import COPPER_LAYERS, is_copper_layer
 from kipy.util.units import from_mm
@@ -4973,11 +4972,11 @@ class DrillChartColumn(Wrapper):
         self._proto.heading = heading
 
     @property
-    def align(self) -> DrillChartAlign.ValueType:
+    def align(self) -> HorizontalAlignment.ValueType:
         return self._proto.align
 
     @align.setter
-    def align(self, align: DrillChartAlign.ValueType):
+    def align(self, align: HorizontalAlignment.ValueType):
         self._proto.align = align
 
     @property
