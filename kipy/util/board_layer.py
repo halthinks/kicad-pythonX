@@ -18,6 +18,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from collections.abc import Iterator
+
 from kipy.proto.board.board_types_pb2 import BoardLayer
 
 _B = BoardLayer
@@ -258,6 +260,6 @@ def layer_from_canonical_name(name: str) -> BoardLayer.ValueType:
     return BoardLayer.BL_UNKNOWN
 
 
-def iter_copper_layers():
+def iter_copper_layers() -> Iterator[BoardLayer.ValueType]:
     """Yields all copper layers."""
     yield from COPPER_LAYERS

@@ -20,7 +20,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import ItemsView, Iterator, KeysView, Sequence, ValuesView
 
 from kipy.common_types import Color
 from kipy.proto.common.types import project_settings_pb2
@@ -28,7 +28,7 @@ from kipy.wrapper import Wrapper
 
 
 class NetClass(Wrapper):
-    def __init__(self, proto: project_settings_pb2.NetClass | None):
+    def __init__(self, proto: project_settings_pb2.NetClass | None) -> None:
         if not proto:
             proto = project_settings_pb2.NetClass()
         self._proto = proto
@@ -58,7 +58,7 @@ class NetClass(Wrapper):
         return self._proto.priority
 
     @priority.setter
-    def priority(self, priority: int):
+    def priority(self, priority: int) -> None:
         self._proto.priority = priority
 
     @property
@@ -80,7 +80,7 @@ class NetClass(Wrapper):
         return None
 
     @clearance.setter
-    def clearance(self, clearance: int | None):
+    def clearance(self, clearance: int | None) -> None:
         if clearance is None:
             self._proto.board.ClearField("clearance")
         else:
@@ -93,7 +93,7 @@ class NetClass(Wrapper):
         return None
 
     @track_width.setter
-    def track_width(self, width: int | None):
+    def track_width(self, width: int | None) -> None:
         if width is None:
             self._proto.board.ClearField("track_width")
         else:
@@ -106,7 +106,7 @@ class NetClass(Wrapper):
         return None
 
     @diff_pair_track_width.setter
-    def diff_pair_track_width(self, width: int | None):
+    def diff_pair_track_width(self, width: int | None) -> None:
         if width is None:
             self._proto.board.ClearField("diff_pair_track_width")
         else:
@@ -119,7 +119,7 @@ class NetClass(Wrapper):
         return None
 
     @diff_pair_gap.setter
-    def diff_pair_gap(self, gap: int | None):
+    def diff_pair_gap(self, gap: int | None) -> None:
         if gap is None:
             self._proto.board.ClearField("diff_pair_gap")
         else:
@@ -132,7 +132,7 @@ class NetClass(Wrapper):
         return None
 
     @diff_pair_via_gap.setter
-    def diff_pair_via_gap(self, gap: int | None):
+    def diff_pair_via_gap(self, gap: int | None) -> None:
         if gap is None:
             self._proto.board.ClearField("diff_pair_via_gap")
         else:
@@ -148,7 +148,7 @@ class NetClass(Wrapper):
         return None
 
     @via_diameter.setter
-    def via_diameter(self, diameter: int | None):
+    def via_diameter(self, diameter: int | None) -> None:
         if diameter is None:
             self._proto.board.via_stack.ClearField("copper_layers")
         else:
@@ -166,7 +166,7 @@ class NetClass(Wrapper):
         return None
 
     @via_drill.setter
-    def via_drill(self, diameter: int | None):
+    def via_drill(self, diameter: int | None) -> None:
         if diameter is None:
             self._proto.board.via_stack.ClearField("drill")
         else:
@@ -183,7 +183,7 @@ class NetClass(Wrapper):
         return None
 
     @microvia_diameter.setter
-    def microvia_diameter(self, diameter: int | None):
+    def microvia_diameter(self, diameter: int | None) -> None:
         if diameter is None:
             self._proto.board.microvia_stack.ClearField("copper_layers")
         else:
@@ -201,7 +201,7 @@ class NetClass(Wrapper):
         return None
 
     @microvia_drill.setter
-    def microvia_drill(self, diameter: int | None):
+    def microvia_drill(self, diameter: int | None) -> None:
         if diameter is None:
             self._proto.board.microvia_stack.ClearField("drill")
         else:
@@ -215,7 +215,7 @@ class NetClass(Wrapper):
         return None
 
     @board_color.setter
-    def board_color(self, color: Color | None):
+    def board_color(self, color: Color | None) -> None:
         if color is None:
             self._proto.board.ClearField("color")
         else:
@@ -228,7 +228,7 @@ class NetClass(Wrapper):
         return None
 
     @wire_width.setter
-    def wire_width(self, value: int | None):
+    def wire_width(self, value: int | None) -> None:
         if value is None:
             self._proto.schematic.ClearField("wire_width")
         else:
@@ -241,7 +241,7 @@ class NetClass(Wrapper):
         return None
 
     @bus_width.setter
-    def bus_width(self, value: int | None):
+    def bus_width(self, value: int | None) -> None:
         if value is None:
             self._proto.schematic.ClearField("bus_width")
         else:
@@ -254,7 +254,7 @@ class NetClass(Wrapper):
         return None
 
     @schematic_color.setter
-    def schematic_color(self, color: Color | None):
+    def schematic_color(self, color: Color | None) -> None:
         if color is None:
             self._proto.schematic.ClearField("color")
         else:
@@ -266,7 +266,7 @@ class NetClassAssignment(Wrapper):
 
     .. versionadded:: 0.x.0 (KiCad 11)"""
 
-    def __init__(self, proto: project_settings_pb2.NetClassAssignment | None = None):
+    def __init__(self, proto: project_settings_pb2.NetClassAssignment | None = None) -> None:
         self._proto = proto if proto is not None else project_settings_pb2.NetClassAssignment()
 
     def __repr__(self) -> str:
@@ -278,7 +278,7 @@ class NetClassAssignment(Wrapper):
         return self._proto.net
 
     @net.setter
-    def net(self, net: str):
+    def net(self, net: str) -> None:
         self._proto.net = net
 
     @property
@@ -288,7 +288,7 @@ class NetClassAssignment(Wrapper):
         return list(self._proto.netclasses)
 
     @netclasses.setter
-    def netclasses(self, netclasses: list[str]):
+    def netclasses(self, netclasses: list[str]) -> None:
         self._proto.netclasses[:] = netclasses
 
 
@@ -297,7 +297,9 @@ class NetClassPatternAssignment(Wrapper):
 
     .. versionadded:: 0.x.0 (KiCad 11)"""
 
-    def __init__(self, proto: project_settings_pb2.NetClassPatternAssignment | None = None):
+    def __init__(
+        self, proto: project_settings_pb2.NetClassPatternAssignment | None = None
+    ) -> None:
         self._proto = (
             proto if proto is not None else project_settings_pb2.NetClassPatternAssignment()
         )
@@ -311,7 +313,7 @@ class NetClassPatternAssignment(Wrapper):
         return self._proto.pattern
 
     @pattern.setter
-    def pattern(self, pattern: str):
+    def pattern(self, pattern: str) -> None:
         self._proto.pattern = pattern
 
     @property
@@ -321,7 +323,7 @@ class NetClassPatternAssignment(Wrapper):
         return self._proto.netclass
 
     @netclass.setter
-    def netclass(self, netclass: str):
+    def netclass(self, netclass: str) -> None:
         self._proto.netclass = netclass
 
 
@@ -339,7 +341,7 @@ class NetClassAssignments:
         self,
         assignments: Sequence[NetClassAssignment] = (),
         pattern_assignments: Sequence[NetClassPatternAssignment] = (),
-    ):
+    ) -> None:
         self.assignments = list(assignments)
         self.pattern_assignments = list(pattern_assignments)
 
@@ -351,7 +353,7 @@ class NetClassAssignments:
 
 
 class TextVariables(Wrapper):
-    def __init__(self, proto: project_settings_pb2.TextVariables | None):
+    def __init__(self, proto: project_settings_pb2.TextVariables | None) -> None:
         if not proto:
             proto = project_settings_pb2.TextVariables()
         self._proto = proto
@@ -361,35 +363,35 @@ class TextVariables(Wrapper):
         return dict(self._proto.variables)
 
     @variables.setter
-    def variables(self, value: dict):
+    def variables(self, value: dict) -> None:
         self._proto.variables.clear()
         self._proto.variables.update(value)
 
     def __getitem__(self, key: str) -> str:
         return self._proto.variables[key]
 
-    def __setitem__(self, key: str, value: str):
+    def __setitem__(self, key: str, value: str) -> None:
         self._proto.variables[key] = value
 
-    def __delitem__(self, key: str):
+    def __delitem__(self, key: str) -> None:
         del self._proto.variables[key]
 
     def __contains__(self, key: str) -> bool:
         return key in self._proto.variables
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[str]:
         return iter(self._proto.variables)
 
     def __len__(self) -> int:
         return len(self._proto.variables)
 
-    def keys(self):
+    def keys(self) -> KeysView[str]:
         return self._proto.variables.keys()
 
-    def values(self):
+    def values(self) -> ValuesView[str]:
         return self._proto.variables.values()
 
-    def items(self):
+    def items(self) -> ItemsView[str, str]:
         return self._proto.variables.items()
 
     def __repr__(self) -> str:

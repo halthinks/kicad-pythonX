@@ -28,24 +28,26 @@ from kipy.proto.common import ApiRequest, ApiResponse, ApiStatusCode
 
 
 class KiCadClient:
-    def __init__(self, socket_path: str, client_name: str, kicad_token: str, timeout_ms: int):
+    def __init__(
+        self, socket_path: str, client_name: str, kicad_token: str, timeout_ms: int
+    ) -> None:
         self._socket_path = socket_path
         self._client_name = client_name
         self._kicad_token = kicad_token
         self._timeout_ms = timeout_ms
         self._connected = False
 
-    def close(self):
+    def close(self) -> None:
         if self._connected:
             self._conn.close()
             self._connected = False
 
-    def _connect(self):
+    def _connect(self) -> None:
         if self._connected:
             self._conn.close()
 
         try:
-            self._conn = pynng.Req0(
+            self._conn: pynng.Req0 = pynng.Req0(
                 dial=self._socket_path,
                 block_on_dial=True,
                 send_timeout=self._timeout_ms,
@@ -57,7 +59,7 @@ class KiCadClient:
             raise ConnectionError(f"Failed to connect to KiCad: {e}") from None
 
     @property
-    def connected(self):
+    def connected(self) -> bool:
         return self._connected
 
     R = TypeVar("R", bound=Message)

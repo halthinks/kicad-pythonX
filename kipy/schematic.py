@@ -20,7 +20,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Iterator, Sequence
 from typing import Any, cast
 
 from google.protobuf.empty_pb2 import Empty
@@ -106,7 +106,7 @@ class Schematic(EditorCommandsHandler["SchematicItem"], VariantsCommandHandler):
     .. versionadded:: 0.x.y (KiCad 11)
     """
 
-    def __init__(self, kicad: KiCadClient, document: DocumentSpecifier):
+    def __init__(self, kicad: KiCadClient, document: DocumentSpecifier) -> None:
         self._kicad = kicad
         self._doc = document
 
@@ -355,7 +355,7 @@ class Schematic(EditorCommandsHandler["SchematicItem"], VariantsCommandHandler):
         """
         return self._get_items(types, self._spec(sheet_path))
 
-    def iter_sheets(self):
+    def iter_sheets(self) -> Iterator[SheetInstance]:
         """Iterates over all sheets in the schematic's hierarchy, depth-first, beginning
         with the root sheet."""
         yield from self.get_hierarchy()
@@ -560,7 +560,7 @@ class Schematic(EditorCommandsHandler["SchematicItem"], VariantsCommandHandler):
         command.document.CopyFrom(self._doc)
         return TitleBlockInfo(self._kicad.send(command, base_types_pb2.TitleBlockInfo))
 
-    def set_title_block(self, title_block: TitleBlockInfo):
+    def set_title_block(self, title_block: TitleBlockInfo) -> None:
         command = editor_commands_pb2.SetTitleBlockInfo()
         command.document.CopyFrom(self._doc)
         command.title_block.CopyFrom(title_block.proto)

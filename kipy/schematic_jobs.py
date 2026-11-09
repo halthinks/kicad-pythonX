@@ -63,7 +63,7 @@ class PlotSettings(Wrapper):
         self,
         proto: schematic_jobs_pb2.SchematicPlotSettings | None = None,
         proto_ref: schematic_jobs_pb2.SchematicPlotSettings | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else schematic_jobs_pb2.SchematicPlotSettings()
         )
@@ -75,7 +75,7 @@ class PlotSettings(Wrapper):
         return self._proto.drawing_sheet
 
     @drawing_sheet.setter
-    def drawing_sheet(self, value: str):
+    def drawing_sheet(self, value: str) -> None:
         self._proto.drawing_sheet = value
 
     @property
@@ -83,7 +83,7 @@ class PlotSettings(Wrapper):
         return self._proto.default_font
 
     @default_font.setter
-    def default_font(self, value: str):
+    def default_font(self, value: str) -> None:
         self._proto.default_font = value
 
     @property
@@ -91,7 +91,7 @@ class PlotSettings(Wrapper):
         return self._proto.variant
 
     @variant.setter
-    def variant(self, value: str):
+    def variant(self, value: str) -> None:
         self._proto.variant = value
 
     @property
@@ -99,7 +99,7 @@ class PlotSettings(Wrapper):
         return self._proto.plot_all
 
     @plot_all.setter
-    def plot_all(self, value: bool):
+    def plot_all(self, value: bool) -> None:
         self._proto.plot_all = value
 
     @property
@@ -107,7 +107,7 @@ class PlotSettings(Wrapper):
         return self._proto.plot_drawing_sheet
 
     @plot_drawing_sheet.setter
-    def plot_drawing_sheet(self, value: bool):
+    def plot_drawing_sheet(self, value: bool) -> None:
         self._proto.plot_drawing_sheet = value
 
     @property
@@ -115,7 +115,7 @@ class PlotSettings(Wrapper):
         return list(self._proto.plot_pages)
 
     @plot_pages.setter
-    def plot_pages(self, value: Sequence[str]):
+    def plot_pages(self, value: Sequence[str]) -> None:
         del self._proto.plot_pages[:]
         self._proto.plot_pages.extend(value)
 
@@ -124,7 +124,7 @@ class PlotSettings(Wrapper):
         return self._proto.show_hop_over
 
     @show_hop_over.setter
-    def show_hop_over(self, value: bool):
+    def show_hop_over(self, value: bool) -> None:
         self._proto.show_hop_over = value
 
     @property
@@ -132,7 +132,7 @@ class PlotSettings(Wrapper):
         return self._proto.black_and_white
 
     @black_and_white.setter
-    def black_and_white(self, value: bool):
+    def black_and_white(self, value: bool) -> None:
         self._proto.black_and_white = value
 
     @property
@@ -140,7 +140,7 @@ class PlotSettings(Wrapper):
         return self._proto.page_size
 
     @page_size.setter
-    def page_size(self, value: schematic_jobs_pb2.SchematicJobPageSize.ValueType):
+    def page_size(self, value: schematic_jobs_pb2.SchematicJobPageSize.ValueType) -> None:
         self._proto.page_size = value
 
     @property
@@ -148,7 +148,7 @@ class PlotSettings(Wrapper):
         return self._proto.use_background_color
 
     @use_background_color.setter
-    def use_background_color(self, value: bool):
+    def use_background_color(self, value: bool) -> None:
         self._proto.use_background_color = value
 
     @property
@@ -156,7 +156,7 @@ class PlotSettings(Wrapper):
         return self._proto.min_pen_width
 
     @min_pen_width.setter
-    def min_pen_width(self, value: int):
+    def min_pen_width(self, value: int) -> None:
         self._proto.min_pen_width = value
 
     @property
@@ -164,7 +164,7 @@ class PlotSettings(Wrapper):
         return self._proto.theme
 
     @theme.setter
-    def theme(self, value: str):
+    def theme(self, value: str) -> None:
         self._proto.theme = value
 
     @property
@@ -173,7 +173,7 @@ class PlotSettings(Wrapper):
         return self._proto.sheet_mode
 
     @sheet_mode.setter
-    def sheet_mode(self, value: schematic_jobs_pb2.SchematicJobSheetMode.ValueType):
+    def sheet_mode(self, value: schematic_jobs_pb2.SchematicJobSheetMode.ValueType) -> None:
         self._proto.sheet_mode = value
 
 
@@ -184,7 +184,7 @@ class BOMFormatSettings(Wrapper):
         self,
         proto: schematic_jobs_pb2.BOMFormatSettings | None = None,
         proto_ref: schematic_jobs_pb2.BOMFormatSettings | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else schematic_jobs_pb2.BOMFormatSettings()
         )
@@ -198,7 +198,7 @@ class BOMFormatSettings(Wrapper):
         return self._proto.preset_name
 
     @preset_name.setter
-    def preset_name(self, value: str):
+    def preset_name(self, value: str) -> None:
         self._proto.preset_name = value
 
     @property
@@ -207,7 +207,7 @@ class BOMFormatSettings(Wrapper):
         return self._proto.field_delimiter
 
     @field_delimiter.setter
-    def field_delimiter(self, value: str):
+    def field_delimiter(self, value: str) -> None:
         self._proto.field_delimiter = value
 
     @property
@@ -216,7 +216,7 @@ class BOMFormatSettings(Wrapper):
         return self._proto.string_delimiter
 
     @string_delimiter.setter
-    def string_delimiter(self, value: str):
+    def string_delimiter(self, value: str) -> None:
         self._proto.string_delimiter = value
 
     @property
@@ -225,7 +225,7 @@ class BOMFormatSettings(Wrapper):
         return self._proto.ref_delimiter
 
     @ref_delimiter.setter
-    def ref_delimiter(self, value: str):
+    def ref_delimiter(self, value: str) -> None:
         self._proto.ref_delimiter = value
 
     @property
@@ -234,7 +234,7 @@ class BOMFormatSettings(Wrapper):
         return self._proto.ref_range_delimiter
 
     @ref_range_delimiter.setter
-    def ref_range_delimiter(self, value: str):
+    def ref_range_delimiter(self, value: str) -> None:
         self._proto.ref_range_delimiter = value
 
     @property
@@ -243,7 +243,7 @@ class BOMFormatSettings(Wrapper):
         return self._proto.keep_tabs
 
     @keep_tabs.setter
-    def keep_tabs(self, value: bool):
+    def keep_tabs(self, value: bool) -> None:
         self._proto.keep_tabs = value
 
     @property
@@ -252,7 +252,7 @@ class BOMFormatSettings(Wrapper):
         return self._proto.keep_line_breaks
 
     @keep_line_breaks.setter
-    def keep_line_breaks(self, value: bool):
+    def keep_line_breaks(self, value: bool) -> None:
         self._proto.keep_line_breaks = value
 
     @property
@@ -262,7 +262,7 @@ class BOMFormatSettings(Wrapper):
         return self._proto.include_byte_order_mark
 
     @include_byte_order_mark.setter
-    def include_byte_order_mark(self, value: bool):
+    def include_byte_order_mark(self, value: bool) -> None:
         self._proto.include_byte_order_mark = value
 
 
@@ -273,7 +273,7 @@ class BOMField(Wrapper):
         self,
         proto: schematic_jobs_pb2.BOMField | None = None,
         proto_ref: schematic_jobs_pb2.BOMField | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_jobs_pb2.BOMField()
         if proto is not None:
             self._proto.CopyFrom(proto)
@@ -284,7 +284,7 @@ class BOMField(Wrapper):
         return self._proto.name
 
     @name.setter
-    def name(self, value: str):
+    def name(self, value: str) -> None:
         self._proto.name = value
 
     @property
@@ -293,7 +293,7 @@ class BOMField(Wrapper):
         return self._proto.label
 
     @label.setter
-    def label(self, value: str):
+    def label(self, value: str) -> None:
         self._proto.label = value
 
     @property
@@ -302,7 +302,7 @@ class BOMField(Wrapper):
         return self._proto.group_by
 
     @group_by.setter
-    def group_by(self, value: bool):
+    def group_by(self, value: bool) -> None:
         self._proto.group_by = value
 
 
@@ -313,7 +313,7 @@ class BOMFieldSettings(Wrapper):
         self,
         proto: schematic_jobs_pb2.BOMFieldSettings | None = None,
         proto_ref: schematic_jobs_pb2.BOMFieldSettings | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_jobs_pb2.BOMFieldSettings()
         if proto is not None:
             self._proto.CopyFrom(proto)
@@ -326,7 +326,7 @@ class BOMFieldSettings(Wrapper):
         return self._proto.preset_name
 
     @preset_name.setter
-    def preset_name(self, value: str):
+    def preset_name(self, value: str) -> None:
         self._proto.preset_name = value
 
     @property
@@ -334,7 +334,7 @@ class BOMFieldSettings(Wrapper):
         return [BOMField(proto_ref=field) for field in self._proto.fields]
 
     @fields.setter
-    def fields(self, value: Sequence[BOMField]):
+    def fields(self, value: Sequence[BOMField]) -> None:
         del self._proto.fields[:]
         self._proto.fields.extend(field.proto for field in value)
 
@@ -343,7 +343,7 @@ class BOMFieldSettings(Wrapper):
         return self._proto.sort_field
 
     @sort_field.setter
-    def sort_field(self, value: str):
+    def sort_field(self, value: str) -> None:
         self._proto.sort_field = value
 
     @property
@@ -352,7 +352,7 @@ class BOMFieldSettings(Wrapper):
         return self._proto.sort_direction
 
     @sort_direction.setter
-    def sort_direction(self, value: schematic_jobs_pb2.BOMSortDirection.ValueType):
+    def sort_direction(self, value: schematic_jobs_pb2.BOMSortDirection.ValueType) -> None:
         self._proto.sort_direction = value
 
     @property
@@ -360,7 +360,7 @@ class BOMFieldSettings(Wrapper):
         return self._proto.filter
 
     @filter.setter
-    def filter(self, value: str):
+    def filter(self, value: str) -> None:
         self._proto.filter = value
 
     @property
@@ -370,7 +370,7 @@ class BOMFieldSettings(Wrapper):
         return self._proto.filter_scope
 
     @filter_scope.setter
-    def filter_scope(self, value: schematic_jobs_pb2.BOMFilterScope.ValueType):
+    def filter_scope(self, value: schematic_jobs_pb2.BOMFilterScope.ValueType) -> None:
         self._proto.filter_scope = value
 
 

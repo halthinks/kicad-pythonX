@@ -47,7 +47,7 @@ class MinimumConstraints(Wrapper):
         self,
         proto: board_rules_pb2.MinimumConstraints | None = None,
         proto_ref: board_rules_pb2.MinimumConstraints | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_rules_pb2.MinimumConstraints()
 
         if proto is not None:
@@ -58,7 +58,7 @@ class MinimumConstraints(Wrapper):
         return self._proto.min_clearance.value_nm
 
     @min_clearance.setter
-    def min_clearance(self, value: int):
+    def min_clearance(self, value: int) -> None:
         self._proto.min_clearance.value_nm = value
 
     @property
@@ -66,7 +66,7 @@ class MinimumConstraints(Wrapper):
         return self._proto.min_groove_width.value_nm
 
     @min_groove_width.setter
-    def min_groove_width(self, value: int):
+    def min_groove_width(self, value: int) -> None:
         self._proto.min_groove_width.value_nm = value
 
     @property
@@ -74,7 +74,7 @@ class MinimumConstraints(Wrapper):
         return self._proto.min_connection_width.value_nm
 
     @min_connection_width.setter
-    def min_connection_width(self, value: int):
+    def min_connection_width(self, value: int) -> None:
         self._proto.min_connection_width.value_nm = value
 
     @property
@@ -82,7 +82,7 @@ class MinimumConstraints(Wrapper):
         return self._proto.min_track_width.value_nm
 
     @min_track_width.setter
-    def min_track_width(self, value: int):
+    def min_track_width(self, value: int) -> None:
         self._proto.min_track_width.value_nm = value
 
     @property
@@ -90,7 +90,7 @@ class MinimumConstraints(Wrapper):
         return self._proto.min_via_annular_width.value_nm
 
     @min_via_annular_width.setter
-    def min_via_annular_width(self, value: int):
+    def min_via_annular_width(self, value: int) -> None:
         self._proto.min_via_annular_width.value_nm = value
 
     @property
@@ -98,7 +98,7 @@ class MinimumConstraints(Wrapper):
         return self._proto.min_via_size.value_nm
 
     @min_via_size.setter
-    def min_via_size(self, value: int):
+    def min_via_size(self, value: int) -> None:
         self._proto.min_via_size.value_nm = value
 
     @property
@@ -106,7 +106,7 @@ class MinimumConstraints(Wrapper):
         return self._proto.min_through_drill.value_nm
 
     @min_through_drill.setter
-    def min_through_drill(self, value: int):
+    def min_through_drill(self, value: int) -> None:
         self._proto.min_through_drill.value_nm = value
 
     @property
@@ -114,7 +114,7 @@ class MinimumConstraints(Wrapper):
         return self._proto.min_microvia_size.value_nm
 
     @min_microvia_size.setter
-    def min_microvia_size(self, value: int):
+    def min_microvia_size(self, value: int) -> None:
         self._proto.min_microvia_size.value_nm = value
 
     @property
@@ -122,7 +122,7 @@ class MinimumConstraints(Wrapper):
         return self._proto.min_microvia_drill.value_nm
 
     @min_microvia_drill.setter
-    def min_microvia_drill(self, value: int):
+    def min_microvia_drill(self, value: int) -> None:
         self._proto.min_microvia_drill.value_nm = value
 
     @property
@@ -130,7 +130,7 @@ class MinimumConstraints(Wrapper):
         return self._proto.copper_edge_clearance.value_nm
 
     @copper_edge_clearance.setter
-    def copper_edge_clearance(self, value: int):
+    def copper_edge_clearance(self, value: int) -> None:
         self._proto.copper_edge_clearance.value_nm = value
 
     @property
@@ -138,7 +138,7 @@ class MinimumConstraints(Wrapper):
         return self._proto.hole_clearance.value_nm
 
     @hole_clearance.setter
-    def hole_clearance(self, value: int):
+    def hole_clearance(self, value: int) -> None:
         self._proto.hole_clearance.value_nm = value
 
     @property
@@ -146,7 +146,7 @@ class MinimumConstraints(Wrapper):
         return self._proto.hole_to_hole_min.value_nm
 
     @hole_to_hole_min.setter
-    def hole_to_hole_min(self, value: int):
+    def hole_to_hole_min(self, value: int) -> None:
         self._proto.hole_to_hole_min.value_nm = value
 
     @property
@@ -154,7 +154,7 @@ class MinimumConstraints(Wrapper):
         return self._proto.silk_clearance.value_nm
 
     @silk_clearance.setter
-    def silk_clearance(self, value: int):
+    def silk_clearance(self, value: int) -> None:
         self._proto.silk_clearance.value_nm = value
 
     @property
@@ -162,7 +162,7 @@ class MinimumConstraints(Wrapper):
         return self._proto.min_resolved_spokes
 
     @min_resolved_spokes.setter
-    def min_resolved_spokes(self, value: int):
+    def min_resolved_spokes(self, value: int) -> None:
         self._proto.min_resolved_spokes = value
 
     @property
@@ -170,7 +170,7 @@ class MinimumConstraints(Wrapper):
         return self._proto.min_silk_text_height.value_nm
 
     @min_silk_text_height.setter
-    def min_silk_text_height(self, value: int):
+    def min_silk_text_height(self, value: int) -> None:
         self._proto.min_silk_text_height.value_nm = value
 
     @property
@@ -178,7 +178,7 @@ class MinimumConstraints(Wrapper):
         return self._proto.min_silk_text_thickness.value_nm
 
     @min_silk_text_thickness.setter
-    def min_silk_text_thickness(self, value: int):
+    def min_silk_text_thickness(self, value: int) -> None:
         self._proto.min_silk_text_thickness.value_nm = value
 
 
@@ -187,7 +187,7 @@ class PresetTrackWidth(Wrapper):
         self,
         proto: board_rules_pb2.PresetTrackWidth | None = None,
         proto_ref: board_rules_pb2.PresetTrackWidth | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_rules_pb2.PresetTrackWidth()
 
         if proto is not None:
@@ -204,7 +204,7 @@ class PresetTrackWidth(Wrapper):
         return self._proto.width.value_nm
 
     @width.setter
-    def width(self, value: int):
+    def width(self, value: int) -> None:
         self._proto.width.value_nm = value
 
 
@@ -213,7 +213,7 @@ class PresetViaDimension(Wrapper):
         self,
         proto: board_rules_pb2.PresetViaDimension | None = None,
         proto_ref: board_rules_pb2.PresetViaDimension | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_rules_pb2.PresetViaDimension()
 
         if proto is not None:
@@ -224,7 +224,7 @@ class PresetViaDimension(Wrapper):
         return self._proto.diameter.value_nm
 
     @diameter.setter
-    def diameter(self, value: int):
+    def diameter(self, value: int) -> None:
         self._proto.diameter.value_nm = value
 
     @property
@@ -232,7 +232,7 @@ class PresetViaDimension(Wrapper):
         return self._proto.drill.value_nm
 
     @drill.setter
-    def drill(self, value: int):
+    def drill(self, value: int) -> None:
         self._proto.drill.value_nm = value
 
 
@@ -241,7 +241,7 @@ class PresetDiffPairDimension(Wrapper):
         self,
         proto: board_rules_pb2.PresetDiffPairDimension | None = None,
         proto_ref: board_rules_pb2.PresetDiffPairDimension | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_rules_pb2.PresetDiffPairDimension()
         )
@@ -254,7 +254,7 @@ class PresetDiffPairDimension(Wrapper):
         return self._proto.width.value_nm
 
     @width.setter
-    def width(self, value: int):
+    def width(self, value: int) -> None:
         self._proto.width.value_nm = value
 
     @property
@@ -262,7 +262,7 @@ class PresetDiffPairDimension(Wrapper):
         return self._proto.gap.value_nm
 
     @gap.setter
-    def gap(self, value: int):
+    def gap(self, value: int) -> None:
         self._proto.gap.value_nm = value
 
     @property
@@ -270,7 +270,7 @@ class PresetDiffPairDimension(Wrapper):
         return self._proto.via_gap.value_nm
 
     @via_gap.setter
-    def via_gap(self, value: int):
+    def via_gap(self, value: int) -> None:
         self._proto.via_gap.value_nm = value
 
 
@@ -279,7 +279,7 @@ class PredefinedSizes(Wrapper):
         self,
         proto: board_rules_pb2.PredefinedSizes | None = None,
         proto_ref: board_rules_pb2.PredefinedSizes | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_rules_pb2.PredefinedSizes()
 
         if proto is not None:
@@ -292,7 +292,7 @@ class PredefinedSizes(Wrapper):
         return self._tracks
 
     @tracks.setter
-    def tracks(self, value: Sequence[PresetTrackWidth]):
+    def tracks(self, value: Sequence[PresetTrackWidth]) -> None:
         self._tracks = list(value)
 
     @property
@@ -302,7 +302,7 @@ class PredefinedSizes(Wrapper):
         return self._vias
 
     @vias.setter
-    def vias(self, value: Sequence[PresetViaDimension]):
+    def vias(self, value: Sequence[PresetViaDimension]) -> None:
         self._vias = list(value)
 
     @property
@@ -312,10 +312,10 @@ class PredefinedSizes(Wrapper):
         return self._diff_pairs
 
     @diff_pairs.setter
-    def diff_pairs(self, value: Sequence[PresetDiffPairDimension]):
+    def diff_pairs(self, value: Sequence[PresetDiffPairDimension]) -> None:
         self._diff_pairs = list(value)
 
-    def _pack(self):
+    def _pack(self) -> None:
         if "_tracks" in self.__dict__:
             del self._proto.tracks[:]
             self._proto.tracks.extend(track.proto for track in self._tracks)
@@ -334,7 +334,7 @@ class SolderMaskPasteDefaults(Wrapper):
         self,
         proto: board_rules_pb2.SolderMaskPasteDefaults | None = None,
         proto_ref: board_rules_pb2.SolderMaskPasteDefaults | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_rules_pb2.SolderMaskPasteDefaults()
         )
@@ -347,7 +347,7 @@ class SolderMaskPasteDefaults(Wrapper):
         return self._proto.mask_expansion.value_nm
 
     @mask_expansion.setter
-    def mask_expansion(self, value: int):
+    def mask_expansion(self, value: int) -> None:
         self._proto.mask_expansion.value_nm = value
 
     @property
@@ -355,7 +355,7 @@ class SolderMaskPasteDefaults(Wrapper):
         return self._proto.mask_min_width.value_nm
 
     @mask_min_width.setter
-    def mask_min_width(self, value: int):
+    def mask_min_width(self, value: int) -> None:
         self._proto.mask_min_width.value_nm = value
 
     @property
@@ -363,7 +363,7 @@ class SolderMaskPasteDefaults(Wrapper):
         return self._proto.mask_to_copper_clearance.value_nm
 
     @mask_to_copper_clearance.setter
-    def mask_to_copper_clearance(self, value: int):
+    def mask_to_copper_clearance(self, value: int) -> None:
         self._proto.mask_to_copper_clearance.value_nm = value
 
     @property
@@ -371,7 +371,7 @@ class SolderMaskPasteDefaults(Wrapper):
         return self._proto.paste_margin.value_nm
 
     @paste_margin.setter
-    def paste_margin(self, value: int):
+    def paste_margin(self, value: int) -> None:
         self._proto.paste_margin.value_nm = value
 
     @property
@@ -379,7 +379,7 @@ class SolderMaskPasteDefaults(Wrapper):
         return self._proto.paste_margin_ratio
 
     @paste_margin_ratio.setter
-    def paste_margin_ratio(self, value: float):
+    def paste_margin_ratio(self, value: float) -> None:
         self._proto.paste_margin_ratio = value
 
     @property
@@ -387,7 +387,7 @@ class SolderMaskPasteDefaults(Wrapper):
         return self._proto.allow_soldermask_bridges_in_footprints
 
     @allow_soldermask_bridges_in_footprints.setter
-    def allow_soldermask_bridges_in_footprints(self, value: bool):
+    def allow_soldermask_bridges_in_footprints(self, value: bool) -> None:
         self._proto.allow_soldermask_bridges_in_footprints = value
 
 
@@ -396,7 +396,7 @@ class TeardropTargetParams(Wrapper):
         self,
         proto: board_rules_pb2.TeardropTargetParams | None = None,
         proto_ref: board_rules_pb2.TeardropTargetParams | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_rules_pb2.TeardropTargetParams()
         )
@@ -409,7 +409,7 @@ class TeardropTargetParams(Wrapper):
         return self._proto.enabled
 
     @enabled.setter
-    def enabled(self, value: bool):
+    def enabled(self, value: bool) -> None:
         self._proto.enabled = value
 
     @property
@@ -417,7 +417,7 @@ class TeardropTargetParams(Wrapper):
         return self._proto.max_length.value_nm
 
     @max_length.setter
-    def max_length(self, value: int):
+    def max_length(self, value: int) -> None:
         self._proto.max_length.value_nm = value
 
     @property
@@ -425,7 +425,7 @@ class TeardropTargetParams(Wrapper):
         return self._proto.max_width.value_nm
 
     @max_width.setter
-    def max_width(self, value: int):
+    def max_width(self, value: int) -> None:
         self._proto.max_width.value_nm = value
 
     @property
@@ -433,7 +433,7 @@ class TeardropTargetParams(Wrapper):
         return self._proto.best_length_ratio
 
     @best_length_ratio.setter
-    def best_length_ratio(self, value: float):
+    def best_length_ratio(self, value: float) -> None:
         self._proto.best_length_ratio = value
 
     @property
@@ -441,7 +441,7 @@ class TeardropTargetParams(Wrapper):
         return self._proto.best_width_ratio
 
     @best_width_ratio.setter
-    def best_width_ratio(self, value: float):
+    def best_width_ratio(self, value: float) -> None:
         self._proto.best_width_ratio = value
 
     @property
@@ -449,7 +449,7 @@ class TeardropTargetParams(Wrapper):
         return self._proto.width_to_size_filter_ratio
 
     @width_to_size_filter_ratio.setter
-    def width_to_size_filter_ratio(self, value: float):
+    def width_to_size_filter_ratio(self, value: float) -> None:
         self._proto.width_to_size_filter_ratio = value
 
     @property
@@ -457,7 +457,7 @@ class TeardropTargetParams(Wrapper):
         return self._proto.curved_edges
 
     @curved_edges.setter
-    def curved_edges(self, value: bool):
+    def curved_edges(self, value: bool) -> None:
         self._proto.curved_edges = value
 
     @property
@@ -465,7 +465,7 @@ class TeardropTargetParams(Wrapper):
         return self._proto.allow_two_tracks
 
     @allow_two_tracks.setter
-    def allow_two_tracks(self, value: bool):
+    def allow_two_tracks(self, value: bool) -> None:
         self._proto.allow_two_tracks = value
 
     @property
@@ -473,7 +473,7 @@ class TeardropTargetParams(Wrapper):
         return self._proto.on_pads_in_zones
 
     @on_pads_in_zones.setter
-    def on_pads_in_zones(self, value: bool):
+    def on_pads_in_zones(self, value: bool) -> None:
         self._proto.on_pads_in_zones = value
 
 
@@ -482,7 +482,7 @@ class TeardropTargetEntry(Wrapper):
         self,
         proto: board_rules_pb2.TeardropTargetEntry | None = None,
         proto_ref: board_rules_pb2.TeardropTargetEntry | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_rules_pb2.TeardropTargetEntry()
 
         if proto is not None:
@@ -493,7 +493,7 @@ class TeardropTargetEntry(Wrapper):
         return self._proto.target
 
     @target.setter
-    def target(self, value: board_rules_pb2.TeardropTarget.ValueType):
+    def target(self, value: board_rules_pb2.TeardropTarget.ValueType) -> None:
         self._proto.target = value
 
     @property
@@ -501,7 +501,7 @@ class TeardropTargetEntry(Wrapper):
         return TeardropTargetParams(proto_ref=self._proto.params)
 
     @params.setter
-    def params(self, value: TeardropTargetParams):
+    def params(self, value: TeardropTargetParams) -> None:
         self._proto.params.CopyFrom(value.proto)
 
 
@@ -510,7 +510,7 @@ class TeardropDefaults(Wrapper):
         self,
         proto: board_rules_pb2.TeardropDefaults | None = None,
         proto_ref: board_rules_pb2.TeardropDefaults | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_rules_pb2.TeardropDefaults()
 
         if proto is not None:
@@ -521,7 +521,7 @@ class TeardropDefaults(Wrapper):
         return self._proto.target_vias
 
     @target_vias.setter
-    def target_vias(self, value: bool):
+    def target_vias(self, value: bool) -> None:
         self._proto.target_vias = value
 
     @property
@@ -529,7 +529,7 @@ class TeardropDefaults(Wrapper):
         return self._proto.target_pth_pads
 
     @target_pth_pads.setter
-    def target_pth_pads(self, value: bool):
+    def target_pth_pads(self, value: bool) -> None:
         self._proto.target_pth_pads = value
 
     @property
@@ -537,7 +537,7 @@ class TeardropDefaults(Wrapper):
         return self._proto.target_smd_pads
 
     @target_smd_pads.setter
-    def target_smd_pads(self, value: bool):
+    def target_smd_pads(self, value: bool) -> None:
         self._proto.target_smd_pads = value
 
     @property
@@ -545,7 +545,7 @@ class TeardropDefaults(Wrapper):
         return self._proto.target_track_to_track
 
     @target_track_to_track.setter
-    def target_track_to_track(self, value: bool):
+    def target_track_to_track(self, value: bool) -> None:
         self._proto.target_track_to_track = value
 
     @property
@@ -553,7 +553,7 @@ class TeardropDefaults(Wrapper):
         return self._proto.use_round_shapes_only
 
     @use_round_shapes_only.setter
-    def use_round_shapes_only(self, value: bool):
+    def use_round_shapes_only(self, value: bool) -> None:
         self._proto.use_round_shapes_only = value
 
     @property
@@ -565,10 +565,10 @@ class TeardropDefaults(Wrapper):
         return self._target_params
 
     @target_params.setter
-    def target_params(self, value: Sequence[TeardropTargetEntry]):
+    def target_params(self, value: Sequence[TeardropTargetEntry]) -> None:
         self._target_params = list(value)
 
-    def _pack(self):
+    def _pack(self) -> None:
         if "_target_params" in self.__dict__:
             del self._proto.target_params[:]
             self._proto.target_params.extend(param.proto for param in self._target_params)
@@ -579,7 +579,7 @@ class ViaProtectionDefaults(Wrapper):
         self,
         proto: board_rules_pb2.ViaProtectionDefaults | None = None,
         proto_ref: board_rules_pb2.ViaProtectionDefaults | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_rules_pb2.ViaProtectionDefaults()
         )
@@ -592,7 +592,7 @@ class ViaProtectionDefaults(Wrapper):
         return self._proto.tent_front
 
     @tent_front.setter
-    def tent_front(self, value: bool):
+    def tent_front(self, value: bool) -> None:
         self._proto.tent_front = value
 
     @property
@@ -600,7 +600,7 @@ class ViaProtectionDefaults(Wrapper):
         return self._proto.tent_back
 
     @tent_back.setter
-    def tent_back(self, value: bool):
+    def tent_back(self, value: bool) -> None:
         self._proto.tent_back = value
 
     @property
@@ -608,7 +608,7 @@ class ViaProtectionDefaults(Wrapper):
         return self._proto.cover_front
 
     @cover_front.setter
-    def cover_front(self, value: bool):
+    def cover_front(self, value: bool) -> None:
         self._proto.cover_front = value
 
     @property
@@ -616,7 +616,7 @@ class ViaProtectionDefaults(Wrapper):
         return self._proto.cover_back
 
     @cover_back.setter
-    def cover_back(self, value: bool):
+    def cover_back(self, value: bool) -> None:
         self._proto.cover_back = value
 
     @property
@@ -624,7 +624,7 @@ class ViaProtectionDefaults(Wrapper):
         return self._proto.plug_front
 
     @plug_front.setter
-    def plug_front(self, value: bool):
+    def plug_front(self, value: bool) -> None:
         self._proto.plug_front = value
 
     @property
@@ -632,7 +632,7 @@ class ViaProtectionDefaults(Wrapper):
         return self._proto.plug_back
 
     @plug_back.setter
-    def plug_back(self, value: bool):
+    def plug_back(self, value: bool) -> None:
         self._proto.plug_back = value
 
     @property
@@ -640,7 +640,7 @@ class ViaProtectionDefaults(Wrapper):
         return self._proto.cap
 
     @cap.setter
-    def cap(self, value: bool):
+    def cap(self, value: bool) -> None:
         self._proto.cap = value
 
     @property
@@ -648,7 +648,7 @@ class ViaProtectionDefaults(Wrapper):
         return self._proto.fill
 
     @fill.setter
-    def fill(self, value: bool):
+    def fill(self, value: bool) -> None:
         self._proto.fill = value
 
 
@@ -657,7 +657,7 @@ class DrcSeveritySetting(Wrapper):
         self,
         proto: board_rules_pb2.DrcSeveritySetting | None = None,
         proto_ref: board_rules_pb2.DrcSeveritySetting | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_rules_pb2.DrcSeveritySetting()
 
         if proto is not None:
@@ -668,7 +668,7 @@ class DrcSeveritySetting(Wrapper):
         return self._proto.rule_type
 
     @rule_type.setter
-    def rule_type(self, value: board_rules_pb2.DrcErrorType.ValueType):
+    def rule_type(self, value: board_rules_pb2.DrcErrorType.ValueType) -> None:
         self._proto.rule_type = value
 
     @property
@@ -676,7 +676,7 @@ class DrcSeveritySetting(Wrapper):
         return self._proto.severity
 
     @severity.setter
-    def severity(self, value: base_types_pb2.RuleSeverity.ValueType):
+    def severity(self, value: base_types_pb2.RuleSeverity.ValueType) -> None:
         self._proto.severity = value
 
 
@@ -685,7 +685,7 @@ class DrcExclusion(Wrapper):
         self,
         proto: board_rules_pb2.DrcExclusion | None = None,
         proto_ref: board_rules_pb2.DrcExclusion | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_rules_pb2.DrcExclusion()
 
         if proto is not None:
@@ -696,7 +696,7 @@ class DrcExclusion(Wrapper):
         return self._proto.marker
 
     @marker.setter
-    def marker(self, value: board_rules_pb2.DrcMarker):
+    def marker(self, value: board_rules_pb2.DrcMarker) -> None:
         self._proto.marker.CopyFrom(value)
 
     @property
@@ -704,7 +704,7 @@ class DrcExclusion(Wrapper):
         return self._proto.comment
 
     @comment.setter
-    def comment(self, value: str):
+    def comment(self, value: str) -> None:
         self._proto.comment = value
 
 
@@ -715,7 +715,7 @@ class BoardDesignRules(Wrapper):
         self,
         proto: board_rules_pb2.BoardDesignRules | None = None,
         proto_ref: board_rules_pb2.BoardDesignRules | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_rules_pb2.BoardDesignRules()
 
         if proto is not None:
@@ -726,7 +726,7 @@ class BoardDesignRules(Wrapper):
         return MinimumConstraints(proto_ref=self._proto.constraints)
 
     @constraints.setter
-    def constraints(self, value: MinimumConstraints):
+    def constraints(self, value: MinimumConstraints) -> None:
         self._proto.constraints.CopyFrom(value.proto)
 
     @property
@@ -736,7 +736,7 @@ class BoardDesignRules(Wrapper):
         return self._predefined_sizes
 
     @predefined_sizes.setter
-    def predefined_sizes(self, value: PredefinedSizes):
+    def predefined_sizes(self, value: PredefinedSizes) -> None:
         self._predefined_sizes = value
 
     @property
@@ -744,7 +744,7 @@ class BoardDesignRules(Wrapper):
         return SolderMaskPasteDefaults(proto_ref=self._proto.solder_mask_paste)
 
     @solder_mask_paste.setter
-    def solder_mask_paste(self, value: SolderMaskPasteDefaults):
+    def solder_mask_paste(self, value: SolderMaskPasteDefaults) -> None:
         self._proto.solder_mask_paste.CopyFrom(value.proto)
 
     @property
@@ -754,7 +754,7 @@ class BoardDesignRules(Wrapper):
         return self._teardrops
 
     @teardrops.setter
-    def teardrops(self, value: TeardropDefaults):
+    def teardrops(self, value: TeardropDefaults) -> None:
         self._teardrops = value
 
     @property
@@ -762,7 +762,7 @@ class BoardDesignRules(Wrapper):
         return ViaProtectionDefaults(proto_ref=self._proto.via_protection)
 
     @via_protection.setter
-    def via_protection(self, value: ViaProtectionDefaults):
+    def via_protection(self, value: ViaProtectionDefaults) -> None:
         self._proto.via_protection.CopyFrom(value.proto)
 
     @property
@@ -779,7 +779,7 @@ class BoardDesignRules(Wrapper):
     def severities(
         self,
         value: dict[board_rules_pb2.DrcErrorType.ValueType, base_types_pb2.RuleSeverity.ValueType],
-    ):
+    ) -> None:
         self._severities = dict(value)
 
     @property
@@ -789,10 +789,10 @@ class BoardDesignRules(Wrapper):
         return self._exclusions
 
     @exclusions.setter
-    def exclusions(self, value: Sequence[DrcExclusion]):
+    def exclusions(self, value: Sequence[DrcExclusion]) -> None:
         self._exclusions = list(value)
 
-    def _pack(self):
+    def _pack(self) -> None:
         if "_predefined_sizes" in self.__dict__:
             self._proto.predefined_sizes.CopyFrom(self._predefined_sizes.proto)
 
@@ -816,7 +816,7 @@ class CustomRuleDisallowSettings(Wrapper):
         self,
         proto: board_rules_pb2.CustomRuleDisallowSettings | None = None,
         proto_ref: board_rules_pb2.CustomRuleDisallowSettings | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_rules_pb2.CustomRuleDisallowSettings()
         )
@@ -831,10 +831,10 @@ class CustomRuleDisallowSettings(Wrapper):
         return self._types
 
     @types.setter
-    def types(self, value: Sequence[board_rules_pb2.CustomRuleDisallowType.ValueType]):
+    def types(self, value: Sequence[board_rules_pb2.CustomRuleDisallowType.ValueType]) -> None:
         self._types = list(value)
 
-    def _pack(self):
+    def _pack(self) -> None:
         if "_types" in self.__dict__:
             del self._proto.types[:]
             self._proto.types.extend(self._types)
@@ -847,7 +847,7 @@ class CustomRuleConstraint(Wrapper):
         self,
         proto: board_rules_pb2.CustomRuleConstraint | None = None,
         proto_ref: board_rules_pb2.CustomRuleConstraint | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_rules_pb2.CustomRuleConstraint()
         )
@@ -866,7 +866,7 @@ class CustomRuleConstraint(Wrapper):
         return self._proto.type
 
     @type.setter
-    def type(self, value: board_rules_pb2.CustomRuleConstraintType.ValueType):
+    def type(self, value: board_rules_pb2.CustomRuleConstraintType.ValueType) -> None:
         self._proto.type = value
 
     @property
@@ -876,7 +876,7 @@ class CustomRuleConstraint(Wrapper):
         return None
 
     @name.setter
-    def name(self, value: str | None):
+    def name(self, value: str | None) -> None:
         if value is None:
             self._proto.ClearField("name")
         else:
@@ -890,7 +890,7 @@ class CustomRuleConstraint(Wrapper):
         return None
 
     @numeric.setter
-    def numeric(self, value: base_types_pb2.MinOptMax | None):
+    def numeric(self, value: base_types_pb2.MinOptMax | None) -> None:
         if value is None:
             if self._proto.WhichOneof("value") == "numeric":
                 self._proto.ClearField("numeric")
@@ -911,7 +911,7 @@ class CustomRuleConstraint(Wrapper):
         return self._disallow
 
     @disallow.setter
-    def disallow(self, value: CustomRuleDisallowSettings | None):
+    def disallow(self, value: CustomRuleDisallowSettings | None) -> None:
         if value is None:
             if self._proto.WhichOneof("value") == "disallow":
                 self._proto.ClearField("disallow")
@@ -932,7 +932,7 @@ class CustomRuleConstraint(Wrapper):
         raise ValueError("zone_connection is only available for CRCT_ZONE_CONNECTION constraints")
 
     @zone_connection.setter
-    def zone_connection(self, value: board_types_pb2.ZoneConnectionStyle.ValueType | None):
+    def zone_connection(self, value: board_types_pb2.ZoneConnectionStyle.ValueType | None) -> None:
         if value is None:
             if self._proto.WhichOneof("value") == "zone_connection":
                 self._proto.ClearField("zone_connection")
@@ -951,7 +951,7 @@ class CustomRuleConstraint(Wrapper):
         raise ValueError("assertion_expression is only available for CRCT_ASSERTION constraints")
 
     @assertion_expression.setter
-    def assertion_expression(self, value: str | None):
+    def assertion_expression(self, value: str | None) -> None:
         if value is None:
             if self._proto.WhichOneof("value") == "assertion_expression":
                 self._proto.ClearField("assertion_expression")
@@ -965,10 +965,12 @@ class CustomRuleConstraint(Wrapper):
         return self._options
 
     @options.setter
-    def options(self, value: Sequence[board_rules_pb2.CustomRuleConstraintOption.ValueType]):
+    def options(
+        self, value: Sequence[board_rules_pb2.CustomRuleConstraintOption.ValueType]
+    ) -> None:
         self._options = list(value)
 
-    def _pack(self):
+    def _pack(self) -> None:
         if "_disallow" in self.__dict__:
             self._proto.disallow.CopyFrom(self._disallow.proto)
 
@@ -982,7 +984,7 @@ class CustomRule(Wrapper):
         self,
         proto: board_rules_pb2.CustomRule | None = None,
         proto_ref: board_rules_pb2.CustomRule | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_rules_pb2.CustomRule()
 
         if proto is not None:
@@ -993,7 +995,7 @@ class CustomRule(Wrapper):
         return self._proto.condition
 
     @condition.setter
-    def condition(self, value: str):
+    def condition(self, value: str) -> None:
         self._proto.condition = value
 
     @property
@@ -1005,10 +1007,10 @@ class CustomRule(Wrapper):
         return self._constraints
 
     @constraints.setter
-    def constraints(self, value: Sequence[CustomRuleConstraint]):
+    def constraints(self, value: Sequence[CustomRuleConstraint]) -> None:
         self._constraints = list(value)
 
-    def _pack(self):
+    def _pack(self) -> None:
         if "_constraints" in self.__dict__:
             del self._proto.constraints[:]
             self._proto.constraints.extend(constraint.proto for constraint in self._constraints)
@@ -1020,7 +1022,7 @@ class CustomRule(Wrapper):
         return None
 
     @single_layer.setter
-    def single_layer(self, value: board_types_pb2.BoardLayer.ValueType | None):
+    def single_layer(self, value: board_types_pb2.BoardLayer.ValueType | None) -> None:
         if value is None:
             if self._proto.WhichOneof("layer_condition") == "single_layer":
                 self._proto.ClearField("single_layer")
@@ -1034,7 +1036,7 @@ class CustomRule(Wrapper):
         return None
 
     @layer_mode.setter
-    def layer_mode(self, value: board_rules_pb2.CustomRuleLayerMode.ValueType | None):
+    def layer_mode(self, value: board_rules_pb2.CustomRuleLayerMode.ValueType | None) -> None:
         if value is None:
             if self._proto.WhichOneof("layer_condition") == "layer_mode":
                 self._proto.ClearField("layer_mode")
@@ -1046,7 +1048,7 @@ class CustomRule(Wrapper):
         return self._proto.severity
 
     @severity.setter
-    def severity(self, value: base_types_pb2.RuleSeverity.ValueType):
+    def severity(self, value: base_types_pb2.RuleSeverity.ValueType) -> None:
         self._proto.severity = value
 
     @property
@@ -1054,7 +1056,7 @@ class CustomRule(Wrapper):
         return self._proto.name
 
     @name.setter
-    def name(self, value: str):
+    def name(self, value: str) -> None:
         self._proto.name = value
 
     @property
@@ -1064,7 +1066,7 @@ class CustomRule(Wrapper):
         return None
 
     @comments.setter
-    def comments(self, value: str | None):
+    def comments(self, value: str | None) -> None:
         if value is None:
             self._proto.ClearField("comments")
         else:
@@ -1072,7 +1074,7 @@ class CustomRule(Wrapper):
 
 
 class BoardDesignRulesResponse(Wrapper):
-    def __init__(self, proto: board_commands_pb2.BoardDesignRulesResponse | None = None):
+    def __init__(self, proto: board_commands_pb2.BoardDesignRulesResponse | None = None) -> None:
         self._proto = board_commands_pb2.BoardDesignRulesResponse()
 
         if proto is not None:
@@ -1088,7 +1090,7 @@ class BoardDesignRulesResponse(Wrapper):
 
 
 class CustomRulesResponse(Wrapper):
-    def __init__(self, proto: board_commands_pb2.CustomRulesResponse | None = None):
+    def __init__(self, proto: board_commands_pb2.CustomRulesResponse | None = None) -> None:
         self._proto = board_commands_pb2.CustomRulesResponse()
 
         if proto is not None:
@@ -1105,10 +1107,10 @@ class CustomRulesResponse(Wrapper):
         return self._rules
 
     @rules.setter
-    def rules(self, value: Sequence[CustomRule]):
+    def rules(self, value: Sequence[CustomRule]) -> None:
         self._rules = list(value)
 
-    def _pack(self):
+    def _pack(self) -> None:
         if "_rules" in self.__dict__:
             del self._proto.rules[:]
             self._proto.rules.extend(rule.proto for rule in self._rules)

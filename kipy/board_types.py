@@ -140,7 +140,7 @@ class BoardItem(Item):
 
 
 class Net(Wrapper):
-    def __init__(self, proto: board_types_pb2.Net | None = None, name: str | None = None):
+    def __init__(self, proto: board_types_pb2.Net | None = None, name: str | None = None) -> None:
         self._proto = board_types_pb2.Net()
 
         if proto is not None:
@@ -157,7 +157,7 @@ class Net(Wrapper):
         return self._proto.name
 
     @name.setter
-    def name(self, name: str):
+    def name(self, name: str) -> None:
         self._proto.name = name
 
     @property
@@ -170,7 +170,7 @@ class Net(Wrapper):
         """
         return self._proto.code.value
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if isinstance(other, Net):
             return self.name == other.name
         return NotImplemented
@@ -183,7 +183,7 @@ class Track(BoardItem):
         self,
         proto: board_types_pb2.Track | None = None,
         proto_ref: board_types_pb2.Track | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.Track()
 
         if proto is not None:
@@ -203,7 +203,7 @@ class Track(BoardItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -214,7 +214,7 @@ class Track(BoardItem):
         return Net(self._proto.net)
 
     @net.setter
-    def net(self, net: Net):
+    def net(self, net: Net) -> None:
         self._proto.net.CopyFrom(net.proto)
 
     @property
@@ -222,7 +222,7 @@ class Track(BoardItem):
         return self._proto.layer
 
     @layer.setter
-    def layer(self, layer: BoardLayer.ValueType):
+    def layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.layer = layer
 
     @property
@@ -230,7 +230,7 @@ class Track(BoardItem):
         return Vector2(self._proto.start)
 
     @start.setter
-    def start(self, point: Vector2):
+    def start(self, point: Vector2) -> None:
         self._proto.start.CopyFrom(point.proto)
 
     @property
@@ -238,7 +238,7 @@ class Track(BoardItem):
         return Vector2(self._proto.end)
 
     @end.setter
-    def end(self, point: Vector2):
+    def end(self, point: Vector2) -> None:
         self._proto.end.CopyFrom(point.proto)
 
     @property
@@ -246,7 +246,7 @@ class Track(BoardItem):
         return self._proto.width.value_nm
 
     @width.setter
-    def width(self, width: int):
+    def width(self, width: int) -> None:
         self._proto.width.value_nm = width
 
     @property
@@ -275,7 +275,7 @@ class Track(BoardItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, properties: list[CustomProperty]):
+    def custom_properties(self, properties: list[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(p.proto for p in properties)
 
@@ -287,7 +287,7 @@ class ArcTrack(BoardItem):
         self,
         proto: board_types_pb2.Arc | None = None,
         proto_ref: board_types_pb2.Arc | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.Arc()
 
         if proto is not None:
@@ -307,7 +307,7 @@ class ArcTrack(BoardItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -318,7 +318,7 @@ class ArcTrack(BoardItem):
         return Net(self._proto.net)
 
     @net.setter
-    def net(self, net: Net):
+    def net(self, net: Net) -> None:
         self._proto.net.CopyFrom(net.proto)
 
     @property
@@ -326,7 +326,7 @@ class ArcTrack(BoardItem):
         return self._proto.layer
 
     @layer.setter
-    def layer(self, layer: BoardLayer.ValueType):
+    def layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.layer = layer
 
     @property
@@ -334,7 +334,7 @@ class ArcTrack(BoardItem):
         return Vector2(self._proto.start)
 
     @start.setter
-    def start(self, point: Vector2):
+    def start(self, point: Vector2) -> None:
         self._proto.start.CopyFrom(point.proto)
 
     @property
@@ -342,7 +342,7 @@ class ArcTrack(BoardItem):
         return Vector2(self._proto.end)
 
     @end.setter
-    def end(self, point: Vector2):
+    def end(self, point: Vector2) -> None:
         self._proto.end.CopyFrom(point.proto)
 
     @property
@@ -350,7 +350,7 @@ class ArcTrack(BoardItem):
         return self._proto.width.value_nm
 
     @width.setter
-    def width(self, width: int):
+    def width(self, width: int) -> None:
         self._proto.width.value_nm = width
 
     @property
@@ -358,7 +358,7 @@ class ArcTrack(BoardItem):
         return Vector2(self._proto.mid)
 
     @mid.setter
-    def mid(self, point: Vector2):
+    def mid(self, point: Vector2) -> None:
         self._proto.mid.CopyFrom(point.proto)
 
     @property
@@ -383,7 +383,7 @@ class ArcTrack(BoardItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, properties: list[CustomProperty]):
+    def custom_properties(self, properties: list[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(p.proto for p in properties)
 
@@ -451,7 +451,7 @@ class PadCustomShapeOptions(Wrapper):
         self,
         proto: board_types_pb2.PadCustomShapeOptions | None = None,
         proto_ref: board_types_pb2.PadCustomShapeOptions | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_types_pb2.PadCustomShapeOptions()
         )
@@ -468,7 +468,7 @@ class PadCustomShapeOptions(Wrapper):
         return self._proto.WhichOneof("role") == "is_number_box"
 
     @is_number_box.setter
-    def is_number_box(self, value: bool):
+    def is_number_box(self, value: bool) -> None:
         if value:
             self._proto.is_number_box = True
         elif self._proto.WhichOneof("role") == "is_number_box":
@@ -480,7 +480,7 @@ class PadCustomShapeOptions(Wrapper):
         return self._proto.WhichOneof("role") == "is_thermal_spoke_template"
 
     @is_thermal_spoke_template.setter
-    def is_thermal_spoke_template(self, value: bool):
+    def is_thermal_spoke_template(self, value: bool) -> None:
         if value:
             self._proto.is_thermal_spoke_template = True
         elif self._proto.WhichOneof("role") == "is_thermal_spoke_template":
@@ -494,14 +494,14 @@ class BoardShape(BoardItem):
         self,
         proto: board_types_pb2.BoardGraphicShape | None = None,
         proto_ref: board_types_pb2.BoardGraphicShape | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.BoardGraphicShape()
 
         if proto is not None:
             self._proto.CopyFrom(proto)
 
     @property
-    def proto(self):
+    def proto(self) -> board_types_pb2.BoardGraphicShape:
         """Returns the outer BoardGraphicShape proto.  Overrides GraphicShape.proto,
         which would otherwise shadow this via the MRO and return the inner
         GraphicShape message (the wrong type for the board item wire format)."""
@@ -516,7 +516,7 @@ class BoardShape(BoardItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -527,7 +527,7 @@ class BoardShape(BoardItem):
         return self._proto.layer
 
     @layer.setter
-    def layer(self, layer: BoardLayer.ValueType):
+    def layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.layer = layer
 
     @property
@@ -542,7 +542,7 @@ class BoardShape(BoardItem):
         return Net(self._proto.net)
 
     @net.setter
-    def net(self, net: Net):
+    def net(self, net: Net) -> None:
         self._proto.net.CopyFrom(net.proto)
 
     @property
@@ -550,7 +550,7 @@ class BoardShape(BoardItem):
         return GraphicAttributes(proto_ref=self._proto.shape.attributes)
 
     @attributes.setter
-    def attributes(self, attributes: GraphicAttributes):
+    def attributes(self, attributes: GraphicAttributes) -> None:
         self._proto.shape.attributes.CopyFrom(attributes.proto)
 
     @property
@@ -568,7 +568,7 @@ class BoardShape(BoardItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, properties: list[CustomProperty]):
+    def custom_properties(self, properties: list[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(p.proto for p in properties)
 
@@ -583,16 +583,16 @@ class BoardShape(BoardItem):
         return None
 
     @pad_custom_shape_options.setter
-    def pad_custom_shape_options(self, options: PadCustomShapeOptions | None):
+    def pad_custom_shape_options(self, options: PadCustomShapeOptions | None) -> None:
         if options is not None:
             self._proto.pad_custom_shape_options.CopyFrom(options.proto)
         else:
             self._proto.ClearField("pad_custom_shape_options")
 
-    def move(self, delta: Vector2):
+    def move(self, delta: Vector2) -> None:
         raise NotImplementedError(f"move() not implemented for {self.__class__.__name__}")
 
-    def rotate(self, angle: Angle, center: Vector2):
+    def rotate(self, angle: Angle, center: Vector2) -> None:
         raise NotImplementedError(f"rotate() not implemented for {self.__class__.__name__}")
 
 
@@ -603,7 +603,7 @@ class BoardSegment(BoardShape, Segment):
         self,
         proto: board_types_pb2.BoardGraphicShape | None = None,
         proto_ref: board_types_pb2.BoardGraphicShape | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.BoardGraphicShape()
 
         if proto is not None:
@@ -625,12 +625,12 @@ class BoardSegment(BoardShape, Segment):
             f"{net_repr})"
         )
 
-    def move(self, delta: Vector2):
+    def move(self, delta: Vector2) -> None:
         """Moves the segment by the given delta vector"""
         self.start += delta
         self.end += delta
 
-    def rotate(self, angle: Angle, center: Vector2):
+    def rotate(self, angle: Angle, center: Vector2) -> None:
         """Rotates the segment around the given center point by the given angle"""
         self.start = self.start.rotate(angle, center)
         self.end = self.end.rotate(angle, center)
@@ -643,7 +643,7 @@ class BoardArc(BoardShape, Arc):
         self,
         proto: board_types_pb2.BoardGraphicShape | None = None,
         proto_ref: board_types_pb2.BoardGraphicShape | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.BoardGraphicShape()
 
         if proto is not None:
@@ -665,13 +665,13 @@ class BoardArc(BoardShape, Arc):
             f"layer={BoardLayer.Name(self.layer)}{net_repr})"
         )
 
-    def move(self, delta: Vector2):
+    def move(self, delta: Vector2) -> None:
         """Moves the arc by the given delta vector"""
         self.start += delta
         self.mid += delta
         self.end += delta
 
-    def rotate(self, angle: Angle, center: Vector2):
+    def rotate(self, angle: Angle, center: Vector2) -> None:
         """Rotates the arc around the given center point by the given angle"""
         self.start = self.start.rotate(angle, center)
         self.mid = self.mid.rotate(angle, center)
@@ -685,7 +685,7 @@ class BoardCircle(BoardShape, Circle):
         self,
         proto: board_types_pb2.BoardGraphicShape | None = None,
         proto_ref: board_types_pb2.BoardGraphicShape | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.BoardGraphicShape()
 
         if proto is not None:
@@ -707,12 +707,12 @@ class BoardCircle(BoardShape, Circle):
             f"layer={BoardLayer.Name(self.layer)}{net_repr})"
         )
 
-    def move(self, delta: Vector2):
+    def move(self, delta: Vector2) -> None:
         """Moves the circle by the given delta vector"""
         self.center += delta
         self.radius_point += delta
 
-    def rotate(self, angle: Angle, center: Vector2):
+    def rotate(self, angle: Angle, center: Vector2) -> None:
         """Rotates the circle around the given center point by the given angle
 
         .. versionadded:: 0.5.0
@@ -728,7 +728,7 @@ class BoardRectangle(BoardShape, Rectangle):
         self,
         proto: board_types_pb2.BoardGraphicShape | None = None,
         proto_ref: board_types_pb2.BoardGraphicShape | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.BoardGraphicShape()
 
         if proto is not None:
@@ -750,12 +750,12 @@ class BoardRectangle(BoardShape, Rectangle):
             f"layer={BoardLayer.Name(self.layer)}{net_repr})"
         )
 
-    def move(self, delta: Vector2):
+    def move(self, delta: Vector2) -> None:
         """Moves the rectangle by the given delta vector"""
         self.top_left += delta
         self.bottom_right += delta
 
-    def rotate(self, angle: Angle, center: Vector2):
+    def rotate(self, angle: Angle, center: Vector2) -> None:
         """Rotates the rectangle around the given center point by the given angle"""
         if angle.normalize().degrees % 90 != 0:
             raise ValueError(
@@ -772,7 +772,7 @@ class BoardPolygon(BoardShape, Polygon):
         self,
         proto: board_types_pb2.BoardGraphicShape | None = None,
         proto_ref: board_types_pb2.BoardGraphicShape | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.BoardGraphicShape()
 
         if proto is not None:
@@ -793,12 +793,12 @@ class BoardPolygon(BoardShape, Polygon):
             f"BoardPolygon(points={self.polygons}, layer={BoardLayer.Name(self.layer)}{net_repr})"
         )
 
-    def move(self, delta: Vector2):
+    def move(self, delta: Vector2) -> None:
         """Moves the polygon by the given delta vector"""
         for polygon in self.polygons:
             polygon.move(delta)
 
-    def rotate(self, angle: Angle, center: Vector2):
+    def rotate(self, angle: Angle, center: Vector2) -> None:
         """Rotates the polygon around the given center point by the given angle"""
         for polygon in self.polygons:
             polygon.rotate(angle, center)
@@ -839,7 +839,7 @@ class BoardBezier(BoardShape, Bezier):
         self,
         proto: board_types_pb2.BoardGraphicShape | None = None,
         proto_ref: board_types_pb2.BoardGraphicShape | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.BoardGraphicShape()
 
         if proto is not None:
@@ -861,14 +861,14 @@ class BoardBezier(BoardShape, Bezier):
             f"end={self.end}, layer={BoardLayer.Name(self.layer)}{net_repr})"
         )
 
-    def move(self, delta: Vector2):
+    def move(self, delta: Vector2) -> None:
         """Moves the bezier curve by the given delta vector"""
         self.start += delta
         self.control1 += delta
         self.control2 += delta
         self.end += delta
 
-    def rotate(self, angle: Angle, center: Vector2):
+    def rotate(self, angle: Angle, center: Vector2) -> None:
         """Rotates the bezier curve around the given center point by the given angle"""
         self.start = self.start.rotate(angle, center)
         self.control1 = self.control1.rotate(angle, center)
@@ -897,7 +897,7 @@ class BoardText(BoardItem):
         self,
         proto: board_types_pb2.BoardText | None = None,
         proto_ref: board_types_pb2.BoardText | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.BoardText()
 
         if proto is not None:
@@ -915,7 +915,7 @@ class BoardText(BoardItem):
         return self._proto.layer
 
     @layer.setter
-    def layer(self, layer: BoardLayer.ValueType):
+    def layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.layer = layer
 
     @property
@@ -927,7 +927,7 @@ class BoardText(BoardItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -940,7 +940,7 @@ class BoardText(BoardItem):
         return self._proto.knockout
 
     @knockout.setter
-    def knockout(self, knockout: bool):
+    def knockout(self, knockout: bool) -> None:
         self._proto.knockout = knockout
 
     @property
@@ -948,7 +948,7 @@ class BoardText(BoardItem):
         return Vector2(self._proto.text.position)
 
     @position.setter
-    def position(self, pos: Vector2):
+    def position(self, pos: Vector2) -> None:
         self._proto.text.position.CopyFrom(pos.proto)
 
     @property
@@ -956,7 +956,7 @@ class BoardText(BoardItem):
         return self._proto.text.text
 
     @value.setter
-    def value(self, text: str):
+    def value(self, text: str) -> None:
         self._proto.text.text = text
 
     @property
@@ -964,7 +964,7 @@ class BoardText(BoardItem):
         return TextAttributes(proto_ref=self._proto.text.attributes)
 
     @attributes.setter
-    def attributes(self, attributes: TextAttributes):
+    def attributes(self, attributes: TextAttributes) -> None:
         self._proto.text.attributes.CopyFrom(attributes.proto)
 
     @property
@@ -983,7 +983,7 @@ class BoardTextBox(BoardItem):
         self,
         proto: board_types_pb2.BoardTextBox | None = None,
         proto_ref: board_types_pb2.BoardTextBox | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.BoardTextBox()
 
         if proto is not None:
@@ -1004,7 +1004,7 @@ class BoardTextBox(BoardItem):
         return self._proto.layer
 
     @layer.setter
-    def layer(self, layer: BoardLayer.ValueType):
+    def layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.layer = layer
 
     @property
@@ -1012,7 +1012,7 @@ class BoardTextBox(BoardItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -1025,7 +1025,7 @@ class BoardTextBox(BoardItem):
         return self._proto.knockout
 
     @knockout.setter
-    def knockout(self, knockout: bool):
+    def knockout(self, knockout: bool) -> None:
         self._proto.knockout = knockout
 
     @property
@@ -1033,7 +1033,7 @@ class BoardTextBox(BoardItem):
         return Vector2(self._proto.textbox.top_left)
 
     @top_left.setter
-    def top_left(self, pos: Vector2):
+    def top_left(self, pos: Vector2) -> None:
         self._proto.textbox.top_left.CopyFrom(pos.proto)
 
     @property
@@ -1041,7 +1041,7 @@ class BoardTextBox(BoardItem):
         return Vector2(self._proto.textbox.bottom_right)
 
     @bottom_right.setter
-    def bottom_right(self, pos: Vector2):
+    def bottom_right(self, pos: Vector2) -> None:
         self._proto.textbox.bottom_right.CopyFrom(pos.proto)
 
     @property
@@ -1049,7 +1049,7 @@ class BoardTextBox(BoardItem):
         return TextAttributes(proto_ref=self._proto.textbox.attributes)
 
     @attributes.setter
-    def attributes(self, attributes: TextAttributes):
+    def attributes(self, attributes: TextAttributes) -> None:
         self._proto.textbox.attributes.CopyFrom(attributes.proto)
 
     @property
@@ -1057,7 +1057,7 @@ class BoardTextBox(BoardItem):
         return self._proto.textbox.text
 
     @value.setter
-    def value(self, text: str):
+    def value(self, text: str) -> None:
         self._proto.textbox.text = text
 
     @property
@@ -1078,7 +1078,7 @@ class Barcode(BoardItem):
         self,
         proto: board_types_pb2.Barcode | None = None,
         proto_ref: board_types_pb2.Barcode | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.Barcode()
 
         if proto is not None:
@@ -1095,7 +1095,7 @@ class Barcode(BoardItem):
         return self._proto.text
 
     @text.setter
-    def text(self, value: str):
+    def text(self, value: str) -> None:
         self._proto.text = value
 
     @property
@@ -1103,7 +1103,7 @@ class Barcode(BoardItem):
         return self._proto.kind
 
     @kind.setter
-    def kind(self, value: BarcodeKind.ValueType):
+    def kind(self, value: BarcodeKind.ValueType) -> None:
         self._proto.kind = value
 
     @property
@@ -1111,7 +1111,7 @@ class Barcode(BoardItem):
         return self._proto.error_correction
 
     @error_correction.setter
-    def error_correction(self, value: BarcodeErrorCorrection.ValueType):
+    def error_correction(self, value: BarcodeErrorCorrection.ValueType) -> None:
         self._proto.error_correction = value
 
     @property
@@ -1119,7 +1119,7 @@ class Barcode(BoardItem):
         return Vector2(self._proto.position)
 
     @position.setter
-    def position(self, value: Vector2):
+    def position(self, value: Vector2) -> None:
         self._proto.position.CopyFrom(value.proto)
 
     @property
@@ -1127,7 +1127,7 @@ class Barcode(BoardItem):
         return Angle(proto_ref=self._proto.orientation)
 
     @orientation.setter
-    def orientation(self, value: Angle):
+    def orientation(self, value: Angle) -> None:
         self._proto.orientation.CopyFrom(value.proto)
 
     @property
@@ -1135,7 +1135,7 @@ class Barcode(BoardItem):
         return self._proto.layer
 
     @layer.setter
-    def layer(self, value: BoardLayer.ValueType):
+    def layer(self, value: BoardLayer.ValueType) -> None:
         self._proto.layer = value
 
     @property
@@ -1143,7 +1143,7 @@ class Barcode(BoardItem):
         return self._proto.width.value_nm
 
     @width.setter
-    def width(self, value: int):
+    def width(self, value: int) -> None:
         self._proto.width.value_nm = value
 
     @property
@@ -1151,7 +1151,7 @@ class Barcode(BoardItem):
         return self._proto.height.value_nm
 
     @height.setter
-    def height(self, value: int):
+    def height(self, value: int) -> None:
         self._proto.height.value_nm = value
 
     @property
@@ -1159,7 +1159,7 @@ class Barcode(BoardItem):
         return self._proto.show_text
 
     @show_text.setter
-    def show_text(self, value: bool):
+    def show_text(self, value: bool) -> None:
         self._proto.show_text = value
 
     @property
@@ -1167,7 +1167,7 @@ class Barcode(BoardItem):
         return self._proto.text_height.value_nm
 
     @text_height.setter
-    def text_height(self, value: int):
+    def text_height(self, value: int) -> None:
         self._proto.text_height.value_nm = value
 
     @property
@@ -1175,7 +1175,7 @@ class Barcode(BoardItem):
         return self._proto.knockout
 
     @knockout.setter
-    def knockout(self, value: bool):
+    def knockout(self, value: bool) -> None:
         self._proto.knockout = value
 
     @property
@@ -1183,7 +1183,7 @@ class Barcode(BoardItem):
         return Vector2(self._proto.knockout_margin)
 
     @knockout_margin.setter
-    def knockout_margin(self, value: Vector2):
+    def knockout_margin(self, value: Vector2) -> None:
         self._proto.knockout_margin.CopyFrom(value.proto)
 
     @property
@@ -1191,7 +1191,7 @@ class Barcode(BoardItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = LockedState.LS_LOCKED if locked else LockedState.LS_UNLOCKED
 
     @property
@@ -1209,7 +1209,7 @@ class Barcode(BoardItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, properties: list[CustomProperty]):
+    def custom_properties(self, properties: list[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(p.proto for p in properties)
 
@@ -1223,7 +1223,7 @@ class ReferenceImage(BoardItem):
         self,
         proto: board_types_pb2.ReferenceImage | None = None,
         proto_ref: board_types_pb2.ReferenceImage | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.ReferenceImage()
 
         if proto is not None:
@@ -1240,7 +1240,7 @@ class ReferenceImage(BoardItem):
         return self._proto.layer
 
     @layer.setter
-    def layer(self, value: BoardLayer.ValueType):
+    def layer(self, value: BoardLayer.ValueType) -> None:
         self._proto.layer = value
 
     @property
@@ -1248,7 +1248,7 @@ class ReferenceImage(BoardItem):
         return Vector2(self._proto.position)
 
     @position.setter
-    def position(self, value: Vector2):
+    def position(self, value: Vector2) -> None:
         self._proto.position.CopyFrom(value.proto)
 
     @property
@@ -1259,7 +1259,7 @@ class ReferenceImage(BoardItem):
         return Angle(proto_ref=self._proto.orientation)
 
     @orientation.setter
-    def orientation(self, orientation: Angle):
+    def orientation(self, orientation: Angle) -> None:
         self._proto.orientation.CopyFrom(orientation.proto)
 
     @property
@@ -1267,7 +1267,7 @@ class ReferenceImage(BoardItem):
         return Vector2(self._proto.transform_origin_offset)
 
     @transform_origin_offset.setter
-    def transform_origin_offset(self, value: Vector2):
+    def transform_origin_offset(self, value: Vector2) -> None:
         self._proto.transform_origin_offset.CopyFrom(value.proto)
 
     @property
@@ -1275,7 +1275,7 @@ class ReferenceImage(BoardItem):
         return self._proto.image_scale.value
 
     @image_scale.setter
-    def image_scale(self, value: float):
+    def image_scale(self, value: float) -> None:
         self._proto.image_scale.value = value
 
     @property
@@ -1283,7 +1283,7 @@ class ReferenceImage(BoardItem):
         return self._proto.image_data
 
     @image_data.setter
-    def image_data(self, value: bytes):
+    def image_data(self, value: bytes) -> None:
         self._proto.image_data = value
 
     @property
@@ -1291,7 +1291,7 @@ class ReferenceImage(BoardItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = LockedState.LS_LOCKED if locked else LockedState.LS_UNLOCKED
 
     @property
@@ -1309,7 +1309,7 @@ class ReferenceImage(BoardItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, properties: list[CustomProperty]):
+    def custom_properties(self, properties: list[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(p.proto for p in properties)
 
@@ -1321,7 +1321,7 @@ class Field(Wrapper):
         self,
         proto: board_types_pb2.Field | None = None,
         proto_ref: board_types_pb2.Field | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.Field()
 
         if proto is not None:
@@ -1343,7 +1343,7 @@ class Field(Wrapper):
         return self._proto.name
 
     @name.setter
-    def name(self, name: str):
+    def name(self, name: str) -> None:
         self._proto.name = name
 
     @property
@@ -1351,7 +1351,7 @@ class Field(Wrapper):
         return self._proto.text.layer
 
     @layer.setter
-    def layer(self, layer: BoardLayer.ValueType):
+    def layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.text.layer = layer
 
     @property
@@ -1359,7 +1359,7 @@ class Field(Wrapper):
         return BoardText(proto_ref=self._proto.text)
 
     @text.setter
-    def text(self, text: BoardText):
+    def text(self, text: BoardText) -> None:
         """
         .. versionadded:: 0.4.0 (setter)
         """
@@ -1373,7 +1373,7 @@ class Field(Wrapper):
         return self._proto.visible
 
     @visible.setter
-    def visible(self, visible: bool):
+    def visible(self, visible: bool) -> None:
         self._proto.visible = visible
 
     @property
@@ -1383,7 +1383,7 @@ class Field(Wrapper):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, properties: list[CustomProperty]):
+    def custom_properties(self, properties: list[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(p.proto for p in properties)
 
@@ -1393,7 +1393,7 @@ class ThermalSpokeSettings(Wrapper):
         self,
         proto: board_types_pb2.ThermalSpokeSettings | None = None,
         proto_ref: board_types_pb2.ThermalSpokeSettings | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_types_pb2.ThermalSpokeSettings()
         )
@@ -1408,7 +1408,7 @@ class ThermalSpokeSettings(Wrapper):
         return None
 
     @width.setter
-    def width(self, width: int):
+    def width(self, width: int) -> None:
         if width is None:
             self._proto.ClearField("width")
         else:
@@ -1419,7 +1419,7 @@ class ThermalSpokeSettings(Wrapper):
         return Angle(proto_ref=self._proto.angle)
 
     @angle.setter
-    def angle(self, angle: Angle):
+    def angle(self, angle: Angle) -> None:
         self._proto.angle.CopyFrom(angle.proto)
 
     @property
@@ -1429,7 +1429,7 @@ class ThermalSpokeSettings(Wrapper):
         return None
 
     @gap.setter
-    def gap(self, gap: int | None):
+    def gap(self, gap: int | None) -> None:
         if gap is None:
             self._proto.ClearField("gap")
         else:
@@ -1441,7 +1441,7 @@ class ZoneConnectionSettings(Wrapper):
         self,
         proto: board_types_pb2.ZoneConnectionSettings | None = None,
         proto_ref: board_types_pb2.ZoneConnectionSettings | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_types_pb2.ZoneConnectionSettings()
         )
@@ -1454,7 +1454,7 @@ class ZoneConnectionSettings(Wrapper):
         return self._proto.zone_connection
 
     @zone_connection.setter
-    def zone_connection(self, zone_connection: ZoneConnectionStyle.ValueType):
+    def zone_connection(self, zone_connection: ZoneConnectionStyle.ValueType) -> None:
         self._proto.zone_connection = zone_connection
 
     @property
@@ -1467,7 +1467,7 @@ class SolderMaskOverrides(Wrapper):
         self,
         proto: board_types_pb2.SolderMaskOverrides | None = None,
         proto_ref: board_types_pb2.SolderMaskOverrides | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.SolderMaskOverrides()
 
         if proto is not None:
@@ -1482,7 +1482,7 @@ class SolderMaskOverrides(Wrapper):
         return None
 
     @solder_mask_margin.setter
-    def solder_mask_margin(self, margin_nm: int | None):
+    def solder_mask_margin(self, margin_nm: int | None) -> None:
         if margin_nm is None:
             self._proto.ClearField("solder_mask_margin")
         else:
@@ -1496,7 +1496,7 @@ class SolderMaskOverrides(Wrapper):
         return self._proto.expose_copper
 
     @expose_copper.setter
-    def expose_copper(self, expose: bool):
+    def expose_copper(self, expose: bool) -> None:
         self._proto.expose_copper = expose
 
 
@@ -1505,7 +1505,7 @@ class SolderPasteOverrides(Wrapper):
         self,
         proto: board_types_pb2.SolderPasteOverrides | None = None,
         proto_ref: board_types_pb2.SolderPasteOverrides | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_types_pb2.SolderPasteOverrides()
         )
@@ -1521,7 +1521,7 @@ class SolderPasteOverrides(Wrapper):
         return None
 
     @solder_paste_margin.setter
-    def solder_paste_margin(self, margin_nm: int | None):
+    def solder_paste_margin(self, margin_nm: int | None) -> None:
         if margin_nm is None:
             self._proto.ClearField("solder_paste_margin")
         else:
@@ -1535,7 +1535,7 @@ class SolderPasteOverrides(Wrapper):
         return None
 
     @solder_paste_margin_ratio.setter
-    def solder_paste_margin_ratio(self, ratio: float | None):
+    def solder_paste_margin_ratio(self, ratio: float | None) -> None:
         if ratio is None:
             self._proto.ClearField("solder_paste_margin_ratio")
         else:
@@ -1551,7 +1551,7 @@ class PadTeardropSettings(Wrapper):
         self,
         proto: board_types_pb2.PadTeardropSettings | None = None,
         proto_ref: board_types_pb2.PadTeardropSettings | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.PadTeardropSettings()
 
         if proto is not None:
@@ -1563,7 +1563,7 @@ class PadTeardropSettings(Wrapper):
         return self._proto.mode
 
     @mode.setter
-    def mode(self, mode: PadTeardropMode.ValueType):
+    def mode(self, mode: PadTeardropMode.ValueType) -> None:
         self._proto.mode = mode
 
     @property
@@ -1571,7 +1571,7 @@ class PadTeardropSettings(Wrapper):
         return self._proto.curved_edges
 
     @curved_edges.setter
-    def curved_edges(self, curved_edges: bool):
+    def curved_edges(self, curved_edges: bool) -> None:
         self._proto.curved_edges = curved_edges
 
     @property
@@ -1581,7 +1581,7 @@ class PadTeardropSettings(Wrapper):
         return self._proto.allow_multiple_track_segments
 
     @allow_multiple_track_segments.setter
-    def allow_multiple_track_segments(self, allow: bool):
+    def allow_multiple_track_segments(self, allow: bool) -> None:
         self._proto.allow_multiple_track_segments = allow
 
     @property
@@ -1590,7 +1590,7 @@ class PadTeardropSettings(Wrapper):
         return self._proto.prefer_zone_connection
 
     @prefer_zone_connection.setter
-    def prefer_zone_connection(self, prefer: bool):
+    def prefer_zone_connection(self, prefer: bool) -> None:
         self._proto.prefer_zone_connection = prefer
 
     @property
@@ -1601,7 +1601,7 @@ class PadTeardropSettings(Wrapper):
         return None
 
     @max_length.setter
-    def max_length(self, length_nm: int | None):
+    def max_length(self, length_nm: int | None) -> None:
         if length_nm is None:
             self._proto.ClearField("max_length")
         else:
@@ -1615,7 +1615,7 @@ class PadTeardropSettings(Wrapper):
         return None
 
     @max_width.setter
-    def max_width(self, width_nm: int | None):
+    def max_width(self, width_nm: int | None) -> None:
         if width_nm is None:
             self._proto.ClearField("max_width")
         else:
@@ -1627,7 +1627,7 @@ class PadTeardropSettings(Wrapper):
         return self._proto.best_length_ratio
 
     @best_length_ratio.setter
-    def best_length_ratio(self, ratio: float):
+    def best_length_ratio(self, ratio: float) -> None:
         self._proto.best_length_ratio = ratio
 
     @property
@@ -1636,7 +1636,7 @@ class PadTeardropSettings(Wrapper):
         return self._proto.best_width_ratio
 
     @best_width_ratio.setter
-    def best_width_ratio(self, ratio: float):
+    def best_width_ratio(self, ratio: float) -> None:
         self._proto.best_width_ratio = ratio
 
     @property
@@ -1646,7 +1646,7 @@ class PadTeardropSettings(Wrapper):
         return self._proto.max_track_width_ratio
 
     @max_track_width_ratio.setter
-    def max_track_width_ratio(self, ratio: float):
+    def max_track_width_ratio(self, ratio: float) -> None:
         self._proto.max_track_width_ratio = ratio
 
 
@@ -1655,7 +1655,7 @@ class PadStackLayer(Wrapper):
         self,
         proto: board_types_pb2.PadStackLayer | None = None,
         proto_ref: board_types_pb2.PadStackLayer | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.PadStackLayer()
 
         if proto is not None:
@@ -1668,7 +1668,7 @@ class PadStackLayer(Wrapper):
         return self._proto.layer
 
     @layer.setter
-    def layer(self, layer: BoardLayer.ValueType):
+    def layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.layer = layer
 
     @property
@@ -1677,7 +1677,7 @@ class PadStackLayer(Wrapper):
         return self._proto.shape
 
     @shape.setter
-    def shape(self, shape: PadStackShape.ValueType):
+    def shape(self, shape: PadStackShape.ValueType) -> None:
         self._proto.shape = shape
 
     @property
@@ -1686,7 +1686,7 @@ class PadStackLayer(Wrapper):
         return Vector2(self._proto.size)
 
     @size.setter
-    def size(self, size: Vector2):
+    def size(self, size: Vector2) -> None:
         self._proto.size.CopyFrom(size.proto)
 
     @property
@@ -1696,7 +1696,7 @@ class PadStackLayer(Wrapper):
         return Vector2(self._proto.offset)
 
     @offset.setter
-    def offset(self, offset: Vector2):
+    def offset(self, offset: Vector2) -> None:
         self._proto.offset.CopyFrom(offset.proto)
 
     @property
@@ -1706,7 +1706,7 @@ class PadStackLayer(Wrapper):
         return self._proto.corner_rounding_ratio
 
     @corner_rounding_ratio.setter
-    def corner_rounding_ratio(self, ratio: float):
+    def corner_rounding_ratio(self, ratio: float) -> None:
         self._proto.corner_rounding_ratio = ratio
 
     @property
@@ -1716,7 +1716,7 @@ class PadStackLayer(Wrapper):
         return self._proto.chamfer_ratio
 
     @chamfer_ratio.setter
-    def chamfer_ratio(self, ratio: float):
+    def chamfer_ratio(self, ratio: float) -> None:
         self._proto.chamfer_ratio = ratio
 
     @property
@@ -1730,7 +1730,7 @@ class PadStackLayer(Wrapper):
         return Vector2(self._proto.trapezoid_delta)
 
     @trapezoid_delta.setter
-    def trapezoid_delta(self, delta: Vector2):
+    def trapezoid_delta(self, delta: Vector2) -> None:
         self._proto.trapezoid_delta.CopyFrom(delta.proto)
 
     @property
@@ -1741,7 +1741,7 @@ class PadStackLayer(Wrapper):
         )
 
     @custom_shapes.setter
-    def custom_shapes(self, shapes: Sequence[BoardShape]):
+    def custom_shapes(self, shapes: Sequence[BoardShape]) -> None:
         del self._proto.custom_shapes[:]
         self._proto.custom_shapes.extend([shape.proto for shape in shapes])
 
@@ -1752,7 +1752,7 @@ class PadStackLayer(Wrapper):
         return self._proto.custom_anchor_shape
 
     @custom_anchor_shape.setter
-    def custom_anchor_shape(self, shape: PadStackShape.ValueType):
+    def custom_anchor_shape(self, shape: PadStackShape.ValueType) -> None:
         self._proto.custom_anchor_shape = shape
 
     @property
@@ -1761,7 +1761,7 @@ class PadStackLayer(Wrapper):
         return self._proto.zone_settings
 
     @zone_settings.setter
-    def zone_settings(self, settings: board_types_pb2.ZoneConnectionSettings):
+    def zone_settings(self, settings: board_types_pb2.ZoneConnectionSettings) -> None:
         self._proto.zone_settings.CopyFrom(settings)
 
 
@@ -1770,7 +1770,7 @@ class DrillProperties(Wrapper):
         self,
         proto: board_types_pb2.DrillProperties | None = None,
         proto_ref: board_types_pb2.DrillProperties | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.DrillProperties()
 
         if proto is not None:
@@ -1782,7 +1782,7 @@ class DrillProperties(Wrapper):
         return self._proto.start_layer
 
     @start_layer.setter
-    def start_layer(self, layer: BoardLayer.ValueType):
+    def start_layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.start_layer = layer
 
     @property
@@ -1791,7 +1791,7 @@ class DrillProperties(Wrapper):
         return self._proto.end_layer
 
     @end_layer.setter
-    def end_layer(self, layer: BoardLayer.ValueType):
+    def end_layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.end_layer = layer
 
     @property
@@ -1800,7 +1800,7 @@ class DrillProperties(Wrapper):
         return Vector2(self._proto.diameter)
 
     @diameter.setter
-    def diameter(self, diameter: Vector2):
+    def diameter(self, diameter: Vector2) -> None:
         self._proto.diameter.CopyFrom(diameter.proto)
 
     @property
@@ -1808,7 +1808,7 @@ class DrillProperties(Wrapper):
         return self._proto.shape
 
     @shape.setter
-    def shape(self, shape: board_types_pb2.DrillShape.ValueType):
+    def shape(self, shape: board_types_pb2.DrillShape.ValueType) -> None:
         self._proto.shape = shape
 
     @property
@@ -1817,7 +1817,7 @@ class DrillProperties(Wrapper):
         return self._proto.capped
 
     @capped.setter
-    def capped(self, capped: ViaDrillCappingMode.ValueType):
+    def capped(self, capped: ViaDrillCappingMode.ValueType) -> None:
         self._proto.capped = capped
 
     @property
@@ -1826,7 +1826,7 @@ class DrillProperties(Wrapper):
         return self._proto.filled
 
     @filled.setter
-    def filled(self, filled: ViaDrillFillingMode.ValueType):
+    def filled(self, filled: ViaDrillFillingMode.ValueType) -> None:
         self._proto.filled = filled
 
 
@@ -1839,7 +1839,7 @@ class PostMachiningProperties(Wrapper):
         self,
         proto: board_types_pb2.PostMachiningProperties | None = None,
         proto_ref: board_types_pb2.PostMachiningProperties | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_types_pb2.PostMachiningProperties()
         )
@@ -1852,7 +1852,7 @@ class PostMachiningProperties(Wrapper):
         return self._proto.mode
 
     @mode.setter
-    def mode(self, mode: ViaDrillPostMachiningMode.ValueType):
+    def mode(self, mode: ViaDrillPostMachiningMode.ValueType) -> None:
         self._proto.mode = mode
 
     @property
@@ -1860,7 +1860,7 @@ class PostMachiningProperties(Wrapper):
         return self._proto.size.value_nm
 
     @size.setter
-    def size(self, size: int):
+    def size(self, size: int) -> None:
         self._proto.size.value_nm = size
 
     @property
@@ -1868,7 +1868,7 @@ class PostMachiningProperties(Wrapper):
         return self._proto.depth.value_nm
 
     @depth.setter
-    def depth(self, depth: int):
+    def depth(self, depth: int) -> None:
         self._proto.depth.value_nm = depth
 
     @property
@@ -1876,7 +1876,7 @@ class PostMachiningProperties(Wrapper):
         return Angle(proto_ref=self._proto.angle)
 
     @angle.setter
-    def angle(self, angle: Angle):
+    def angle(self, angle: Angle) -> None:
         self._proto.angle.CopyFrom(angle.proto)
 
 
@@ -1885,7 +1885,7 @@ class PadStackOuterLayer(Wrapper):
         self,
         proto: board_types_pb2.PadStackOuterLayer | None = None,
         proto_ref: board_types_pb2.PadStackOuterLayer | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.PadStackOuterLayer()
 
         if proto is not None:
@@ -1896,7 +1896,7 @@ class PadStackOuterLayer(Wrapper):
         return self._proto.solder_mask_mode
 
     @solder_mask_mode.setter
-    def solder_mask_mode(self, mode: board_types_pb2.SolderMaskMode.ValueType):
+    def solder_mask_mode(self, mode: board_types_pb2.SolderMaskMode.ValueType) -> None:
         self._proto.solder_mask_mode = mode
 
     @property
@@ -1904,7 +1904,7 @@ class PadStackOuterLayer(Wrapper):
         return self._proto.solder_paste_mode
 
     @solder_paste_mode.setter
-    def solder_paste_mode(self, mode: board_types_pb2.SolderPasteMode.ValueType):
+    def solder_paste_mode(self, mode: board_types_pb2.SolderPasteMode.ValueType) -> None:
         self._proto.solder_paste_mode = mode
 
     @property
@@ -1914,7 +1914,7 @@ class PadStackOuterLayer(Wrapper):
         return SolderMaskOverrides(proto_ref=self._proto.solder_mask_settings)
 
     @solder_mask_settings.setter
-    def solder_mask_settings(self, settings: SolderMaskOverrides):
+    def solder_mask_settings(self, settings: SolderMaskOverrides) -> None:
         self._proto.solder_mask_settings.CopyFrom(settings.proto)
 
     @property
@@ -1924,7 +1924,7 @@ class PadStackOuterLayer(Wrapper):
         return SolderPasteOverrides(proto_ref=self._proto.solder_paste_settings)
 
     @solder_paste_settings.setter
-    def solder_paste_settings(self, settings: SolderPasteOverrides):
+    def solder_paste_settings(self, settings: SolderPasteOverrides) -> None:
         self._proto.solder_paste_settings.CopyFrom(settings.proto)
 
     @property
@@ -1934,7 +1934,7 @@ class PadStackOuterLayer(Wrapper):
         return self._proto.plugging_mode
 
     @plugging_mode.setter
-    def plugging_mode(self, mode: ViaPluggingMode.ValueType):
+    def plugging_mode(self, mode: ViaPluggingMode.ValueType) -> None:
         self._proto.plugging_mode = mode
 
     @property
@@ -1944,7 +1944,7 @@ class PadStackOuterLayer(Wrapper):
         return self._proto.covering_mode
 
     @covering_mode.setter
-    def covering_mode(self, mode: ViaCoveringMode.ValueType):
+    def covering_mode(self, mode: ViaCoveringMode.ValueType) -> None:
         self._proto.covering_mode = mode
 
 
@@ -1953,7 +1953,7 @@ class PadStack(BoardItem):
         self,
         proto: board_types_pb2.PadStack | None = None,
         proto_ref: board_types_pb2.PadStack | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.PadStack()
 
         if proto is not None:
@@ -1965,7 +1965,7 @@ class PadStack(BoardItem):
         return self._proto.type
 
     @type.setter
-    def type(self, type: board_types_pb2.PadStackType.ValueType):
+    def type(self, type: board_types_pb2.PadStackType.ValueType) -> None:
         self._proto.type = type
 
         layer_map = {layer.layer: layer for layer in self._proto.copper_layers}
@@ -1993,7 +1993,7 @@ class PadStack(BoardItem):
         return self._proto.layers
 
     @layers.setter
-    def layers(self, layers: Sequence[BoardLayer.ValueType]):
+    def layers(self, layers: Sequence[BoardLayer.ValueType]) -> None:
         del self._proto.layers[:]
         self._proto.layers.extend(layers)
 
@@ -2008,7 +2008,7 @@ class PadStack(BoardItem):
         return self._proto.unconnected_layer_removal
 
     @unconnected_layer_removal.setter
-    def unconnected_layer_removal(self, removal: UnconnectedLayerRemoval.ValueType):
+    def unconnected_layer_removal(self, removal: UnconnectedLayerRemoval.ValueType) -> None:
         self._proto.unconnected_layer_removal = removal
 
     @property
@@ -2027,7 +2027,7 @@ class PadStack(BoardItem):
         return Angle(proto_ref=self._proto.angle)
 
     @angle.setter
-    def angle(self, angle: Angle):
+    def angle(self, angle: Angle) -> None:
         self._proto.angle.CopyFrom(angle.proto)
 
     @property
@@ -2052,7 +2052,7 @@ class PadStack(BoardItem):
         return DrillProperties(proto_ref=self._proto.secondary_drill)
 
     @secondary_drill.setter
-    def secondary_drill(self, drill: DrillProperties):
+    def secondary_drill(self, drill: DrillProperties) -> None:
         self._proto.secondary_drill.CopyFrom(drill.proto)
 
     @property
@@ -2062,7 +2062,7 @@ class PadStack(BoardItem):
         return DrillProperties(proto_ref=self._proto.tertiary_drill)
 
     @tertiary_drill.setter
-    def tertiary_drill(self, drill: DrillProperties):
+    def tertiary_drill(self, drill: DrillProperties) -> None:
         self._proto.tertiary_drill.CopyFrom(drill.proto)
 
     @property
@@ -2072,7 +2072,7 @@ class PadStack(BoardItem):
         return PostMachiningProperties(proto_ref=self._proto.front_post_machining)
 
     @front_post_machining.setter
-    def front_post_machining(self, properties: PostMachiningProperties):
+    def front_post_machining(self, properties: PostMachiningProperties) -> None:
         self._proto.front_post_machining.CopyFrom(properties.proto)
 
     @property
@@ -2082,7 +2082,7 @@ class PadStack(BoardItem):
         return PostMachiningProperties(proto_ref=self._proto.back_post_machining)
 
     @back_post_machining.setter
-    def back_post_machining(self, properties: PostMachiningProperties):
+    def back_post_machining(self, properties: PostMachiningProperties) -> None:
         self._proto.back_post_machining.CopyFrom(properties.proto)
 
     def is_masked(self, layer: BoardLayer.ValueType = BoardLayer.BL_UNDEFINED) -> bool:
@@ -2116,7 +2116,7 @@ class SymbolPinInfo(Wrapper):
         self,
         proto: board_types_pb2.SymbolPinInfo | None = None,
         proto_ref: board_types_pb2.SymbolPinInfo | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.SymbolPinInfo()
 
         if proto is not None:
@@ -2131,7 +2131,7 @@ class SymbolPinInfo(Wrapper):
         return self._proto.name
 
     @name.setter
-    def name(self, name: str):
+    def name(self, name: str) -> None:
         self._proto.name = name
 
     @property
@@ -2140,7 +2140,7 @@ class SymbolPinInfo(Wrapper):
         return self._proto.type
 
     @type.setter
-    def type(self, type: base_types_pb2.ElectricalPinType.ValueType):
+    def type(self, type: base_types_pb2.ElectricalPinType.ValueType) -> None:
         self._proto.type = type
 
     @property
@@ -2149,7 +2149,7 @@ class SymbolPinInfo(Wrapper):
         return self._proto.no_connect
 
     @no_connect.setter
-    def no_connect(self, no_connect: bool):
+    def no_connect(self, no_connect: bool) -> None:
         self._proto.no_connect = no_connect
 
 
@@ -2158,7 +2158,7 @@ class Pad(BoardItem):
         self,
         proto: board_types_pb2.Pad | None = None,
         proto_ref: board_types_pb2.Pad | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.Pad()
 
         if proto is not None:
@@ -2183,7 +2183,7 @@ class Pad(BoardItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -2194,7 +2194,7 @@ class Pad(BoardItem):
         return self._proto.number
 
     @number.setter
-    def number(self, number: str):
+    def number(self, number: str) -> None:
         self._proto.number = number
 
     @property
@@ -2203,7 +2203,7 @@ class Pad(BoardItem):
         return Vector2(self._proto.position)
 
     @position.setter
-    def position(self, position: Vector2):
+    def position(self, position: Vector2) -> None:
         self._proto.position.CopyFrom(position.proto)
 
     @property
@@ -2214,7 +2214,7 @@ class Pad(BoardItem):
         return self._proto.fab_property
 
     @fab_property.setter
-    def fab_property(self, fab_property: PadFabricationProperty.ValueType):
+    def fab_property(self, fab_property: PadFabricationProperty.ValueType) -> None:
         self._proto.fab_property = fab_property
 
     @property
@@ -2222,7 +2222,7 @@ class Pad(BoardItem):
         return Net(self._proto.net)
 
     @net.setter
-    def net(self, net: Net):
+    def net(self, net: Net) -> None:
         self._proto.net.CopyFrom(net.proto)
 
     @property
@@ -2235,7 +2235,7 @@ class Pad(BoardItem):
         return self._proto.type
 
     @pad_type.setter
-    def pad_type(self, pad_type: PadType.ValueType):
+    def pad_type(self, pad_type: PadType.ValueType) -> None:
         """
         .. versionadded:: 0.4.0 (setter)
         """
@@ -2253,7 +2253,7 @@ class Pad(BoardItem):
         return self._proto.pad_to_die_length.value_nm
 
     @pad_to_die_length.setter
-    def pad_to_die_length(self, length: int):
+    def pad_to_die_length(self, length: int) -> None:
         self._proto.pad_to_die_length.value_nm = length
 
     @property
@@ -2264,7 +2264,7 @@ class Pad(BoardItem):
         return PadTeardropSettings(proto_ref=self._proto.teardrop)
 
     @teardrop.setter
-    def teardrop(self, settings: PadTeardropSettings):
+    def teardrop(self, settings: PadTeardropSettings) -> None:
         self._proto.teardrop.CopyFrom(settings.proto)
 
     @property
@@ -2275,7 +2275,7 @@ class Pad(BoardItem):
         return self._proto.sim_electrical_type
 
     @sim_electrical_type.setter
-    def sim_electrical_type(self, sim_type: PadSimElectricalType.ValueType):
+    def sim_electrical_type(self, sim_type: PadSimElectricalType.ValueType) -> None:
         self._proto.sim_electrical_type = sim_type
 
     @property
@@ -2288,7 +2288,7 @@ class Pad(BoardItem):
         return None
 
     @copper_clearance_override.setter
-    def copper_clearance_override(self, clearance_nm: int | None):
+    def copper_clearance_override(self, clearance_nm: int | None) -> None:
         if clearance_nm is None:
             self._proto.ClearField("copper_clearance_override")
         else:
@@ -2304,7 +2304,7 @@ class Pad(BoardItem):
         return None
 
     @pad_to_die_delay.setter
-    def pad_to_die_delay(self, delay: int | None):
+    def pad_to_die_delay(self, delay: int | None) -> None:
         if delay is None:
             self._proto.ClearField("pad_to_die_delay")
         else:
@@ -2318,7 +2318,7 @@ class Pad(BoardItem):
         return SymbolPinInfo(proto_ref=self._proto.symbol_pin)
 
     @symbol_pin.setter
-    def symbol_pin(self, pin: SymbolPinInfo):
+    def symbol_pin(self, pin: SymbolPinInfo) -> None:
         self._proto.symbol_pin.CopyFrom(pin.proto)
 
     @property
@@ -2328,7 +2328,7 @@ class Pad(BoardItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, properties: list[CustomProperty]):
+    def custom_properties(self, properties: list[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(p.proto for p in properties)
 
@@ -2346,7 +2346,7 @@ class Via(BoardItem):
         self,
         proto: board_types_pb2.Via | None = None,
         proto_ref: board_types_pb2.Via | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.Via()
 
         if proto is not None:
@@ -2367,7 +2367,7 @@ class Via(BoardItem):
         return Vector2(self._proto.position)
 
     @position.setter
-    def position(self, position: Vector2):
+    def position(self, position: Vector2) -> None:
         self._proto.position.CopyFrom(position.proto)
 
     @property
@@ -2375,7 +2375,7 @@ class Via(BoardItem):
         return Net(self._proto.net)
 
     @net.setter
-    def net(self, net: Net):
+    def net(self, net: Net) -> None:
         self._proto.net.CopyFrom(net.proto)
 
     @property
@@ -2383,7 +2383,7 @@ class Via(BoardItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = LockedState.LS_LOCKED if locked else LockedState.LS_UNLOCKED
 
     @property
@@ -2398,7 +2398,7 @@ class Via(BoardItem):
         return self._proto.type
 
     @type.setter
-    def type(self, type: ViaType.ValueType):
+    def type(self, type: ViaType.ValueType) -> None:
         self._proto.type = type
 
         if (
@@ -2432,7 +2432,7 @@ class Via(BoardItem):
         return self.padstack.copper_layers[0].size.x
 
     @diameter.setter
-    def diameter(self, diameter: int):
+    def diameter(self, diameter: int) -> None:
         self.padstack.type = PST_NORMAL
         self.padstack.copper_layers[0].size = Vector2.from_xy(diameter, diameter)
 
@@ -2442,7 +2442,7 @@ class Via(BoardItem):
         return self.padstack.drill.diameter.x
 
     @drill_diameter.setter
-    def drill_diameter(self, diameter: int):
+    def drill_diameter(self, diameter: int) -> None:
         self.padstack.drill.diameter = Vector2.from_xy(diameter, diameter)
 
     @property
@@ -2453,7 +2453,7 @@ class Via(BoardItem):
         return self._proto.is_free
 
     @is_free.setter
-    def is_free(self, is_free: bool):
+    def is_free(self, is_free: bool) -> None:
         self._proto.is_free = is_free
 
     @property
@@ -2464,7 +2464,7 @@ class Via(BoardItem):
         return PadTeardropSettings(proto_ref=self._proto.teardrop)
 
     @teardrop.setter
-    def teardrop(self, settings: PadTeardropSettings):
+    def teardrop(self, settings: PadTeardropSettings) -> None:
         self._proto.teardrop.CopyFrom(settings.proto)
 
     @property
@@ -2474,7 +2474,7 @@ class Via(BoardItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, properties: list[CustomProperty]):
+    def custom_properties(self, properties: list[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(p.proto for p in properties)
 
@@ -2494,7 +2494,7 @@ class FootprintAttributes(Wrapper):
         self,
         proto: board_types_pb2.FootprintAttributes | None = None,
         proto_ref: board_types_pb2.FootprintAttributes | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.FootprintAttributes()
 
         if proto is not None:
@@ -2505,7 +2505,7 @@ class FootprintAttributes(Wrapper):
         return self._proto.not_in_schematic
 
     @not_in_schematic.setter
-    def not_in_schematic(self, not_in_schematic: bool):
+    def not_in_schematic(self, not_in_schematic: bool) -> None:
         self._proto.not_in_schematic = not_in_schematic
 
     @property
@@ -2513,7 +2513,7 @@ class FootprintAttributes(Wrapper):
         return self._proto.exclude_from_bill_of_materials
 
     @exclude_from_bill_of_materials.setter
-    def exclude_from_bill_of_materials(self, exclude: bool):
+    def exclude_from_bill_of_materials(self, exclude: bool) -> None:
         self._proto.exclude_from_bill_of_materials = exclude
 
     @property
@@ -2521,7 +2521,7 @@ class FootprintAttributes(Wrapper):
         return self._proto.exclude_from_position_files
 
     @exclude_from_position_files.setter
-    def exclude_from_position_files(self, exclude: bool):
+    def exclude_from_position_files(self, exclude: bool) -> None:
         self._proto.exclude_from_position_files = exclude
 
     @property
@@ -2529,7 +2529,7 @@ class FootprintAttributes(Wrapper):
         return self._proto.do_not_populate
 
     @do_not_populate.setter
-    def do_not_populate(self, do_not_populate: bool):
+    def do_not_populate(self, do_not_populate: bool) -> None:
         self._proto.do_not_populate = do_not_populate
 
     @property
@@ -2537,7 +2537,7 @@ class FootprintAttributes(Wrapper):
         return self._proto.exempt_from_courtyard_requirement
 
     @exempt_from_courtyard_requirement.setter
-    def exempt_from_courtyard_requirement(self, exempt_from_courtyard_requirement: bool):
+    def exempt_from_courtyard_requirement(self, exempt_from_courtyard_requirement: bool) -> None:
         self._proto.exempt_from_courtyard_requirement = exempt_from_courtyard_requirement
 
     @property
@@ -2545,7 +2545,7 @@ class FootprintAttributes(Wrapper):
         return self._proto.allow_soldermask_bridges
 
     @allow_soldermask_bridges.setter
-    def allow_soldermask_bridges(self, allow_soldermask_bridges: bool):
+    def allow_soldermask_bridges(self, allow_soldermask_bridges: bool) -> None:
         self._proto.allow_soldermask_bridges = allow_soldermask_bridges
 
     @property
@@ -2553,7 +2553,7 @@ class FootprintAttributes(Wrapper):
         return self._proto.exclude_from_simulation
 
     @exclude_from_simulation.setter
-    def exclude_from_simulation(self, exclude_from_simulation: bool):
+    def exclude_from_simulation(self, exclude_from_simulation: bool) -> None:
         self._proto.exclude_from_simulation = exclude_from_simulation
 
     @property
@@ -2566,7 +2566,7 @@ class FootprintAttributes(Wrapper):
         return self._proto.mounting_style
 
     @mounting_style.setter
-    def mounting_style(self, style: board_types_pb2.FootprintMountingStyle.ValueType):
+    def mounting_style(self, style: board_types_pb2.FootprintMountingStyle.ValueType) -> None:
         self._proto.mounting_style = style
 
     @property
@@ -2574,7 +2574,7 @@ class FootprintAttributes(Wrapper):
         return self._proto.description
 
     @description.setter
-    def description(self, description: str):
+    def description(self, description: str) -> None:
         self._proto.description = description
 
     @property
@@ -2582,7 +2582,7 @@ class FootprintAttributes(Wrapper):
         return self._proto.keywords
 
     @keywords.setter
-    def keywords(self, keywords: str):
+    def keywords(self, keywords: str) -> None:
         self._proto.keywords = keywords
 
 
@@ -2593,7 +2593,7 @@ class Footprint3DModel(Wrapper):
         self,
         proto: board_types_pb2.Footprint3DModel | None = None,
         proto_ref: board_types_pb2.Footprint3DModel | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.Footprint3DModel()
 
         if proto is not None:
@@ -2612,7 +2612,7 @@ class Footprint3DModel(Wrapper):
         return self._proto.filename
 
     @filename.setter
-    def filename(self, filename: str):
+    def filename(self, filename: str) -> None:
         self._proto.filename = filename
 
     @property
@@ -2621,7 +2621,7 @@ class Footprint3DModel(Wrapper):
         return Vector3D(self._proto.scale)
 
     @scale.setter
-    def scale(self, scale: Vector3D):
+    def scale(self, scale: Vector3D) -> None:
         self._proto.scale.CopyFrom(scale.proto)
 
     @property
@@ -2630,7 +2630,7 @@ class Footprint3DModel(Wrapper):
         return Vector3D(self._proto.rotation)
 
     @rotation.setter
-    def rotation(self, rotation: Vector3D):
+    def rotation(self, rotation: Vector3D) -> None:
         self._proto.rotation.CopyFrom(rotation.proto)
 
     @property
@@ -2639,7 +2639,7 @@ class Footprint3DModel(Wrapper):
         return Vector3D(self._proto.offset)
 
     @offset.setter
-    def offset(self, offset: Vector3D):
+    def offset(self, offset: Vector3D) -> None:
         self._proto.offset.CopyFrom(offset.proto)
 
     @property
@@ -2647,7 +2647,7 @@ class Footprint3DModel(Wrapper):
         return self._proto.visible
 
     @visible.setter
-    def visible(self, visible: bool):
+    def visible(self, visible: bool) -> None:
         self._proto.visible = visible
 
     @property
@@ -2655,7 +2655,7 @@ class Footprint3DModel(Wrapper):
         return self._proto.opacity
 
     @opacity.setter
-    def opacity(self, opacity: float):
+    def opacity(self, opacity: float) -> None:
         self._proto.opacity = opacity
 
 
@@ -2670,7 +2670,7 @@ class FootprintDesignRuleOverrides(Wrapper):
         self,
         proto: board_types_pb2.FootprintDesignRuleOverrides | None = None,
         proto_ref: board_types_pb2.FootprintDesignRuleOverrides | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_types_pb2.FootprintDesignRuleOverrides()
         )
@@ -2685,7 +2685,7 @@ class FootprintDesignRuleOverrides(Wrapper):
         return None
 
     @solder_mask.setter
-    def solder_mask(self, value: SolderMaskOverrides | None):
+    def solder_mask(self, value: SolderMaskOverrides | None) -> None:
         if value is not None:
             self._proto.solder_mask.CopyFrom(value.proto)
         else:
@@ -2698,7 +2698,7 @@ class FootprintDesignRuleOverrides(Wrapper):
         return None
 
     @solder_paste.setter
-    def solder_paste(self, value: SolderPasteOverrides | None):
+    def solder_paste(self, value: SolderPasteOverrides | None) -> None:
         if value is not None:
             self._proto.solder_paste.CopyFrom(value.proto)
         else:
@@ -2711,7 +2711,7 @@ class FootprintDesignRuleOverrides(Wrapper):
         return None
 
     @copper_clearance.setter
-    def copper_clearance(self, clearance_nm: int | None):
+    def copper_clearance(self, clearance_nm: int | None) -> None:
         if clearance_nm is not None:
             self._proto.copper_clearance.value_nm = clearance_nm
         else:
@@ -2722,7 +2722,7 @@ class FootprintDesignRuleOverrides(Wrapper):
         return self._proto.zone_connection
 
     @zone_connection.setter
-    def zone_connection(self, value: ZoneConnectionStyle.ValueType):
+    def zone_connection(self, value: ZoneConnectionStyle.ValueType) -> None:
         self._proto.zone_connection = value
 
 
@@ -2736,7 +2736,7 @@ class NetTieDefinition(Wrapper):
         self,
         proto: board_types_pb2.NetTieDefinition | None = None,
         proto_ref: board_types_pb2.NetTieDefinition | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.NetTieDefinition()
 
         if proto is not None:
@@ -2747,7 +2747,7 @@ class NetTieDefinition(Wrapper):
         return list(self._proto.pad_number)
 
     @pad_numbers.setter
-    def pad_numbers(self, pad_numbers: list[str]):
+    def pad_numbers(self, pad_numbers: list[str]) -> None:
         del self._proto.pad_number[:]
         self._proto.pad_number.extend(pad_numbers)
 
@@ -2761,7 +2761,7 @@ class JumperGroup(Wrapper):
         self,
         proto: board_types_pb2.JumperGroup | None = None,
         proto_ref: board_types_pb2.JumperGroup | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.JumperGroup()
 
         if proto is not None:
@@ -2772,7 +2772,7 @@ class JumperGroup(Wrapper):
         return list(self._proto.pad_names)
 
     @pad_names.setter
-    def pad_names(self, pad_names: list[str]):
+    def pad_names(self, pad_names: list[str]) -> None:
         del self._proto.pad_names[:]
         self._proto.pad_names.extend(pad_names)
 
@@ -2786,7 +2786,7 @@ class JumperSettings(Wrapper):
         self,
         proto: board_types_pb2.JumperSettings | None = None,
         proto_ref: board_types_pb2.JumperSettings | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.JumperSettings()
 
         if proto is not None:
@@ -2798,7 +2798,7 @@ class JumperSettings(Wrapper):
         return self._proto.duplicate_names_are_jumpered
 
     @duplicate_names_are_jumpered.setter
-    def duplicate_names_are_jumpered(self, value: bool):
+    def duplicate_names_are_jumpered(self, value: bool) -> None:
         self._proto.duplicate_names_are_jumpered = value
 
     @property
@@ -2806,7 +2806,7 @@ class JumperSettings(Wrapper):
         return MutableWrapperSequence(self._proto.groups, JumperGroup)
 
     @groups.setter
-    def groups(self, groups: list[JumperGroup]):
+    def groups(self, groups: list[JumperGroup]) -> None:
         del self._proto.groups[:]
         self._proto.groups.extend(g.proto for g in groups)
 
@@ -2820,7 +2820,7 @@ class Footprint(Wrapper):
         self,
         proto: board_types_pb2.Footprint | None = None,
         proto_ref: board_types_pb2.Footprint | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.Footprint()
 
         if proto is not None:
@@ -2828,7 +2828,7 @@ class Footprint(Wrapper):
 
         self._unwrapped_items = [unwrap(item) for item in self._proto.items]
 
-    def _pack(self):
+    def _pack(self) -> None:
         """Packs all items in the footprint into the proto"""
         del self._proto.items[:]
         for item in self._unwrapped_items:
@@ -2844,7 +2844,7 @@ class Footprint(Wrapper):
         return LibraryIdentifier(proto_ref=self._proto.id)
 
     @id.setter
-    def id(self, attributes: LibraryIdentifier):
+    def id(self, attributes: LibraryIdentifier) -> None:
         self._proto.id.CopyFrom(attributes.proto)
 
     @property
@@ -2852,7 +2852,7 @@ class Footprint(Wrapper):
         return self._unwrapped_items
 
     @items.setter
-    def items(self, items: Sequence[Wrapper]):
+    def items(self, items: Sequence[Wrapper]) -> None:
         self._unwrapped_items = list(items)
 
     @property
@@ -2884,7 +2884,7 @@ class Footprint(Wrapper):
         .. versionadded:: 0.3.0"""
         return [item for item in self.items if isinstance(item, Footprint3DModel)]
 
-    def add_item(self, item: Wrapper):
+    def add_item(self, item: Wrapper) -> None:
         self._unwrapped_items.append(item)
 
     @property
@@ -2895,7 +2895,7 @@ class Footprint(Wrapper):
         return Vector2(self._proto.anchor)
 
     @anchor.setter
-    def anchor(self, anchor: Vector2):
+    def anchor(self, anchor: Vector2) -> None:
         self._proto.anchor.CopyFrom(anchor.proto)
 
     @property
@@ -2906,7 +2906,7 @@ class Footprint(Wrapper):
         return MutableWrapperSequence(self._proto.net_ties, NetTieDefinition)
 
     @net_ties.setter
-    def net_ties(self, net_ties: list[NetTieDefinition]):
+    def net_ties(self, net_ties: list[NetTieDefinition]) -> None:
         del self._proto.net_ties[:]
         self._proto.net_ties.extend(t.proto for t in net_ties)
 
@@ -2918,7 +2918,7 @@ class Footprint(Wrapper):
         return list(self._proto.private_layers)
 
     @private_layers.setter
-    def private_layers(self, layers: list[BoardLayer.ValueType]):
+    def private_layers(self, layers: list[BoardLayer.ValueType]) -> None:
         del self._proto.private_layers[:]
         self._proto.private_layers.extend(layers)
 
@@ -2930,7 +2930,7 @@ class Footprint(Wrapper):
         return JumperSettings(proto_ref=self._proto.jumpers)
 
     @jumpers.setter
-    def jumpers(self, settings: JumperSettings):
+    def jumpers(self, settings: JumperSettings) -> None:
         self._proto.jumpers.CopyFrom(settings.proto)
 
 
@@ -2943,7 +2943,7 @@ class FootprintVariant(Wrapper):
         self,
         proto: board_types_pb2.FootprintVariant | None = None,
         proto_ref: board_types_pb2.FootprintVariant | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.FootprintVariant()
 
         if proto is not None:
@@ -2955,7 +2955,7 @@ class FootprintVariant(Wrapper):
         return self._proto.name
 
     @name.setter
-    def name(self, name: str):
+    def name(self, name: str) -> None:
         self._proto.name = name
 
     @property
@@ -2963,7 +2963,7 @@ class FootprintVariant(Wrapper):
         return self._proto.do_not_populate
 
     @do_not_populate.setter
-    def do_not_populate(self, do_not_populate: bool):
+    def do_not_populate(self, do_not_populate: bool) -> None:
         self._proto.do_not_populate = do_not_populate
 
     @property
@@ -2971,7 +2971,7 @@ class FootprintVariant(Wrapper):
         return self._proto.exclude_from_bill_of_materials
 
     @exclude_from_bill_of_materials.setter
-    def exclude_from_bill_of_materials(self, exclude: bool):
+    def exclude_from_bill_of_materials(self, exclude: bool) -> None:
         self._proto.exclude_from_bill_of_materials = exclude
 
     @property
@@ -2979,7 +2979,7 @@ class FootprintVariant(Wrapper):
         return self._proto.exclude_from_position_files
 
     @exclude_from_position_files.setter
-    def exclude_from_position_files(self, exclude: bool):
+    def exclude_from_position_files(self, exclude: bool) -> None:
         self._proto.exclude_from_position_files = exclude
 
     @property
@@ -2987,7 +2987,7 @@ class FootprintVariant(Wrapper):
         return self._proto.exclude_from_simulation
 
     @exclude_from_simulation.setter
-    def exclude_from_simulation(self, exclude: bool):
+    def exclude_from_simulation(self, exclude: bool) -> None:
         self._proto.exclude_from_simulation = exclude
 
     @property
@@ -2996,7 +2996,7 @@ class FootprintVariant(Wrapper):
         return dict(self._proto.fields)
 
     @fields.setter
-    def fields(self, fields: dict[str, str]):
+    def fields(self, fields: dict[str, str]) -> None:
         self._proto.fields.clear()
         self._proto.fields.update(fields)
 
@@ -3004,7 +3004,7 @@ class FootprintVariant(Wrapper):
 class FootprintInstance(BoardItem):
     """Represents a footprint instance on a board"""
 
-    def __init__(self, proto: board_types_pb2.FootprintInstance | None = None):
+    def __init__(self, proto: board_types_pb2.FootprintInstance | None = None) -> None:
         self._proto = board_types_pb2.FootprintInstance()
 
         if proto is not None:
@@ -3013,7 +3013,7 @@ class FootprintInstance(BoardItem):
         self._definition = Footprint(proto_ref=self._proto.definition)
 
     @property
-    def proto(self):
+    def proto(self) -> board_types_pb2.FootprintInstance:
         self._definition._pack()
         return self.__dict__["_proto"]
 
@@ -3029,7 +3029,7 @@ class FootprintInstance(BoardItem):
         return Vector2(proto_ref=self._proto.position)
 
     @position.setter
-    def position(self, position: Vector2):
+    def position(self, position: Vector2) -> None:
         """Changes the footprint position, which will also update the positions of all the
         contained items since KiCad footprint children are stored with absolute positions"""
         delta = position - self.position
@@ -3099,7 +3099,7 @@ class FootprintInstance(BoardItem):
         return Angle(proto_ref=self._proto.orientation)
 
     @orientation.setter
-    def orientation(self, orientation: Angle):
+    def orientation(self, orientation: Angle) -> None:
         normalized = Angle(orientation.proto).normalize180()
         live = self.orientation
         delta = normalized - live
@@ -3198,7 +3198,7 @@ class FootprintInstance(BoardItem):
         return self._proto.layer
 
     @layer.setter
-    def layer(self, layer: BoardLayer.ValueType):
+    def layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.layer = layer
 
     @property
@@ -3206,7 +3206,7 @@ class FootprintInstance(BoardItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = LockedState.LS_LOCKED if locked else LockedState.LS_UNLOCKED
 
     @property
@@ -3218,7 +3218,7 @@ class FootprintInstance(BoardItem):
         return Field(proto_ref=self._proto.reference_field)
 
     @reference_field.setter
-    def reference_field(self, field: Field):
+    def reference_field(self, field: Field) -> None:
         self._proto.reference_field.CopyFrom(field.proto)
 
     @property
@@ -3226,7 +3226,7 @@ class FootprintInstance(BoardItem):
         return Field(proto_ref=self._proto.value_field)
 
     @value_field.setter
-    def value_field(self, field: Field):
+    def value_field(self, field: Field) -> None:
         self._proto.value_field.CopyFrom(field.proto)
 
     @property
@@ -3234,7 +3234,7 @@ class FootprintInstance(BoardItem):
         return Field(proto_ref=self._proto.datasheet_field)
 
     @datasheet_field.setter
-    def datasheet_field(self, field: Field):
+    def datasheet_field(self, field: Field) -> None:
         self._proto.datasheet_field.CopyFrom(field.proto)
 
     @property
@@ -3242,7 +3242,7 @@ class FootprintInstance(BoardItem):
         return Field(proto_ref=self._proto.description_field)
 
     @description_field.setter
-    def description_field(self, field: Field):
+    def description_field(self, field: Field) -> None:
         self._proto.description_field.CopyFrom(field.proto)
 
     @property
@@ -3258,7 +3258,7 @@ class FootprintInstance(BoardItem):
         return FootprintDesignRuleOverrides(proto_ref=self._proto.overrides)
 
     @overrides.setter
-    def overrides(self, value: FootprintDesignRuleOverrides):
+    def overrides(self, value: FootprintDesignRuleOverrides) -> None:
         self._proto.overrides.CopyFrom(value.proto)
 
     @property
@@ -3318,7 +3318,7 @@ class FootprintInstance(BoardItem):
         return None
 
     @embedded_files.setter
-    def embedded_files(self, files: EmbeddedFiles | None):
+    def embedded_files(self, files: EmbeddedFiles | None) -> None:
         if files is not None:
             self._proto.embedded_files.CopyFrom(files.proto)
         else:
@@ -3331,7 +3331,7 @@ class FootprintInstance(BoardItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, properties: list[CustomProperty]):
+    def custom_properties(self, properties: list[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(p.proto for p in properties)
 
@@ -3343,7 +3343,7 @@ class FootprintInstance(BoardItem):
         return MutableWrapperSequence(self._proto.variants, FootprintVariant)
 
     @variants.setter
-    def variants(self, variants: list[FootprintVariant]):
+    def variants(self, variants: list[FootprintVariant]) -> None:
         del self._proto.variants[:]
         self._proto.variants.extend(variant.proto for variant in variants)
 
@@ -3363,7 +3363,7 @@ class ZoneFilledPolygons(Wrapper):
         self,
         proto: board_types_pb2.ZoneFilledPolygons | None = None,
         proto_ref: board_types_pb2.ZoneFilledPolygons | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.ZoneFilledPolygons()
 
         if proto is not None:
@@ -3374,7 +3374,7 @@ class ZoneFilledPolygons(Wrapper):
         return self._proto.layer
 
     @layer.setter
-    def layer(self, layer: BoardLayer.ValueType):
+    def layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.layer = layer
 
     @property
@@ -3391,7 +3391,7 @@ class HatchFillSettings(Wrapper):
         self,
         proto: board_types_pb2.HatchFillSettings | None = None,
         proto_ref: board_types_pb2.HatchFillSettings | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.HatchFillSettings()
 
         if proto is not None:
@@ -3402,7 +3402,7 @@ class HatchFillSettings(Wrapper):
         return self._proto.thickness.value_nm
 
     @thickness.setter
-    def thickness(self, thickness_nm: int):
+    def thickness(self, thickness_nm: int) -> None:
         self._proto.thickness.value_nm = thickness_nm
 
     @property
@@ -3410,7 +3410,7 @@ class HatchFillSettings(Wrapper):
         return self._proto.gap.value_nm
 
     @gap.setter
-    def gap(self, gap_nm: int):
+    def gap(self, gap_nm: int) -> None:
         self._proto.gap.value_nm = gap_nm
 
     @property
@@ -3418,7 +3418,7 @@ class HatchFillSettings(Wrapper):
         return Angle(proto_ref=self._proto.orientation)
 
     @orientation.setter
-    def orientation(self, orientation: Angle):
+    def orientation(self, orientation: Angle) -> None:
         self._proto.orientation.CopyFrom(orientation.proto)
 
     @property
@@ -3426,7 +3426,7 @@ class HatchFillSettings(Wrapper):
         return self._proto.hatch_smoothing_ratio
 
     @hatch_smoothing_ratio.setter
-    def hatch_smoothing_ratio(self, ratio: float):
+    def hatch_smoothing_ratio(self, ratio: float) -> None:
         self._proto.hatch_smoothing_ratio = ratio
 
     @property
@@ -3434,7 +3434,7 @@ class HatchFillSettings(Wrapper):
         return self._proto.hatch_hole_min_area_ratio
 
     @hatch_hole_min_area_ratio.setter
-    def hatch_hole_min_area_ratio(self, ratio: float):
+    def hatch_hole_min_area_ratio(self, ratio: float) -> None:
         self._proto.hatch_hole_min_area_ratio = ratio
 
     @property
@@ -3442,7 +3442,7 @@ class HatchFillSettings(Wrapper):
         return self._proto.border_mode
 
     @border_mode.setter
-    def border_mode(self, mode: ZoneHatchFillBorderMode.ValueType):
+    def border_mode(self, mode: ZoneHatchFillBorderMode.ValueType) -> None:
         self._proto.border_mode = mode
 
 
@@ -3455,7 +3455,7 @@ class ThievingFillSettings(Wrapper):
         self,
         proto: board_types_pb2.ThievingFillSettings | None = None,
         proto_ref: board_types_pb2.ThievingFillSettings | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_types_pb2.ThievingFillSettings()
         )
@@ -3468,7 +3468,7 @@ class ThievingFillSettings(Wrapper):
         return self._proto.pattern
 
     @pattern.setter
-    def pattern(self, pattern: ThievingPattern.ValueType):
+    def pattern(self, pattern: ThievingPattern.ValueType) -> None:
         self._proto.pattern = pattern
 
     @property
@@ -3476,7 +3476,7 @@ class ThievingFillSettings(Wrapper):
         return self._proto.element_size.value_nm
 
     @element_size.setter
-    def element_size(self, size_nm: int):
+    def element_size(self, size_nm: int) -> None:
         self._proto.element_size.value_nm = size_nm
 
     @property
@@ -3484,7 +3484,7 @@ class ThievingFillSettings(Wrapper):
         return self._proto.gap.value_nm
 
     @gap.setter
-    def gap(self, gap_nm: int):
+    def gap(self, gap_nm: int) -> None:
         self._proto.gap.value_nm = gap_nm
 
     @property
@@ -3492,7 +3492,7 @@ class ThievingFillSettings(Wrapper):
         return self._proto.line_width.value_nm
 
     @line_width.setter
-    def line_width(self, width_nm: int):
+    def line_width(self, width_nm: int) -> None:
         self._proto.line_width.value_nm = width_nm
 
     @property
@@ -3500,7 +3500,7 @@ class ThievingFillSettings(Wrapper):
         return self._proto.stagger
 
     @stagger.setter
-    def stagger(self, stagger: bool):
+    def stagger(self, stagger: bool) -> None:
         self._proto.stagger = stagger
 
     @property
@@ -3508,7 +3508,7 @@ class ThievingFillSettings(Wrapper):
         return Angle(proto_ref=self._proto.orientation)
 
     @orientation.setter
-    def orientation(self, orientation: Angle):
+    def orientation(self, orientation: Angle) -> None:
         self._proto.orientation.CopyFrom(orientation.proto)
 
 
@@ -3521,7 +3521,7 @@ class RuleAreaSettings(Wrapper):
         self,
         proto: board_types_pb2.RuleAreaSettings | None = None,
         proto_ref: board_types_pb2.RuleAreaSettings | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.RuleAreaSettings()
 
         if proto is not None:
@@ -3532,7 +3532,7 @@ class RuleAreaSettings(Wrapper):
         return self._proto.keepout_copper
 
     @keepout_copper.setter
-    def keepout_copper(self, keepout: bool):
+    def keepout_copper(self, keepout: bool) -> None:
         self._proto.keepout_copper = keepout
 
     @property
@@ -3540,7 +3540,7 @@ class RuleAreaSettings(Wrapper):
         return self._proto.keepout_vias
 
     @keepout_vias.setter
-    def keepout_vias(self, keepout: bool):
+    def keepout_vias(self, keepout: bool) -> None:
         self._proto.keepout_vias = keepout
 
     @property
@@ -3548,7 +3548,7 @@ class RuleAreaSettings(Wrapper):
         return self._proto.keepout_tracks
 
     @keepout_tracks.setter
-    def keepout_tracks(self, keepout: bool):
+    def keepout_tracks(self, keepout: bool) -> None:
         self._proto.keepout_tracks = keepout
 
     @property
@@ -3556,7 +3556,7 @@ class RuleAreaSettings(Wrapper):
         return self._proto.keepout_pads
 
     @keepout_pads.setter
-    def keepout_pads(self, keepout: bool):
+    def keepout_pads(self, keepout: bool) -> None:
         self._proto.keepout_pads = keepout
 
     @property
@@ -3564,7 +3564,7 @@ class RuleAreaSettings(Wrapper):
         return self._proto.keepout_footprints
 
     @keepout_footprints.setter
-    def keepout_footprints(self, keepout: bool):
+    def keepout_footprints(self, keepout: bool) -> None:
         self._proto.keepout_footprints = keepout
 
     @property
@@ -3572,7 +3572,7 @@ class RuleAreaSettings(Wrapper):
         return self._proto.placement_enabled
 
     @placement_enabled.setter
-    def placement_enabled(self, enabled: bool):
+    def placement_enabled(self, enabled: bool) -> None:
         self._proto.placement_enabled = enabled
 
     @property
@@ -3580,7 +3580,7 @@ class RuleAreaSettings(Wrapper):
         return self._proto.placement_source_type
 
     @placement_source_type.setter
-    def placement_source_type(self, source_type: PlacementRuleSourceType.ValueType):
+    def placement_source_type(self, source_type: PlacementRuleSourceType.ValueType) -> None:
         self._proto.placement_source_type = source_type
 
     @property
@@ -3588,7 +3588,7 @@ class RuleAreaSettings(Wrapper):
         return self._proto.placement_source
 
     @placement_source.setter
-    def placement_source(self, source: str):
+    def placement_source(self, source: str) -> None:
         self._proto.placement_source = source
 
 
@@ -3601,7 +3601,7 @@ class ZoneLayerProperties(Wrapper):
         self,
         proto: board_types_pb2.ZoneLayerProperties | None = None,
         proto_ref: board_types_pb2.ZoneLayerProperties | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.ZoneLayerProperties()
 
         if proto is not None:
@@ -3612,7 +3612,7 @@ class ZoneLayerProperties(Wrapper):
         return self._proto.layer
 
     @layer.setter
-    def layer(self, layer: BoardLayer.ValueType):
+    def layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.layer = layer
 
     @property
@@ -3620,7 +3620,7 @@ class ZoneLayerProperties(Wrapper):
         return Vector2(self._proto.hatching_offset)
 
     @hatching_offset.setter
-    def hatching_offset(self, offset: Vector2):
+    def hatching_offset(self, offset: Vector2) -> None:
         self._proto.hatching_offset.CopyFrom(offset.proto)
 
 
@@ -3631,7 +3631,7 @@ class Zone(BoardItem):
         self,
         proto: board_types_pb2.Zone | None = None,
         proto_ref: board_types_pb2.Zone | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.Zone()
 
         if proto is not None:
@@ -3659,7 +3659,7 @@ class Zone(BoardItem):
         return self._proto.type
 
     @type.setter
-    def type(self, type: ZoneType.ValueType):
+    def type(self, type: ZoneType.ValueType) -> None:
         self._proto.type = type
 
     @property
@@ -3667,7 +3667,7 @@ class Zone(BoardItem):
         return self._proto.layers
 
     @layers.setter
-    def layers(self, layers: Sequence[BoardLayer.ValueType]):
+    def layers(self, layers: Sequence[BoardLayer.ValueType]) -> None:
         del self._proto.layers[:]
         self._proto.layers.extend(layers)
 
@@ -3678,7 +3678,7 @@ class Zone(BoardItem):
         return PolygonWithHoles(proto_ref=self._proto.outline.polygons[0])
 
     @outline.setter
-    def outline(self, outline: PolygonWithHoles):
+    def outline(self, outline: PolygonWithHoles) -> None:
         """Sets the zone outline.  The outline and all holes are forced closed regardless
         of the source polygon's :class:`PolygonWithHoles` ``auto_close`` flag; zones require
         closed polygons."""
@@ -3697,7 +3697,7 @@ class Zone(BoardItem):
         return self._proto.name
 
     @name.setter
-    def name(self, name: str):
+    def name(self, name: str) -> None:
         self._proto.name = name
 
     @property
@@ -3705,7 +3705,7 @@ class Zone(BoardItem):
         return self._proto.priority
 
     @priority.setter
-    def priority(self, priority: int):
+    def priority(self, priority: int) -> None:
         self._proto.priority = priority
 
     @property
@@ -3717,7 +3717,7 @@ class Zone(BoardItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = LockedState.LS_LOCKED if locked else LockedState.LS_UNLOCKED
 
     @property
@@ -3746,7 +3746,7 @@ class Zone(BoardItem):
         return self._proto.copper_settings.clearance.value_nm
 
     @clearance.setter
-    def clearance(self, clearance: int):
+    def clearance(self, clearance: int) -> None:
         if self.is_rule_area():
             raise ValueError("clearance does not apply to rule areas")
         self._proto.copper_settings.clearance.value_nm = clearance
@@ -3758,7 +3758,7 @@ class Zone(BoardItem):
         return self._proto.copper_settings.min_thickness.value_nm
 
     @min_thickness.setter
-    def min_thickness(self, thickness: int):
+    def min_thickness(self, thickness: int) -> None:
         if self.is_rule_area():
             raise ValueError("min thickness does not apply to rule areas")
         self._proto.copper_settings.min_thickness.value_nm = thickness
@@ -3770,7 +3770,7 @@ class Zone(BoardItem):
         return self._proto.copper_settings.island_mode
 
     @island_mode.setter
-    def island_mode(self, mode: IslandRemovalMode.ValueType):
+    def island_mode(self, mode: IslandRemovalMode.ValueType) -> None:
         if self.is_rule_area():
             raise ValueError("island removal mode does not apply to rule areas")
         self._proto.copper_settings.island_mode = mode
@@ -3782,7 +3782,7 @@ class Zone(BoardItem):
         return self._proto.copper_settings.min_island_area
 
     @min_island_area.setter
-    def min_island_area(self, area: int):
+    def min_island_area(self, area: int) -> None:
         if self.is_rule_area():
             raise ValueError("minimum island area does not apply to rule areas")
         self._proto.copper_settings.min_island_area = area
@@ -3800,7 +3800,7 @@ class Zone(BoardItem):
         return Net(self._proto.copper_settings.net)
 
     @net.setter
-    def net(self, net: Net):
+    def net(self, net: Net) -> None:
         """
         Assigns a net to a copper zone (cannot be used for rule areas).
 
@@ -3826,7 +3826,7 @@ class Zone(BoardItem):
         return HatchFillSettings(proto_ref=self._proto.copper_settings.hatch_settings)
 
     @hatch_settings.setter
-    def hatch_settings(self, settings: HatchFillSettings | None):
+    def hatch_settings(self, settings: HatchFillSettings | None) -> None:
         if self.is_rule_area():
             raise ValueError("hatch settings do not apply to rule areas")
         if settings is None:
@@ -3844,7 +3844,7 @@ class Zone(BoardItem):
         return ThievingFillSettings(proto_ref=self._proto.copper_settings.thieving_settings)
 
     @thieving_settings.setter
-    def thieving_settings(self, settings: ThievingFillSettings | None):
+    def thieving_settings(self, settings: ThievingFillSettings | None) -> None:
         if self.is_rule_area():
             raise ValueError("thieving settings do not apply to rule areas")
         if settings is None:
@@ -3862,7 +3862,7 @@ class Zone(BoardItem):
         return self._proto.copper_settings.corner_smoothing
 
     @corner_smoothing.setter
-    def corner_smoothing(self, mode: ZoneCornerSmoothingMode.ValueType):
+    def corner_smoothing(self, mode: ZoneCornerSmoothingMode.ValueType) -> None:
         if self.is_rule_area():
             raise ValueError("corner smoothing does not apply to rule areas")
         self._proto.copper_settings.corner_smoothing = mode
@@ -3877,7 +3877,7 @@ class Zone(BoardItem):
         return self._proto.copper_settings.corner_radius.value_nm
 
     @corner_radius.setter
-    def corner_radius(self, radius_nm: int):
+    def corner_radius(self, radius_nm: int) -> None:
         if self.is_rule_area():
             raise ValueError("corner radius does not apply to rule areas")
         self._proto.copper_settings.corner_radius.value_nm = radius_nm
@@ -3892,7 +3892,7 @@ class Zone(BoardItem):
         return RuleAreaSettings(proto_ref=self._proto.rule_area_settings)
 
     @rule_area_settings.setter
-    def rule_area_settings(self, settings: RuleAreaSettings):
+    def rule_area_settings(self, settings: RuleAreaSettings) -> None:
         if not self.is_rule_area():
             raise ValueError("rule area settings apply only to rule areas")
         self._proto.rule_area_settings.CopyFrom(settings.proto)
@@ -3905,7 +3905,7 @@ class Zone(BoardItem):
         return MutableWrapperSequence(self._proto.layer_properties, ZoneLayerProperties)
 
     @layer_properties.setter
-    def layer_properties(self, properties: list[ZoneLayerProperties]):
+    def layer_properties(self, properties: list[ZoneLayerProperties]) -> None:
         del self._proto.layer_properties[:]
         self._proto.layer_properties.extend(p.proto for p in properties)
 
@@ -3916,7 +3916,7 @@ class Zone(BoardItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, properties: list[CustomProperty]):
+    def custom_properties(self, properties: list[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(p.proto for p in properties)
 
@@ -3925,7 +3925,7 @@ class Zone(BoardItem):
         return self._proto.border.style
 
     @border_style.setter
-    def border_style(self, style: ZoneBorderStyle.ValueType):
+    def border_style(self, style: ZoneBorderStyle.ValueType) -> None:
         self._proto.border.style = style
 
     @property
@@ -3933,7 +3933,7 @@ class Zone(BoardItem):
         return self._proto.border.pitch.value_nm
 
     @border_hatch_pitch.setter
-    def border_hatch_pitch(self, value: int):
+    def border_hatch_pitch(self, value: int) -> None:
         self._proto.border.pitch.value_nm = value
 
     @property
@@ -3947,14 +3947,14 @@ class Zone(BoardItem):
     def bounding_box(self) -> Box2:
         return self.outline.bounding_box()
 
-    def move(self, delta: Vector2):
+    def move(self, delta: Vector2) -> None:
         """Moves the zone by the given delta vector"""
         self.outline.move(delta)
         for polygon in self.filled_polygons.values():
             for shape in polygon:
                 shape.move(delta)
 
-    def rotate(self, angle: Angle, center: Vector2):
+    def rotate(self, angle: Angle, center: Vector2) -> None:
         """Rotates the zone by the given angle around the given center point"""
         self.outline.rotate(angle, center)
 
@@ -3970,7 +3970,7 @@ class Dimension(BoardItem):
         self,
         proto: board_types_pb2.Dimension | None = None,
         proto_ref: board_types_pb2.Dimension | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.Dimension()
 
         if proto is not None:
@@ -3985,7 +3985,7 @@ class Dimension(BoardItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = LockedState.LS_LOCKED if locked else LockedState.LS_UNLOCKED
 
     @property
@@ -3993,7 +3993,7 @@ class Dimension(BoardItem):
         return self._proto.layer
 
     @layer.setter
-    def layer(self, layer: BoardLayer.ValueType):
+    def layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.layer = layer
 
     @property
@@ -4001,7 +4001,7 @@ class Dimension(BoardItem):
         return Text(proto_ref=self._proto.text)
 
     @text.setter
-    def text(self, text: Text):
+    def text(self, text: Text) -> None:
         self._proto.text.CopyFrom(text.proto)
 
     @property
@@ -4009,7 +4009,7 @@ class Dimension(BoardItem):
         return self._proto.override_text_enabled
 
     @override_text_enabled.setter
-    def override_text_enabled(self, enabled: bool):
+    def override_text_enabled(self, enabled: bool) -> None:
         self._proto.override_text_enabled = enabled
 
     @property
@@ -4017,7 +4017,7 @@ class Dimension(BoardItem):
         return self._proto.override_text
 
     @override_text.setter
-    def override_text(self, text: str):
+    def override_text(self, text: str) -> None:
         self._proto.override_text = text
 
     @property
@@ -4025,7 +4025,7 @@ class Dimension(BoardItem):
         return self._proto.prefix
 
     @prefix.setter
-    def prefix(self, prefix: str):
+    def prefix(self, prefix: str) -> None:
         self._proto.prefix = prefix
 
     @property
@@ -4033,7 +4033,7 @@ class Dimension(BoardItem):
         return self._proto.suffix
 
     @suffix.setter
-    def suffix(self, suffix: str):
+    def suffix(self, suffix: str) -> None:
         self._proto.suffix = suffix
 
     @property
@@ -4041,7 +4041,7 @@ class Dimension(BoardItem):
         return self._proto.unit
 
     @unit.setter
-    def unit(self, unit: board_types_pb2.DimensionUnit.ValueType):
+    def unit(self, unit: board_types_pb2.DimensionUnit.ValueType) -> None:
         self._proto.unit = unit
 
     @property
@@ -4049,7 +4049,7 @@ class Dimension(BoardItem):
         return self._proto.unit_format
 
     @unit_format.setter
-    def unit_format(self, format: board_types_pb2.DimensionUnitFormat.ValueType):
+    def unit_format(self, format: board_types_pb2.DimensionUnitFormat.ValueType) -> None:
         self._proto.unit_format = format
 
     @property
@@ -4057,7 +4057,9 @@ class Dimension(BoardItem):
         return self._proto.arrow_direction
 
     @arrow_direction.setter
-    def arrow_direction(self, direction: board_types_pb2.DimensionArrowDirection.ValueType):
+    def arrow_direction(
+        self, direction: board_types_pb2.DimensionArrowDirection.ValueType
+    ) -> None:
         self._proto.arrow_direction = direction
 
     @property
@@ -4065,7 +4067,7 @@ class Dimension(BoardItem):
         return self._proto.precision
 
     @precision.setter
-    def precision(self, precision: board_types_pb2.DimensionPrecision.ValueType):
+    def precision(self, precision: board_types_pb2.DimensionPrecision.ValueType) -> None:
         self._proto.precision = precision
 
     @property
@@ -4073,7 +4075,7 @@ class Dimension(BoardItem):
         return self._proto.suppress_trailing_zeroes
 
     @suppress_trailing_zeroes.setter
-    def suppress_trailing_zeroes(self, suppress: bool):
+    def suppress_trailing_zeroes(self, suppress: bool) -> None:
         self._proto.suppress_trailing_zeroes = suppress
 
     @property
@@ -4081,7 +4083,7 @@ class Dimension(BoardItem):
         return self._proto.line_thickness.value_nm
 
     @line_thickness.setter
-    def line_thickness(self, thickness: int):
+    def line_thickness(self, thickness: int) -> None:
         self._proto.line_thickness.value_nm = thickness
 
     @property
@@ -4089,7 +4091,7 @@ class Dimension(BoardItem):
         return self._proto.arrow_length.value_nm
 
     @arrow_length.setter
-    def arrow_length(self, length: int):
+    def arrow_length(self, length: int) -> None:
         self._proto.arrow_length.value_nm = length
 
     @property
@@ -4097,7 +4099,7 @@ class Dimension(BoardItem):
         return self._proto.extension_offset.value_nm
 
     @extension_offset.setter
-    def extension_offset(self, offset: int):
+    def extension_offset(self, offset: int) -> None:
         self._proto.extension_offset.value_nm = offset
 
     @property
@@ -4105,7 +4107,7 @@ class Dimension(BoardItem):
         return self._proto.text_position
 
     @text_position.setter
-    def text_position(self, position: board_types_pb2.DimensionTextPosition.ValueType):
+    def text_position(self, position: board_types_pb2.DimensionTextPosition.ValueType) -> None:
         self._proto.text_position = position
 
     @property
@@ -4113,7 +4115,7 @@ class Dimension(BoardItem):
         return self._proto.keep_text_aligned
 
     @keep_text_aligned.setter
-    def keep_text_aligned(self, aligned: bool):
+    def keep_text_aligned(self, aligned: bool) -> None:
         self._proto.keep_text_aligned = aligned
 
     @property
@@ -4131,7 +4133,7 @@ class Dimension(BoardItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, properties: list[CustomProperty]):
+    def custom_properties(self, properties: list[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(p.proto for p in properties)
 
@@ -4141,7 +4143,7 @@ class AlignedDimension(Dimension):
         self,
         proto: board_types_pb2.Dimension | None = None,
         proto_ref: board_types_pb2.Dimension | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.Dimension()
 
         if proto is not None:
@@ -4161,7 +4163,7 @@ class AlignedDimension(Dimension):
         return Vector2(self._proto.aligned.start)
 
     @start.setter
-    def start(self, start: Vector2):
+    def start(self, start: Vector2) -> None:
         self._proto.aligned.start.CopyFrom(start.proto)
 
     @property
@@ -4169,7 +4171,7 @@ class AlignedDimension(Dimension):
         return Vector2(self._proto.aligned.end)
 
     @end.setter
-    def end(self, end: Vector2):
+    def end(self, end: Vector2) -> None:
         self._proto.aligned.end.CopyFrom(end.proto)
 
     @property
@@ -4177,7 +4179,7 @@ class AlignedDimension(Dimension):
         return self._proto.aligned.height.value_nm
 
     @height.setter
-    def height(self, height: int):
+    def height(self, height: int) -> None:
         self._proto.aligned.height.value_nm = height
 
     @property
@@ -4185,7 +4187,7 @@ class AlignedDimension(Dimension):
         return self._proto.aligned.extension_height.value_nm
 
     @extension_height.setter
-    def extension_height(self, extension_height: int):
+    def extension_height(self, extension_height: int) -> None:
         self._proto.aligned.extension_height.value_nm = extension_height
 
 
@@ -4194,7 +4196,7 @@ class OrthogonalDimension(Dimension):
         self,
         proto: board_types_pb2.Dimension | None = None,
         proto_ref: board_types_pb2.Dimension | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.Dimension()
 
         if proto is not None:
@@ -4213,7 +4215,7 @@ class OrthogonalDimension(Dimension):
         return Vector2(self._proto.orthogonal.start)
 
     @start.setter
-    def start(self, start: Vector2):
+    def start(self, start: Vector2) -> None:
         self._proto.orthogonal.start.CopyFrom(start.proto)
 
     @property
@@ -4221,7 +4223,7 @@ class OrthogonalDimension(Dimension):
         return Vector2(self._proto.orthogonal.end)
 
     @end.setter
-    def end(self, end: Vector2):
+    def end(self, end: Vector2) -> None:
         self._proto.orthogonal.end.CopyFrom(end.proto)
 
     @property
@@ -4229,7 +4231,7 @@ class OrthogonalDimension(Dimension):
         return self._proto.orthogonal.height.value_nm
 
     @height.setter
-    def height(self, height: int):
+    def height(self, height: int) -> None:
         self._proto.orthogonal.height.value_nm = height
 
     @property
@@ -4237,7 +4239,7 @@ class OrthogonalDimension(Dimension):
         return self._proto.orthogonal.extension_height.value_nm
 
     @extension_height.setter
-    def extension_height(self, extension_height: int):
+    def extension_height(self, extension_height: int) -> None:
         self._proto.orthogonal.extension_height.value_nm = extension_height
 
     @property
@@ -4245,7 +4247,7 @@ class OrthogonalDimension(Dimension):
         return self._proto.orthogonal.alignment
 
     @alignment.setter
-    def alignment(self, alignment: base_types_pb2.AxisAlignment.ValueType):
+    def alignment(self, alignment: base_types_pb2.AxisAlignment.ValueType) -> None:
         self._proto.orthogonal.alignment = alignment
 
 
@@ -4254,7 +4256,7 @@ class RadialDimension(Dimension):
         self,
         proto: board_types_pb2.Dimension | None = None,
         proto_ref: board_types_pb2.Dimension | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.Dimension()
 
         if proto is not None:
@@ -4274,7 +4276,7 @@ class RadialDimension(Dimension):
         return Vector2(self._proto.radial.center)
 
     @center.setter
-    def center(self, center: Vector2):
+    def center(self, center: Vector2) -> None:
         self._proto.radial.center.CopyFrom(center.proto)
 
     @property
@@ -4282,7 +4284,7 @@ class RadialDimension(Dimension):
         return Vector2(self._proto.radial.radius_point)
 
     @radius_point.setter
-    def radius_point(self, radius_point: Vector2):
+    def radius_point(self, radius_point: Vector2) -> None:
         self._proto.radial.radius_point.CopyFrom(radius_point.proto)
 
     @property
@@ -4290,7 +4292,7 @@ class RadialDimension(Dimension):
         return self._proto.radial.leader_length.value_nm
 
     @leader_length.setter
-    def leader_length(self, leader_length: int):
+    def leader_length(self, leader_length: int) -> None:
         self._proto.radial.leader_length.value_nm = leader_length
 
 
@@ -4299,7 +4301,7 @@ class LeaderDimension(Dimension):
         self,
         proto: board_types_pb2.Dimension | None = None,
         proto_ref: board_types_pb2.Dimension | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.Dimension()
 
         if proto is not None:
@@ -4319,7 +4321,7 @@ class LeaderDimension(Dimension):
         return Vector2(self._proto.leader.start)
 
     @start.setter
-    def start(self, start: Vector2):
+    def start(self, start: Vector2) -> None:
         self._proto.leader.start.CopyFrom(start.proto)
 
     @property
@@ -4327,7 +4329,7 @@ class LeaderDimension(Dimension):
         return Vector2(self._proto.leader.end)
 
     @end.setter
-    def end(self, end: Vector2):
+    def end(self, end: Vector2) -> None:
         self._proto.leader.end.CopyFrom(end.proto)
 
     @property
@@ -4335,7 +4337,9 @@ class LeaderDimension(Dimension):
         return self._proto.leader.border_style
 
     @border_style.setter
-    def border_style(self, border_style: board_types_pb2.DimensionTextBorderStyle.ValueType):
+    def border_style(
+        self, border_style: board_types_pb2.DimensionTextBorderStyle.ValueType
+    ) -> None:
         self._proto.leader.border_style = border_style
 
 
@@ -4344,7 +4348,7 @@ class CenterDimension(Dimension):
         self,
         proto: board_types_pb2.Dimension | None = None,
         proto_ref: board_types_pb2.Dimension | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.Dimension()
 
         if proto is not None:
@@ -4361,7 +4365,7 @@ class CenterDimension(Dimension):
         return Vector2(self._proto.center.center)
 
     @center.setter
-    def center(self, center: Vector2):
+    def center(self, center: Vector2) -> None:
         self._proto.center.center.CopyFrom(center.proto)
 
     @property
@@ -4369,7 +4373,7 @@ class CenterDimension(Dimension):
         return Vector2(self._proto.center.end)
 
     @end.setter
-    def end(self, end: Vector2):
+    def end(self, end: Vector2) -> None:
         self._proto.center.end.CopyFrom(end.proto)
 
 
@@ -4391,7 +4395,7 @@ class BoardEditorAppearanceSettings(Wrapper):
         self,
         proto: board_commands_pb2.BoardEditorAppearanceSettings | None = None,
         proto_ref: board_commands_pb2.BoardEditorAppearanceSettings | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref
             if proto_ref is not None
@@ -4407,7 +4411,9 @@ class BoardEditorAppearanceSettings(Wrapper):
         return self._proto.inactive_layer_display
 
     @inactive_layer_display.setter
-    def inactive_layer_display(self, mode: board_commands_pb2.InactiveLayerDisplayMode.ValueType):
+    def inactive_layer_display(
+        self, mode: board_commands_pb2.InactiveLayerDisplayMode.ValueType
+    ) -> None:
         self._proto.inactive_layer_display = mode
 
     @property
@@ -4416,7 +4422,7 @@ class BoardEditorAppearanceSettings(Wrapper):
         return self._proto.net_color_display
 
     @net_color_display.setter
-    def net_color_display(self, mode: board_commands_pb2.NetColorDisplayMode.ValueType):
+    def net_color_display(self, mode: board_commands_pb2.NetColorDisplayMode.ValueType) -> None:
         self._proto.net_color_display = mode
 
     @property
@@ -4425,7 +4431,7 @@ class BoardEditorAppearanceSettings(Wrapper):
         return self._proto.board_flip
 
     @board_flip.setter
-    def board_flip(self, mode: board_commands_pb2.BoardFlipMode.ValueType):
+    def board_flip(self, mode: board_commands_pb2.BoardFlipMode.ValueType) -> None:
         self._proto.board_flip = mode
 
     @property
@@ -4434,7 +4440,7 @@ class BoardEditorAppearanceSettings(Wrapper):
         return self._proto.ratsnest_display
 
     @ratsnest_display.setter
-    def ratsnest_display(self, mode: board_commands_pb2.RatsnestDisplayMode.ValueType):
+    def ratsnest_display(self, mode: board_commands_pb2.RatsnestDisplayMode.ValueType) -> None:
         self._proto.ratsnest_display = mode
 
 
@@ -4449,7 +4455,7 @@ class Group(BoardItem):
     def __init__(
         self,
         proto: board_types_pb2.Group | None = None,
-    ):
+    ) -> None:
         self._proto = board_types_pb2.Group()
 
         if proto is not None:
@@ -4473,7 +4479,7 @@ class Group(BoardItem):
         return self._item_ids
 
     @item_ids.setter
-    def item_ids(self, ids: Sequence[KIID]):
+    def item_ids(self, ids: Sequence[KIID]) -> None:
         """Setting this property will invalidate the cache of concrete items
         returned by the :attr:`items` property."""
         del self._proto.items[:]
@@ -4496,7 +4502,7 @@ class Group(BoardItem):
         return self._unwrapped_items if self._unwrapped_items is not None else []
 
     @items.setter
-    def items(self, items: Sequence[BoardItem]):
+    def items(self, items: Sequence[BoardItem]) -> None:
         """Sets the items in the group, replacing any existing items"""
         del self._proto.items[:]
         self._unwrapped_items = items
@@ -4510,7 +4516,7 @@ class Group(BoardItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -4524,7 +4530,7 @@ class Group(BoardItem):
         return LibraryIdentifier(proto_ref=self._proto.lib_id)
 
     @lib_id.setter
-    def lib_id(self, lib_id: LibraryIdentifier):
+    def lib_id(self, lib_id: LibraryIdentifier) -> None:
         self._proto.lib_id.CopyFrom(lib_id.proto)
 
     @property
@@ -4534,7 +4540,7 @@ class Group(BoardItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, properties: list[CustomProperty]):
+    def custom_properties(self, properties: list[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(p.proto for p in properties)
 
@@ -4556,7 +4562,7 @@ class TableCell(Wrapper):
         self,
         proto: board_types_pb2.TableCell | None = None,
         proto_ref: board_types_pb2.TableCell | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.TableCell()
 
         if proto is not None:
@@ -4570,7 +4576,7 @@ class TableCell(Wrapper):
         return BoardTextBox(proto_ref=self._proto.text_box)
 
     @text.setter
-    def text(self, text_box: BoardTextBox):
+    def text(self, text_box: BoardTextBox) -> None:
         self._proto.text_box.CopyFrom(text_box.proto)
 
     @property
@@ -4578,7 +4584,7 @@ class TableCell(Wrapper):
         return self._proto.column_span
 
     @column_span.setter
-    def column_span(self, span: int):
+    def column_span(self, span: int) -> None:
         self._proto.column_span = span
 
     @property
@@ -4586,7 +4592,7 @@ class TableCell(Wrapper):
         return self._proto.row_span
 
     @row_span.setter
-    def row_span(self, span: int):
+    def row_span(self, span: int) -> None:
         self._proto.row_span = span
 
     @property
@@ -4596,7 +4602,7 @@ class TableCell(Wrapper):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, properties: list[CustomProperty]):
+    def custom_properties(self, properties: list[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(p.proto for p in properties)
 
@@ -4610,7 +4616,7 @@ class Table(BoardItem):
         self,
         proto: board_types_pb2.Table | None = None,
         proto_ref: board_types_pb2.Table | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.Table()
 
         if proto is not None:
@@ -4631,7 +4637,7 @@ class Table(BoardItem):
         return self._proto.column_count
 
     @column_count.setter
-    def column_count(self, count: int):
+    def column_count(self, count: int) -> None:
         self._proto.column_count = count
 
     @property
@@ -4639,7 +4645,7 @@ class Table(BoardItem):
         return list(self._proto.column_widths)
 
     @column_widths.setter
-    def column_widths(self, widths: list[int]):
+    def column_widths(self, widths: list[int]) -> None:
         del self._proto.column_widths[:]
         self._proto.column_widths.extend(widths)
 
@@ -4648,7 +4654,7 @@ class Table(BoardItem):
         return list(self._proto.row_heights)
 
     @row_heights.setter
-    def row_heights(self, heights: list[int]):
+    def row_heights(self, heights: list[int]) -> None:
         del self._proto.row_heights[:]
         self._proto.row_heights.extend(heights)
 
@@ -4657,7 +4663,7 @@ class Table(BoardItem):
         return self._proto.layer
 
     @layer.setter
-    def layer(self, layer: BoardLayer.ValueType):
+    def layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.layer = layer
 
     @property
@@ -4665,7 +4671,7 @@ class Table(BoardItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -4676,7 +4682,7 @@ class Table(BoardItem):
         return MutableWrapperSequence(self._proto.cells, TableCell)
 
     @cells.setter
-    def cells(self, cells: list[TableCell]):
+    def cells(self, cells: list[TableCell]) -> None:
         del self._proto.cells[:]
         self._proto.cells.extend(cell.proto for cell in cells)
 
@@ -4685,7 +4691,7 @@ class Table(BoardItem):
         return self._proto.external_border
 
     @external_border.setter
-    def external_border(self, mode: TableStrokeMode.ValueType):
+    def external_border(self, mode: TableStrokeMode.ValueType) -> None:
         self._proto.external_border = mode
 
     @property
@@ -4693,7 +4699,7 @@ class Table(BoardItem):
         return self._proto.header_separator
 
     @header_separator.setter
-    def header_separator(self, mode: TableStrokeMode.ValueType):
+    def header_separator(self, mode: TableStrokeMode.ValueType) -> None:
         self._proto.header_separator = mode
 
     @property
@@ -4701,7 +4707,7 @@ class Table(BoardItem):
         return self._proto.row_separators
 
     @row_separators.setter
-    def row_separators(self, mode: TableStrokeMode.ValueType):
+    def row_separators(self, mode: TableStrokeMode.ValueType) -> None:
         self._proto.row_separators = mode
 
     @property
@@ -4709,7 +4715,7 @@ class Table(BoardItem):
         return self._proto.column_separators
 
     @column_separators.setter
-    def column_separators(self, mode: TableStrokeMode.ValueType):
+    def column_separators(self, mode: TableStrokeMode.ValueType) -> None:
         self._proto.column_separators = mode
 
     @property
@@ -4717,7 +4723,7 @@ class Table(BoardItem):
         return StrokeAttributes(proto_ref=self._proto.border_stroke)
 
     @border_stroke.setter
-    def border_stroke(self, stroke: StrokeAttributes):
+    def border_stroke(self, stroke: StrokeAttributes) -> None:
         self._proto.border_stroke.CopyFrom(stroke.proto)
 
     @property
@@ -4725,7 +4731,7 @@ class Table(BoardItem):
         return StrokeAttributes(proto_ref=self._proto.separators_stroke)
 
     @separators_stroke.setter
-    def separators_stroke(self, stroke: StrokeAttributes):
+    def separators_stroke(self, stroke: StrokeAttributes) -> None:
         self._proto.separators_stroke.CopyFrom(stroke.proto)
 
     @property
@@ -4742,7 +4748,7 @@ class Table(BoardItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, properties: list[CustomProperty]):
+    def custom_properties(self, properties: list[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(p.proto for p in properties)
 
@@ -4756,7 +4762,7 @@ class ReferencePoint(BoardItem):
         self,
         proto: board_types_pb2.ReferencePoint | None = None,
         proto_ref: board_types_pb2.ReferencePoint | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.ReferencePoint()
 
         if proto is not None:
@@ -4777,7 +4783,7 @@ class ReferencePoint(BoardItem):
         return self._proto.layer
 
     @layer.setter
-    def layer(self, layer: BoardLayer.ValueType):
+    def layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.layer = layer
 
     @property
@@ -4785,7 +4791,7 @@ class ReferencePoint(BoardItem):
         return Vector2(self._proto.position)
 
     @position.setter
-    def position(self, position: Vector2):
+    def position(self, position: Vector2) -> None:
         self._proto.position.CopyFrom(position.proto)
 
     @property
@@ -4794,7 +4800,7 @@ class ReferencePoint(BoardItem):
         return self._proto.size.value_nm
 
     @size.setter
-    def size(self, size_nm: int):
+    def size(self, size_nm: int) -> None:
         self._proto.size.value_nm = size_nm
 
     @property
@@ -4802,7 +4808,7 @@ class ReferencePoint(BoardItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -4822,7 +4828,7 @@ class ReferencePoint(BoardItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, properties: list[CustomProperty]):
+    def custom_properties(self, properties: list[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(p.proto for p in properties)
 
@@ -4836,7 +4842,7 @@ class GridItemAffects(Wrapper):
         self,
         proto: board_types_pb2.GridItemAffects | None = None,
         proto_ref: board_types_pb2.GridItemAffects | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.GridItemAffects()
 
         if proto is not None:
@@ -4847,7 +4853,7 @@ class GridItemAffects(Wrapper):
         return self._proto.cursor
 
     @cursor.setter
-    def cursor(self, cursor: bool):
+    def cursor(self, cursor: bool) -> None:
         self._proto.cursor = cursor
 
     @property
@@ -4855,7 +4861,7 @@ class GridItemAffects(Wrapper):
         return self._proto.routing
 
     @routing.setter
-    def routing(self, routing: bool):
+    def routing(self, routing: bool) -> None:
         self._proto.routing = routing
 
     @property
@@ -4863,7 +4869,7 @@ class GridItemAffects(Wrapper):
         return self._proto.placement
 
     @placement.setter
-    def placement(self, placement: bool):
+    def placement(self, placement: bool) -> None:
         self._proto.placement = placement
 
 
@@ -4874,7 +4880,7 @@ class CartesianGridItemAttributes(Wrapper):
         self,
         proto: board_types_pb2.CartesianGridItemAttributes | None = None,
         proto_ref: board_types_pb2.CartesianGridItemAttributes | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_types_pb2.CartesianGridItemAttributes()
         )
@@ -4888,7 +4894,7 @@ class CartesianGridItemAttributes(Wrapper):
         return Vector2(self._proto.extent)
 
     @extent.setter
-    def extent(self, extent: Vector2):
+    def extent(self, extent: Vector2) -> None:
         self._proto.extent.CopyFrom(extent.proto)
 
     @property
@@ -4897,7 +4903,7 @@ class CartesianGridItemAttributes(Wrapper):
         return Vector2(self._proto.spacing)
 
     @spacing.setter
-    def spacing(self, spacing: Vector2):
+    def spacing(self, spacing: Vector2) -> None:
         self._proto.spacing.CopyFrom(spacing.proto)
 
 
@@ -4908,7 +4914,7 @@ class PolarGridItemAttributes(Wrapper):
         self,
         proto: board_types_pb2.PolarGridItemAttributes | None = None,
         proto_ref: board_types_pb2.PolarGridItemAttributes | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_types_pb2.PolarGridItemAttributes()
         )
@@ -4922,7 +4928,7 @@ class PolarGridItemAttributes(Wrapper):
         return self._proto.radius_extent.value_nm
 
     @radius_extent.setter
-    def radius_extent(self, extent_nm: int):
+    def radius_extent(self, extent_nm: int) -> None:
         self._proto.radius_extent.value_nm = extent_nm
 
     @property
@@ -4931,7 +4937,7 @@ class PolarGridItemAttributes(Wrapper):
         return self._proto.radius_spacing.value_nm
 
     @radius_spacing.setter
-    def radius_spacing(self, spacing_nm: int):
+    def radius_spacing(self, spacing_nm: int) -> None:
         self._proto.radius_spacing.value_nm = spacing_nm
 
     @property
@@ -4940,7 +4946,7 @@ class PolarGridItemAttributes(Wrapper):
         return Angle(proto_ref=self._proto.phi_extent)
 
     @phi_extent.setter
-    def phi_extent(self, extent: Angle):
+    def phi_extent(self, extent: Angle) -> None:
         self._proto.phi_extent.CopyFrom(extent.proto)
 
     @property
@@ -4949,7 +4955,7 @@ class PolarGridItemAttributes(Wrapper):
         return Angle(proto_ref=self._proto.phi_spacing)
 
     @phi_spacing.setter
-    def phi_spacing(self, spacing: Angle):
+    def phi_spacing(self, spacing: Angle) -> None:
         self._proto.phi_spacing.CopyFrom(spacing.proto)
 
 
@@ -4962,7 +4968,7 @@ class GridItem(BoardItem):
         self,
         proto: board_types_pb2.GridItem | None = None,
         proto_ref: board_types_pb2.GridItem | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.GridItem()
 
         if proto is not None:
@@ -4982,7 +4988,7 @@ class GridItem(BoardItem):
         return Vector2(self._proto.position)
 
     @position.setter
-    def position(self, position: Vector2):
+    def position(self, position: Vector2) -> None:
         self._proto.position.CopyFrom(position.proto)
 
     @property
@@ -4990,7 +4996,7 @@ class GridItem(BoardItem):
         return Angle(proto_ref=self._proto.orientation)
 
     @orientation.setter
-    def orientation(self, orientation: Angle):
+    def orientation(self, orientation: Angle) -> None:
         self._proto.orientation.CopyFrom(orientation.proto)
 
     @property
@@ -5001,7 +5007,7 @@ class GridItem(BoardItem):
         return None
 
     @cartesian.setter
-    def cartesian(self, attributes: CartesianGridItemAttributes | None):
+    def cartesian(self, attributes: CartesianGridItemAttributes | None) -> None:
         if attributes is None:
             if self._proto.WhichOneof("geometry") == "cartesian":
                 self._proto.ClearField("cartesian")
@@ -5016,7 +5022,7 @@ class GridItem(BoardItem):
         return None
 
     @polar.setter
-    def polar(self, attributes: PolarGridItemAttributes | None):
+    def polar(self, attributes: PolarGridItemAttributes | None) -> None:
         if attributes is None:
             if self._proto.WhichOneof("geometry") == "polar":
                 self._proto.ClearField("polar")
@@ -5028,7 +5034,7 @@ class GridItem(BoardItem):
         return self._proto.priority
 
     @priority.setter
-    def priority(self, priority: int):
+    def priority(self, priority: int) -> None:
         self._proto.priority = priority
 
     @property
@@ -5037,7 +5043,7 @@ class GridItem(BoardItem):
         return self._proto.tick_interval
 
     @tick_interval.setter
-    def tick_interval(self, interval: int):
+    def tick_interval(self, interval: int) -> None:
         self._proto.tick_interval = interval
 
     @property
@@ -5045,7 +5051,7 @@ class GridItem(BoardItem):
         return GridItemAffects(proto_ref=self._proto.affects)
 
     @affects.setter
-    def affects(self, affects: GridItemAffects):
+    def affects(self, affects: GridItemAffects) -> None:
         self._proto.affects.CopyFrom(affects.proto)
 
     @property
@@ -5053,7 +5059,7 @@ class GridItem(BoardItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -5064,7 +5070,7 @@ class GridItem(BoardItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, properties: list[CustomProperty]):
+    def custom_properties(self, properties: list[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(p.proto for p in properties)
 
@@ -5076,7 +5082,7 @@ class ConstraintMember(Wrapper):
         self,
         proto: board_types_pb2.ConstraintMember | None = None,
         proto_ref: board_types_pb2.ConstraintMember | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.ConstraintMember()
 
         if proto is not None:
@@ -5090,7 +5096,7 @@ class ConstraintMember(Wrapper):
         return self._proto.item
 
     @item.setter
-    def item(self, item: KIID):
+    def item(self, item: KIID) -> None:
         self._proto.item.CopyFrom(item)
 
     @property
@@ -5098,7 +5104,7 @@ class ConstraintMember(Wrapper):
         return self._proto.anchor
 
     @anchor.setter
-    def anchor(self, anchor: ConstraintAnchor.ValueType):
+    def anchor(self, anchor: ConstraintAnchor.ValueType) -> None:
         self._proto.anchor = anchor
 
     @property
@@ -5108,7 +5114,7 @@ class ConstraintMember(Wrapper):
         return None
 
     @index.setter
-    def index(self, index: int | None):
+    def index(self, index: int | None) -> None:
         if index is None:
             self._proto.ClearField("index")
         else:
@@ -5124,7 +5130,7 @@ class Constraint(BoardItem):
         self,
         proto: board_types_pb2.Constraint | None = None,
         proto_ref: board_types_pb2.Constraint | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.Constraint()
 
         if proto is not None:
@@ -5142,7 +5148,7 @@ class Constraint(BoardItem):
         return self._proto.type
 
     @type.setter
-    def type(self, type: ConstraintType.ValueType):
+    def type(self, type: ConstraintType.ValueType) -> None:
         self._proto.type = type
 
     @property
@@ -5150,7 +5156,7 @@ class Constraint(BoardItem):
         return MutableWrapperSequence(self._proto.members, ConstraintMember)
 
     @members.setter
-    def members(self, members: list[ConstraintMember]):
+    def members(self, members: list[ConstraintMember]) -> None:
         del self._proto.members[:]
         self._proto.members.extend(member.proto for member in members)
 
@@ -5161,7 +5167,7 @@ class Constraint(BoardItem):
         return None
 
     @value.setter
-    def value(self, value: float | None):
+    def value(self, value: float | None) -> None:
         if value is None:
             self._proto.ClearField("value")
         else:
@@ -5172,7 +5178,7 @@ class Constraint(BoardItem):
         return self._proto.driving
 
     @driving.setter
-    def driving(self, driving: bool):
+    def driving(self, driving: bool) -> None:
         self._proto.driving = driving
 
     @property
@@ -5189,7 +5195,7 @@ class DrillSpan(Wrapper):
         self,
         proto: board_types_pb2.DrillSpan | None = None,
         proto_ref: board_types_pb2.DrillSpan | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.DrillSpan()
 
         if proto is not None:
@@ -5207,7 +5213,7 @@ class DrillSpan(Wrapper):
         return self._proto.start_layer
 
     @start_layer.setter
-    def start_layer(self, layer: BoardLayer.ValueType):
+    def start_layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.start_layer = layer
 
     @property
@@ -5215,7 +5221,7 @@ class DrillSpan(Wrapper):
         return self._proto.end_layer
 
     @end_layer.setter
-    def end_layer(self, layer: BoardLayer.ValueType):
+    def end_layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.end_layer = layer
 
     @property
@@ -5223,7 +5229,7 @@ class DrillSpan(Wrapper):
         return self._proto.is_backdrill
 
     @is_backdrill.setter
-    def is_backdrill(self, is_backdrill: bool):
+    def is_backdrill(self, is_backdrill: bool) -> None:
         self._proto.is_backdrill = is_backdrill
 
     @property
@@ -5231,7 +5237,7 @@ class DrillSpan(Wrapper):
         return self._proto.is_non_plated
 
     @is_non_plated.setter
-    def is_non_plated(self, is_non_plated: bool):
+    def is_non_plated(self, is_non_plated: bool) -> None:
         self._proto.is_non_plated = is_non_plated
 
 
@@ -5244,7 +5250,7 @@ class DrillChartColumn(Wrapper):
         self,
         proto: board_types_pb2.DrillChartColumn | None = None,
         proto_ref: board_types_pb2.DrillChartColumn | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.DrillChartColumn()
 
         if proto is not None:
@@ -5258,7 +5264,7 @@ class DrillChartColumn(Wrapper):
         return self._proto.id
 
     @id.setter
-    def id(self, id: DrillChartColumnId.ValueType):
+    def id(self, id: DrillChartColumnId.ValueType) -> None:
         self._proto.id = id
 
     @property
@@ -5266,7 +5272,7 @@ class DrillChartColumn(Wrapper):
         return self._proto.heading
 
     @heading.setter
-    def heading(self, heading: str):
+    def heading(self, heading: str) -> None:
         self._proto.heading = heading
 
     @property
@@ -5274,7 +5280,7 @@ class DrillChartColumn(Wrapper):
         return self._proto.align
 
     @align.setter
-    def align(self, align: HorizontalAlignment.ValueType):
+    def align(self, align: HorizontalAlignment.ValueType) -> None:
         self._proto.align = align
 
     @property
@@ -5283,7 +5289,7 @@ class DrillChartColumn(Wrapper):
         return self._proto.width.value_nm
 
     @width.setter
-    def width(self, width_nm: int):
+    def width(self, width_nm: int) -> None:
         self._proto.width.value_nm = width_nm
 
 
@@ -5296,7 +5302,7 @@ class DrillChartFilter(Wrapper):
         self,
         proto: board_types_pb2.DrillChartFilter | None = None,
         proto_ref: board_types_pb2.DrillChartFilter | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.DrillChartFilter()
 
         if proto is not None:
@@ -5314,7 +5320,7 @@ class DrillChartFilter(Wrapper):
         return self._proto.plated
 
     @plated.setter
-    def plated(self, plated: bool):
+    def plated(self, plated: bool) -> None:
         self._proto.plated = plated
 
     @property
@@ -5322,7 +5328,7 @@ class DrillChartFilter(Wrapper):
         return self._proto.non_plated
 
     @non_plated.setter
-    def non_plated(self, non_plated: bool):
+    def non_plated(self, non_plated: bool) -> None:
         self._proto.non_plated = non_plated
 
     @property
@@ -5330,7 +5336,7 @@ class DrillChartFilter(Wrapper):
         return self._proto.vias
 
     @vias.setter
-    def vias(self, vias: bool):
+    def vias(self, vias: bool) -> None:
         self._proto.vias = vias
 
     @property
@@ -5338,7 +5344,7 @@ class DrillChartFilter(Wrapper):
         return self._proto.slots
 
     @slots.setter
-    def slots(self, slots: bool):
+    def slots(self, slots: bool) -> None:
         self._proto.slots = slots
 
     @property
@@ -5346,7 +5352,7 @@ class DrillChartFilter(Wrapper):
         return self._proto.backdrills
 
     @backdrills.setter
-    def backdrills(self, backdrills: bool):
+    def backdrills(self, backdrills: bool) -> None:
         self._proto.backdrills = backdrills
 
     @property
@@ -5354,7 +5360,7 @@ class DrillChartFilter(Wrapper):
         return self._proto.castellated
 
     @castellated.setter
-    def castellated(self, castellated: bool):
+    def castellated(self, castellated: bool) -> None:
         self._proto.castellated = castellated
 
 
@@ -5367,7 +5373,7 @@ class DrillChart(BoardItem):
         self,
         proto: board_types_pb2.DrillChart | None = None,
         proto_ref: board_types_pb2.DrillChart | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.DrillChart()
 
         if proto is not None:
@@ -5392,7 +5398,7 @@ class DrillChart(BoardItem):
         return Table(proto_ref=self._proto.table)
 
     @table.setter
-    def table(self, table: Table):
+    def table(self, table: Table) -> None:
         self._proto.table.CopyFrom(table.proto)
 
     @property
@@ -5400,7 +5406,7 @@ class DrillChart(BoardItem):
         return DrillChartFilter(proto_ref=self._proto.filter)
 
     @filter.setter
-    def filter(self, filter: DrillChartFilter):
+    def filter(self, filter: DrillChartFilter) -> None:
         self._proto.filter.CopyFrom(filter.proto)
 
     @property
@@ -5408,7 +5414,7 @@ class DrillChart(BoardItem):
         return MutableWrapperSequence(self._proto.columns, DrillChartColumn)
 
     @columns.setter
-    def columns(self, columns: list[DrillChartColumn]):
+    def columns(self, columns: list[DrillChartColumn]) -> None:
         del self._proto.columns[:]
         self._proto.columns.extend(column.proto for column in columns)
 
@@ -5417,7 +5423,7 @@ class DrillChart(BoardItem):
         return self._proto.units
 
     @units.setter
-    def units(self, units: Units.ValueType):
+    def units(self, units: Units.ValueType) -> None:
         self._proto.units = units
 
     @property
@@ -5425,7 +5431,7 @@ class DrillChart(BoardItem):
         return self._proto.precision
 
     @precision.setter
-    def precision(self, precision: int):
+    def precision(self, precision: int) -> None:
         self._proto.precision = precision
 
     @property
@@ -5433,7 +5439,7 @@ class DrillChart(BoardItem):
         return self._proto.show_totals
 
     @show_totals.setter
-    def show_totals(self, show_totals: bool):
+    def show_totals(self, show_totals: bool) -> None:
         self._proto.show_totals = show_totals
 
     @property
@@ -5442,7 +5448,7 @@ class DrillChart(BoardItem):
         return dict(self._proto.row_shapes)
 
     @row_shapes.setter
-    def row_shapes(self, row_shapes: dict[int, int]):
+    def row_shapes(self, row_shapes: dict[int, int]) -> None:
         self._proto.row_shapes.clear()
         self._proto.row_shapes.update(row_shapes)
 
@@ -5452,7 +5458,7 @@ class DrillChart(BoardItem):
         return self._proto.symbol_column
 
     @symbol_column.setter
-    def symbol_column(self, symbol_column: int):
+    def symbol_column(self, symbol_column: int) -> None:
         self._proto.symbol_column = symbol_column
 
     @property
@@ -5461,7 +5467,7 @@ class DrillChart(BoardItem):
         return dict(self._proto.row_keys)
 
     @row_keys.setter
-    def row_keys(self, row_keys: dict[int, str]):
+    def row_keys(self, row_keys: dict[int, str]) -> None:
         self._proto.row_keys.clear()
         self._proto.row_keys.update(row_keys)
 
@@ -5475,7 +5481,7 @@ class DrillMap(BoardItem):
         self,
         proto: board_types_pb2.DrillMap | None = None,
         proto_ref: board_types_pb2.DrillMap | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.DrillMap()
 
         if proto is not None:
@@ -5496,7 +5502,7 @@ class DrillMap(BoardItem):
         return self._proto.layer
 
     @layer.setter
-    def layer(self, layer: BoardLayer.ValueType):
+    def layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.layer = layer
 
     @property
@@ -5508,7 +5514,7 @@ class DrillMap(BoardItem):
         return Vector2(self._proto.position)
 
     @position.setter
-    def position(self, position: Vector2):
+    def position(self, position: Vector2) -> None:
         self._proto.position.CopyFrom(position.proto)
 
     @property
@@ -5516,7 +5522,7 @@ class DrillMap(BoardItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -5528,7 +5534,7 @@ class DrillMap(BoardItem):
         return self._proto.all_spans
 
     @all_spans.setter
-    def all_spans(self, all_spans: bool):
+    def all_spans(self, all_spans: bool) -> None:
         self._proto.all_spans = all_spans
 
     @property
@@ -5536,7 +5542,7 @@ class DrillMap(BoardItem):
         return DrillSpan(proto_ref=self._proto.span)
 
     @span.setter
-    def span(self, span: DrillSpan):
+    def span(self, span: DrillSpan) -> None:
         self._proto.span.CopyFrom(span.proto)
 
     @property
@@ -5544,7 +5550,7 @@ class DrillMap(BoardItem):
         return self._proto.outline_slots
 
     @outline_slots.setter
-    def outline_slots(self, outline_slots: bool):
+    def outline_slots(self, outline_slots: bool) -> None:
         self._proto.outline_slots = outline_slots
 
     @property
@@ -5552,7 +5558,7 @@ class DrillMap(BoardItem):
         return self._proto.guide_cross
 
     @guide_cross.setter
-    def guide_cross(self, guide_cross: bool):
+    def guide_cross(self, guide_cross: bool) -> None:
         self._proto.guide_cross = guide_cross
 
     @property
@@ -5561,7 +5567,7 @@ class DrillMap(BoardItem):
         return self._proto.symbol_size.value_nm
 
     @symbol_size.setter
-    def symbol_size(self, size_nm: int):
+    def symbol_size(self, size_nm: int) -> None:
         self._proto.symbol_size.value_nm = size_nm
 
 
@@ -5574,7 +5580,7 @@ class TimeRange(Wrapper):
         self,
         proto: board_types_pb2.TimeRange | None = None,
         proto_ref: board_types_pb2.TimeRange | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.TimeRange()
 
         if proto is not None:
@@ -5589,7 +5595,7 @@ class TimeRange(Wrapper):
         return self._proto.min_as if self._proto.HasField("min_as") else None
 
     @min.setter
-    def min(self, value: int | None):
+    def min(self, value: int | None) -> None:
         if value is None:
             self._proto.ClearField("min_as")
         else:
@@ -5601,7 +5607,7 @@ class TimeRange(Wrapper):
         return self._proto.opt_as if self._proto.HasField("opt_as") else None
 
     @opt.setter
-    def opt(self, value: int | None):
+    def opt(self, value: int | None) -> None:
         if value is None:
             self._proto.ClearField("opt_as")
         else:
@@ -5613,7 +5619,7 @@ class TimeRange(Wrapper):
         return self._proto.max_as if self._proto.HasField("max_as") else None
 
     @max.setter
-    def max(self, value: int | None):
+    def max(self, value: int | None) -> None:
         if value is None:
             self._proto.ClearField("max_as")
         else:
@@ -5629,7 +5635,7 @@ class TuningPatternSettings(Wrapper):
         self,
         proto: board_types_pb2.TuningPatternSettings | None = None,
         proto_ref: board_types_pb2.TuningPatternSettings | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_types_pb2.TuningPatternSettings()
         )
@@ -5650,7 +5656,7 @@ class TuningPatternSettings(Wrapper):
         return self._proto.initial_side
 
     @initial_side.setter
-    def initial_side(self, side: TuningPatternMeanderSide.ValueType):
+    def initial_side(self, side: TuningPatternMeanderSide.ValueType) -> None:
         self._proto.initial_side = side
 
     @property
@@ -5658,7 +5664,7 @@ class TuningPatternSettings(Wrapper):
         return self._proto.corner_style
 
     @corner_style.setter
-    def corner_style(self, style: TuningPatternCornerStyle.ValueType):
+    def corner_style(self, style: TuningPatternCornerStyle.ValueType) -> None:
         self._proto.corner_style = style
 
     @property
@@ -5667,7 +5673,7 @@ class TuningPatternSettings(Wrapper):
         return self._proto.corner_radius_percent
 
     @corner_radius_percent.setter
-    def corner_radius_percent(self, percent: int):
+    def corner_radius_percent(self, percent: int) -> None:
         self._proto.corner_radius_percent = percent
 
     @property
@@ -5676,7 +5682,7 @@ class TuningPatternSettings(Wrapper):
         return self._proto.single_sided
 
     @single_sided.setter
-    def single_sided(self, single_sided: bool):
+    def single_sided(self, single_sided: bool) -> None:
         self._proto.single_sided = single_sided
 
     @property
@@ -5685,7 +5691,7 @@ class TuningPatternSettings(Wrapper):
         return self._proto.max_amplitude.value_nm
 
     @max_amplitude.setter
-    def max_amplitude(self, amplitude_nm: int):
+    def max_amplitude(self, amplitude_nm: int) -> None:
         self._proto.max_amplitude.value_nm = amplitude_nm
 
     @property
@@ -5694,7 +5700,7 @@ class TuningPatternSettings(Wrapper):
         return self._proto.min_amplitude.value_nm
 
     @min_amplitude.setter
-    def min_amplitude(self, amplitude_nm: int):
+    def min_amplitude(self, amplitude_nm: int) -> None:
         self._proto.min_amplitude.value_nm = amplitude_nm
 
     @property
@@ -5703,7 +5709,7 @@ class TuningPatternSettings(Wrapper):
         return self._proto.min_spacing.value_nm
 
     @min_spacing.setter
-    def min_spacing(self, spacing_nm: int):
+    def min_spacing(self, spacing_nm: int) -> None:
         self._proto.min_spacing.value_nm = spacing_nm
 
 
@@ -5718,7 +5724,7 @@ class TuningPatternState(Wrapper):
         self,
         proto: board_types_pb2.TuningPatternState | None = None,
         proto_ref: board_types_pb2.TuningPatternState | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.TuningPatternState()
 
         if proto is not None:
@@ -5751,7 +5757,7 @@ class TuningPattern(BoardItem):
         self,
         proto: board_types_pb2.TuningPattern | None = None,
         proto_ref: board_types_pb2.TuningPattern | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.TuningPattern()
 
         if proto is not None:
@@ -5773,7 +5779,7 @@ class TuningPattern(BoardItem):
         return self._proto.layer
 
     @layer.setter
-    def layer(self, layer: BoardLayer.ValueType):
+    def layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.layer = layer
 
     @property
@@ -5782,7 +5788,7 @@ class TuningPattern(BoardItem):
         return Vector2(proto_ref=self._proto.origin)
 
     @origin.setter
-    def origin(self, origin: Vector2):
+    def origin(self, origin: Vector2) -> None:
         self._proto.origin.CopyFrom(origin.proto)
 
     @property
@@ -5791,7 +5797,7 @@ class TuningPattern(BoardItem):
         return Vector2(proto_ref=self._proto.end)
 
     @end.setter
-    def end(self, end: Vector2):
+    def end(self, end: Vector2) -> None:
         self._proto.end.CopyFrom(end.proto)
 
     @property
@@ -5800,7 +5806,7 @@ class TuningPattern(BoardItem):
         return self._proto.mode
 
     @mode.setter
-    def mode(self, mode: TuningPatternMode.ValueType):
+    def mode(self, mode: TuningPatternMode.ValueType) -> None:
         self._proto.mode = mode
 
     @property
@@ -5808,7 +5814,7 @@ class TuningPattern(BoardItem):
         return TuningPatternSettings(proto_ref=self._proto.settings)
 
     @settings.setter
-    def settings(self, settings: TuningPatternSettings):
+    def settings(self, settings: TuningPatternSettings) -> None:
         self._proto.settings.CopyFrom(settings.proto)
 
     @property
@@ -5817,7 +5823,7 @@ class TuningPattern(BoardItem):
         return self._proto.target_mode
 
     @target_mode.setter
-    def target_mode(self, target_mode: TuningPatternTargetMode.ValueType):
+    def target_mode(self, target_mode: TuningPatternTargetMode.ValueType) -> None:
         self._proto.target_mode = target_mode
 
     @property
@@ -5828,7 +5834,7 @@ class TuningPattern(BoardItem):
         return None
 
     @target_length.setter
-    def target_length(self, target: MinOptMax | None):
+    def target_length(self, target: MinOptMax | None) -> None:
         if target is None:
             if self._proto.WhichOneof("target") == "target_length":
                 self._proto.ClearField("target_length")
@@ -5843,7 +5849,7 @@ class TuningPattern(BoardItem):
         return None
 
     @target_delay.setter
-    def target_delay(self, target: TimeRange | None):
+    def target_delay(self, target: TimeRange | None) -> None:
         if target is None:
             if self._proto.WhichOneof("target") == "target_delay":
                 self._proto.ClearField("target_delay")
@@ -5858,7 +5864,7 @@ class TuningPattern(BoardItem):
         return None
 
     @target_skew.setter
-    def target_skew(self, target: MinOptMax | None):
+    def target_skew(self, target: MinOptMax | None) -> None:
         if target is None:
             if self._proto.WhichOneof("target") == "target_skew":
                 self._proto.ClearField("target_skew")
@@ -5874,7 +5880,7 @@ class TuningPattern(BoardItem):
         return None
 
     @target_skew_delay.setter
-    def target_skew_delay(self, target: TimeRange | None):
+    def target_skew_delay(self, target: TimeRange | None) -> None:
         if target is None:
             if self._proto.WhichOneof("target") == "target_skew_delay":
                 self._proto.ClearField("target_skew_delay")
@@ -5887,7 +5893,7 @@ class TuningPattern(BoardItem):
         return self._proto.override_custom_rules
 
     @override_custom_rules.setter
-    def override_custom_rules(self, override: bool):
+    def override_custom_rules(self, override: bool) -> None:
         self._proto.override_custom_rules = override
 
     @property
@@ -5900,7 +5906,7 @@ class TuningPattern(BoardItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = LockedState.LS_LOCKED if locked else LockedState.LS_UNLOCKED
 
     @property
@@ -5920,7 +5926,7 @@ class TuningPattern(BoardItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, properties: list[CustomProperty]):
+    def custom_properties(self, properties: list[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(p.proto for p in properties)
 
@@ -5934,7 +5940,7 @@ class GridCell(Wrapper):
         self,
         proto: board_types_pb2.GridCell | None = None,
         proto_ref: board_types_pb2.GridCell | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.GridCell()
 
         if proto is not None:
@@ -5949,7 +5955,7 @@ class GridCell(Wrapper):
         return self._proto.i
 
     @i.setter
-    def i(self, i: int):
+    def i(self, i: int) -> None:
         self._proto.i = i
 
     @property
@@ -5958,7 +5964,7 @@ class GridCell(Wrapper):
         return self._proto.j
 
     @j.setter
-    def j(self, j: int):
+    def j(self, j: int) -> None:
         self._proto.j = j
 
 
@@ -5971,7 +5977,7 @@ class ViaStitchGridSettings(Wrapper):
         self,
         proto: board_types_pb2.ViaStitchGridSettings | None = None,
         proto_ref: board_types_pb2.ViaStitchGridSettings | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_types_pb2.ViaStitchGridSettings()
         )
@@ -5992,7 +5998,7 @@ class ViaStitchGridSettings(Wrapper):
         return Vector2(proto_ref=self._proto.origin_offset)
 
     @origin_offset.setter
-    def origin_offset(self, offset: Vector2):
+    def origin_offset(self, offset: Vector2) -> None:
         self._proto.origin_offset.CopyFrom(offset.proto)
 
     @property
@@ -6001,7 +6007,7 @@ class ViaStitchGridSettings(Wrapper):
         return self._proto.seed if self._proto.HasField("seed") else None
 
     @seed.setter
-    def seed(self, seed: int | None):
+    def seed(self, seed: int | None) -> None:
         if seed is None:
             self._proto.ClearField("seed")
         else:
@@ -6013,7 +6019,7 @@ class ViaStitchGridSettings(Wrapper):
         return MutableWrapperSequence(self._proto.excluded_cells, GridCell)
 
     @excluded_cells.setter
-    def excluded_cells(self, cells: list[GridCell]):
+    def excluded_cells(self, cells: list[GridCell]) -> None:
         del self._proto.excluded_cells[:]
         self._proto.excluded_cells.extend(cell.proto for cell in cells)
 
@@ -6027,7 +6033,7 @@ class ViaStitchGuardSettings(Wrapper):
         self,
         proto: board_types_pb2.ViaStitchGuardSettings | None = None,
         proto_ref: board_types_pb2.ViaStitchGuardSettings | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_types_pb2.ViaStitchGuardSettings()
         )
@@ -6044,7 +6050,7 @@ class ViaStitchGuardSettings(Wrapper):
         return Net(self._proto.guarded_net)
 
     @guarded_net.setter
-    def guarded_net(self, net: Net):
+    def guarded_net(self, net: Net) -> None:
         self._proto.guarded_net.CopyFrom(net.proto)
 
 
@@ -6058,7 +6064,7 @@ class ViaStitchArea(BoardItem):
         self,
         proto: board_types_pb2.ViaStitchArea | None = None,
         proto_ref: board_types_pb2.ViaStitchArea | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.ViaStitchArea()
 
         if proto is not None:
@@ -6080,7 +6086,7 @@ class ViaStitchArea(BoardItem):
         return self._proto.layer
 
     @layer.setter
-    def layer(self, layer: BoardLayer.ValueType):
+    def layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.layer = layer
 
     @property
@@ -6091,7 +6097,7 @@ class ViaStitchArea(BoardItem):
         return PolygonWithHoles(proto_ref=self._proto.outline.polygons[0])
 
     @outline.setter
-    def outline(self, outline: PolygonWithHoles):
+    def outline(self, outline: PolygonWithHoles) -> None:
         """Sets the outline.  The outline and all holes are forced closed."""
         p = base_types_pb2.PolygonWithHoles()
         p.CopyFrom(outline.proto)
@@ -6109,7 +6115,7 @@ class ViaStitchArea(BoardItem):
         return self._proto.pitch.value_nm
 
     @pitch.setter
-    def pitch(self, pitch_nm: int):
+    def pitch(self, pitch_nm: int) -> None:
         self._proto.pitch.value_nm = pitch_nm
 
     @property
@@ -6117,7 +6123,7 @@ class ViaStitchArea(BoardItem):
         return self._proto.layout
 
     @layout.setter
-    def layout(self, layout: ViaStitchLayout.ValueType):
+    def layout(self, layout: ViaStitchLayout.ValueType) -> None:
         self._proto.layout = layout
 
     @property
@@ -6125,7 +6131,7 @@ class ViaStitchArea(BoardItem):
         return self._proto.mode
 
     @mode.setter
-    def mode(self, mode: ViaStitchMode.ValueType):
+    def mode(self, mode: ViaStitchMode.ValueType) -> None:
         self._proto.mode = mode
 
     @property
@@ -6136,7 +6142,7 @@ class ViaStitchArea(BoardItem):
         return None
 
     @grid_settings.setter
-    def grid_settings(self, settings: ViaStitchGridSettings | None):
+    def grid_settings(self, settings: ViaStitchGridSettings | None) -> None:
         if settings is None:
             if self._proto.WhichOneof("mode_specific_settings") == "grid_settings":
                 self._proto.ClearField("grid_settings")
@@ -6151,7 +6157,7 @@ class ViaStitchArea(BoardItem):
         return None
 
     @guard_settings.setter
-    def guard_settings(self, settings: ViaStitchGuardSettings | None):
+    def guard_settings(self, settings: ViaStitchGuardSettings | None) -> None:
         if settings is None:
             if self._proto.WhichOneof("mode_specific_settings") == "guard_settings":
                 self._proto.ClearField("guard_settings")
@@ -6164,7 +6170,7 @@ class ViaStitchArea(BoardItem):
         return Net(self._proto.net)
 
     @net.setter
-    def net(self, net: Net):
+    def net(self, net: Net) -> None:
         self._proto.net.CopyFrom(net.proto)
 
     @property
@@ -6173,7 +6179,7 @@ class ViaStitchArea(BoardItem):
         return MutableWrapperSequence(self._proto.excluded_positions, Vector2)
 
     @excluded_positions.setter
-    def excluded_positions(self, positions: list[Vector2]):
+    def excluded_positions(self, positions: list[Vector2]) -> None:
         del self._proto.excluded_positions[:]
         self._proto.excluded_positions.extend(position.proto for position in positions)
 
@@ -6183,7 +6189,7 @@ class ViaStitchArea(BoardItem):
         return Via(proto_ref=self._proto.via_template)
 
     @via_template.setter
-    def via_template(self, via: Via):
+    def via_template(self, via: Via) -> None:
         self._proto.via_template.CopyFrom(via.proto)
 
     @property
@@ -6191,7 +6197,7 @@ class ViaStitchArea(BoardItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = LockedState.LS_LOCKED if locked else LockedState.LS_UNLOCKED
 
     @property
@@ -6211,7 +6217,7 @@ class ViaStitchArea(BoardItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, properties: list[CustomProperty]):
+    def custom_properties(self, properties: list[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(p.proto for p in properties)
 
@@ -6226,7 +6232,7 @@ class ViaStack(BoardItem):
         self,
         proto: board_types_pb2.ViaStack | None = None,
         proto_ref: board_types_pb2.ViaStack | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_types_pb2.ViaStack()
 
         if proto is not None:
@@ -6249,7 +6255,7 @@ class ViaStack(BoardItem):
         return self._proto.start_layer
 
     @start_layer.setter
-    def start_layer(self, layer: BoardLayer.ValueType):
+    def start_layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.start_layer = layer
 
     @property
@@ -6258,7 +6264,7 @@ class ViaStack(BoardItem):
         return self._proto.end_layer
 
     @end_layer.setter
-    def end_layer(self, layer: BoardLayer.ValueType):
+    def end_layer(self, layer: BoardLayer.ValueType) -> None:
         self._proto.end_layer = layer
 
     @property
@@ -6266,7 +6272,7 @@ class ViaStack(BoardItem):
         return self._proto.style
 
     @style.setter
-    def style(self, style: ViaStackStyle.ValueType):
+    def style(self, style: ViaStackStyle.ValueType) -> None:
         self._proto.style = style
 
     @property
@@ -6275,7 +6281,7 @@ class ViaStack(BoardItem):
         return self._proto.pitch.value_nm
 
     @pitch.setter
-    def pitch(self, pitch_nm: int):
+    def pitch(self, pitch_nm: int) -> None:
         self._proto.pitch.value_nm = pitch_nm
 
     @property
@@ -6284,7 +6290,7 @@ class ViaStack(BoardItem):
         return self._proto.filled
 
     @filled.setter
-    def filled(self, filled: bool):
+    def filled(self, filled: bool) -> None:
         self._proto.filled = filled
 
     @property
@@ -6293,7 +6299,7 @@ class ViaStack(BoardItem):
         return self._proto.capped
 
     @capped.setter
-    def capped(self, capped: bool):
+    def capped(self, capped: bool) -> None:
         self._proto.capped = capped
 
     @property
@@ -6302,7 +6308,7 @@ class ViaStack(BoardItem):
         return self._proto.via_size.value_nm
 
     @via_size.setter
-    def via_size(self, size_nm: int):
+    def via_size(self, size_nm: int) -> None:
         self._proto.via_size.value_nm = size_nm
 
     @property
@@ -6311,7 +6317,7 @@ class ViaStack(BoardItem):
         return self._proto.via_drill.value_nm
 
     @via_drill.setter
-    def via_drill(self, drill_nm: int):
+    def via_drill(self, drill_nm: int) -> None:
         self._proto.via_drill.value_nm = drill_nm
 
     @property
@@ -6321,7 +6327,7 @@ class ViaStack(BoardItem):
         return self._proto.use_netclass
 
     @use_netclass.setter
-    def use_netclass(self, use_netclass: bool):
+    def use_netclass(self, use_netclass: bool) -> None:
         self._proto.use_netclass = use_netclass
 
     @property
@@ -6330,7 +6336,7 @@ class ViaStack(BoardItem):
         return self._proto.preset_name if self._proto.HasField("preset_name") else None
 
     @preset_name.setter
-    def preset_name(self, name: str | None):
+    def preset_name(self, name: str | None) -> None:
         if name is None:
             self._proto.ClearField("preset_name")
         else:
@@ -6344,7 +6350,7 @@ class ViaStack(BoardItem):
         return None
 
     @hops.setter
-    def hops(self, hops: PolyLine | None):
+    def hops(self, hops: PolyLine | None) -> None:
         if hops is None:
             self._proto.ClearField("hops")
         else:
@@ -6355,7 +6361,7 @@ class ViaStack(BoardItem):
         return Net(self._proto.net)
 
     @net.setter
-    def net(self, net: Net):
+    def net(self, net: Net) -> None:
         self._proto.net.CopyFrom(net.proto)
 
     @property
@@ -6363,7 +6369,7 @@ class ViaStack(BoardItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = LockedState.LS_LOCKED if locked else LockedState.LS_UNLOCKED
 
     @property
@@ -6383,7 +6389,7 @@ class ViaStack(BoardItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, properties: list[CustomProperty]):
+    def custom_properties(self, properties: list[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(p.proto for p in properties)
 

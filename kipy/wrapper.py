@@ -23,7 +23,7 @@ from __future__ import annotations
 import sys
 from abc import ABC, abstractmethod
 from collections.abc import Callable, Iterable, MutableSequence
-from typing import TypeVar
+from typing import Any, TypeVar, cast, overload
 
 if sys.version_info >= (3, 11):
     from typing import Self
@@ -61,7 +61,7 @@ class MutableWrapperSequence(MutableSequence[T]):
         container: RepeatedCompositeFieldContainer,
         wrapper_type: type[T],
         concrete_factory: Callable[[T], T | None] | None = None,
-    ):
+    ) -> None:
         self._container = container
         self._wrapper_type = wrapper_type
         self._concrete_factory = concrete_factory
@@ -69,22 +69,34 @@ class MutableWrapperSequence(MutableSequence[T]):
     def __len__(self) -> int:
         return len(self._container)
 
-    def __getitem__(self, index):
+    @overload
+    def __getitem__(self, index: int) -> T: ...
+
+    @overload
+    def __getitem__(self, index: slice) -> list[T]: ...
+
+    def __getitem__(self, index: int | slice) -> T | list[T]:
         if isinstance(index, slice):
             return [self._wrap(item) for item in self._container[index]]
         return self._wrap(self._container[index])
 
-    def __setitem__(self, index, value):
+    @overload
+    def __setitem__(self, index: int, value: T) -> None: ...
+
+    @overload
+    def __setitem__(self, index: slice, value: Iterable[T]) -> None: ...
+
+    def __setitem__(self, index: int | slice, value: T | Iterable[T]) -> None:
         if isinstance(index, slice):
             raise TypeError(
                 "Slice assignment is not supported; assign the sequence via the property setter"
             )
-        self._container[index].CopyFrom(value.proto)
+        self._container[index].CopyFrom(cast(T, value).proto)
 
-    def __delitem__(self, index):
+    def __delitem__(self, index: int | slice) -> None:
         del self._container[index]
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: object) -> bool:
         if isinstance(other, MutableWrapperSequence):
             return len(self) == len(other) and all(a.proto == b.proto for a, b in zip(self, other))
         if isinstance(other, (list, tuple)):
@@ -103,41 +115,42 @@ class MutableWrapperSequence(MutableSequence[T]):
             return self._concrete_factory(base) or base
         return base
 
-    def insert(self, index: int, value: T):
+    def insert(self, index: int, value: T) -> None:
         self._container.insert(index, type(value.proto)())
         self._container[index].CopyFrom(value.proto)
 
-    def append(self, value: T):
+    def append(self, value: T) -> None:
         self._container.add().CopyFrom(value.proto)
 
-    def extend(self, values: Iterable[T]):
+    def extend(self, values: Iterable[T]) -> None:
         for value in values:
             self.append(value)
 
-    def clear(self):
+    def clear(self) -> None:
         del self._container[:]
 
-    def sort(self, *args, **kwargs):
+    def sort(self, *args: object, **kwargs: object) -> None:
         raise TypeError(
             "MutableWrapperSequence cannot be reordered; rebuild the sequence and assign it via the property setter"
         )
 
-    def reverse(self):
+    def reverse(self) -> None:
         raise TypeError(
             "MutableWrapperSequence cannot be reordered; rebuild the sequence and assign it via the property setter"
         )
 
 
 class Wrapper(ABC):
-    def __init__(self, proto: Message | None = None, proto_ref: Message | None = None):
+    def __init__(self, proto: Message | None = None, proto_ref: Message | None = None) -> None:
         pass
 
     @property
-    def proto(self):
+    def proto(self) -> Any:
+        # Concrete wrappers expose different protobuf message types through this property.
         self._pack()
         return self.__dict__["_proto"]
 
-    def _pack(self):
+    def _pack(self) -> None:
         """Used in some cases to ensure the internal proto state matches the Python
         class instance, for subclasses where the properties are not directly acting on
         the proto object.

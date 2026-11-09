@@ -165,7 +165,7 @@ class ImportNetlistResult(Wrapper):
         self,
         proto: board_commands_pb2.ImportNetlistResponse | None = None,
         proto_ref: board_commands_pb2.ImportNetlistResponse | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_commands_pb2.ImportNetlistResponse()
         )
@@ -201,7 +201,7 @@ class ImportNetlistResult(Wrapper):
 class BoardLayerGraphicsDefaults(Wrapper):
     """The default properties for graphic items added on a given class of board layer"""
 
-    def __init__(self, proto: board_pb2.BoardLayerGraphicsDefaults | None = None):
+    def __init__(self, proto: board_pb2.BoardLayerGraphicsDefaults | None = None) -> None:
         self._proto = board_pb2.BoardLayerGraphicsDefaults()
 
         if proto is not None:
@@ -213,7 +213,7 @@ class BoardLayerGraphicsDefaults(Wrapper):
         return self._proto.layer
 
     @layer.setter
-    def layer(self, value: board_pb2.BoardLayerClass.ValueType):
+    def layer(self, value: board_pb2.BoardLayerClass.ValueType) -> None:
         self._proto.layer = value
 
     @property
@@ -221,7 +221,7 @@ class BoardLayerGraphicsDefaults(Wrapper):
         return self._proto.line_thickness.value_nm
 
     @line_thickness.setter
-    def line_thickness(self, value: int):
+    def line_thickness(self, value: int) -> None:
         self._proto.line_thickness.value_nm = value
 
     @property
@@ -230,7 +230,7 @@ class BoardLayerGraphicsDefaults(Wrapper):
 
 
 class BoardStackupDielectricProperties(Wrapper):
-    def __init__(self, proto: board_pb2.BoardStackupDielectricProperties | None = None):
+    def __init__(self, proto: board_pb2.BoardStackupDielectricProperties | None = None) -> None:
         self._proto = board_pb2.BoardStackupDielectricProperties()
         if proto:
             self._proto.CopyFrom(proto)
@@ -240,7 +240,7 @@ class BoardStackupDielectricProperties(Wrapper):
         return self._proto.epsilon_r
 
     @epsilon_r.setter
-    def epsilon_r(self, epsilon_r: float):
+    def epsilon_r(self, epsilon_r: float) -> None:
         self._proto.epsilon_r = epsilon_r
 
     @property
@@ -248,7 +248,7 @@ class BoardStackupDielectricProperties(Wrapper):
         return self._proto.loss_tangent
 
     @loss_tangent.setter
-    def loss_tangent(self, loss_tangent: float):
+    def loss_tangent(self, loss_tangent: float) -> None:
         self._proto.loss_tangent = loss_tangent
 
     @property
@@ -256,7 +256,7 @@ class BoardStackupDielectricProperties(Wrapper):
         return self._proto.material_name
 
     @material_name.setter
-    def material_name(self, name: str):
+    def material_name(self, name: str) -> None:
         self._proto.material_name = name
 
     @property
@@ -264,7 +264,7 @@ class BoardStackupDielectricProperties(Wrapper):
         return self._proto.thickness.value_nm
 
     @thickness.setter
-    def thickness(self, thickness: int):
+    def thickness(self, thickness: int) -> None:
         self._proto.thickness.value_nm = thickness
 
     @property
@@ -276,7 +276,7 @@ class BoardStackupDielectricProperties(Wrapper):
         return self._proto.thickness_locked
 
     @thickness_locked.setter
-    def thickness_locked(self, locked: bool):
+    def thickness_locked(self, locked: bool) -> None:
         self._proto.thickness_locked = locked
 
     @property
@@ -290,7 +290,7 @@ class BoardStackupDielectricProperties(Wrapper):
         return None
 
     @spec_frequency.setter
-    def spec_frequency(self, frequency: float | None):
+    def spec_frequency(self, frequency: float | None) -> None:
         if frequency is None:
             self._proto.ClearField("spec_frequency")
         else:
@@ -305,12 +305,12 @@ class BoardStackupDielectricProperties(Wrapper):
         return self._proto.dielectric_model
 
     @dielectric_model.setter
-    def dielectric_model(self, model: board_pb2.DielectricModel.ValueType):
+    def dielectric_model(self, model: board_pb2.DielectricModel.ValueType) -> None:
         self._proto.dielectric_model = model
 
 
 class BoardStackupDielectricLayer(Wrapper):
-    def __init__(self, proto: board_pb2.BoardStackupDielectricLayer | None = None):
+    def __init__(self, proto: board_pb2.BoardStackupDielectricLayer | None = None) -> None:
         self._proto = board_pb2.BoardStackupDielectricLayer()
         if proto:
             self._proto.CopyFrom(proto)
@@ -329,7 +329,7 @@ class BoardStackupDielectricLayer(Wrapper):
         return self._proto.type
 
     @type.setter
-    def type(self, value: board_pb2.BoardStackupDielectricType.ValueType):
+    def type(self, value: board_pb2.BoardStackupDielectricType.ValueType) -> None:
         self._proto.type = value
 
 
@@ -338,7 +338,7 @@ class BoardStackupSoldermaskLayer(Wrapper):
 
     .. versionadded:: 0.8.0 (KiCad 10.0.6)"""
 
-    def __init__(self, proto: board_pb2.BoardStackupSoldermaskLayer | None = None):
+    def __init__(self, proto: board_pb2.BoardStackupSoldermaskLayer | None = None) -> None:
         self._proto = board_pb2.BoardStackupSoldermaskLayer()
         if proto:
             self._proto.CopyFrom(proto)
@@ -348,7 +348,7 @@ class BoardStackupSoldermaskLayer(Wrapper):
         return self._proto.epsilon_r
 
     @epsilon_r.setter
-    def epsilon_r(self, value: float):
+    def epsilon_r(self, value: float) -> None:
         self._proto.epsilon_r = value
 
     @property
@@ -356,7 +356,7 @@ class BoardStackupSoldermaskLayer(Wrapper):
         return self._proto.loss_tangent
 
     @loss_tangent.setter
-    def loss_tangent(self, value: float):
+    def loss_tangent(self, value: float) -> None:
         self._proto.loss_tangent = value
 
     @property
@@ -364,7 +364,7 @@ class BoardStackupSoldermaskLayer(Wrapper):
         return self._proto.material_name
 
     @material_name.setter
-    def material_name(self, value: str):
+    def material_name(self, value: str) -> None:
         self._proto.material_name = value
 
     @property
@@ -372,7 +372,7 @@ class BoardStackupSoldermaskLayer(Wrapper):
         return self._proto.thickness.value_nm
 
     @thickness.setter
-    def thickness(self, value: int):
+    def thickness(self, value: int) -> None:
         self._proto.thickness.value_nm = value
 
 
@@ -381,7 +381,7 @@ class BoardStackupSilkscreenLayer(Wrapper):
 
     .. versionadded:: 0.8.0 (KiCad 10.0.6)"""
 
-    def __init__(self, proto: board_pb2.BoardStackupSilkscreenLayer | None = None):
+    def __init__(self, proto: board_pb2.BoardStackupSilkscreenLayer | None = None) -> None:
         self._proto = board_pb2.BoardStackupSilkscreenLayer()
         if proto:
             self._proto.CopyFrom(proto)
@@ -391,12 +391,12 @@ class BoardStackupSilkscreenLayer(Wrapper):
         return self._proto.material_name
 
     @material_name.setter
-    def material_name(self, value: str):
+    def material_name(self, value: str) -> None:
         self._proto.material_name = value
 
 
 class BoardStackupLayer(Wrapper):
-    def __init__(self, proto: board_pb2.BoardStackupLayer | None = None):
+    def __init__(self, proto: board_pb2.BoardStackupLayer | None = None) -> None:
         self._proto = board_pb2.BoardStackupLayer()
         if proto:
             self._proto.CopyFrom(proto)
@@ -415,7 +415,7 @@ class BoardStackupLayer(Wrapper):
         return self._proto.thickness.value_nm
 
     @thickness.setter
-    def thickness(self, value: int):
+    def thickness(self, value: int) -> None:
         self._proto.thickness.value_nm = value
 
     @property
@@ -425,7 +425,7 @@ class BoardStackupLayer(Wrapper):
         return self._proto.layer
 
     @layer.setter
-    def layer(self, value: BoardLayer.ValueType):
+    def layer(self, value: BoardLayer.ValueType) -> None:
         self._proto.layer = value
 
     @property
@@ -433,7 +433,7 @@ class BoardStackupLayer(Wrapper):
         return self._proto.enabled
 
     @enabled.setter
-    def enabled(self, value: bool):
+    def enabled(self, value: bool) -> None:
         self._proto.enabled = value
 
     @property
@@ -441,7 +441,7 @@ class BoardStackupLayer(Wrapper):
         return self._proto.type
 
     @type.setter
-    def type(self, value: board_pb2.BoardStackupLayerType.ValueType):
+    def type(self, value: board_pb2.BoardStackupLayerType.ValueType) -> None:
         self._proto.type = value
 
     @property
@@ -455,7 +455,7 @@ class BoardStackupLayer(Wrapper):
         return None
 
     @dielectric.setter
-    def dielectric(self, value: BoardStackupDielectricLayer):
+    def dielectric(self, value: BoardStackupDielectricLayer) -> None:
         self._proto.dielectric.CopyFrom(value.proto)
 
     @property
@@ -469,7 +469,7 @@ class BoardStackupLayer(Wrapper):
         return None
 
     @soldermask.setter
-    def soldermask(self, value: BoardStackupSoldermaskLayer):
+    def soldermask(self, value: BoardStackupSoldermaskLayer) -> None:
         self._proto.soldermask.CopyFrom(value.proto)
 
     @property
@@ -483,7 +483,7 @@ class BoardStackupLayer(Wrapper):
         return None
 
     @silkscreen.setter
-    def silkscreen(self, value: BoardStackupSilkscreenLayer):
+    def silkscreen(self, value: BoardStackupSilkscreenLayer) -> None:
         self._proto.silkscreen.CopyFrom(value.proto)
 
     @property
@@ -491,7 +491,7 @@ class BoardStackupLayer(Wrapper):
         return Color(self._proto.color)
 
     @color.setter
-    def color(self, value: Color):
+    def color(self, value: Color) -> None:
         self._proto.color.CopyFrom(value.proto)
 
     @property
@@ -499,7 +499,7 @@ class BoardStackupLayer(Wrapper):
         return self._proto.material_name
 
     @material_name.setter
-    def material_name(self, value: str):
+    def material_name(self, value: str) -> None:
         self._proto.material_name = value
 
     @property
@@ -509,7 +509,7 @@ class BoardStackupLayer(Wrapper):
         return self._proto.user_name
 
     @user_name.setter
-    def user_name(self, value: str):
+    def user_name(self, value: str) -> None:
         self._proto.user_name = value
 
 
@@ -518,7 +518,7 @@ class BoardFinish(Wrapper):
 
     .. versionadded:: 0.8.0 (KiCad 10.0.6)"""
 
-    def __init__(self, proto: board_pb2.BoardFinish | None = None):
+    def __init__(self, proto: board_pb2.BoardFinish | None = None) -> None:
         self._proto = board_pb2.BoardFinish()
         if proto:
             self._proto.CopyFrom(proto)
@@ -532,7 +532,7 @@ class BoardFinish(Wrapper):
         return self._proto.type_name
 
     @type_name.setter
-    def type_name(self, value: str):
+    def type_name(self, value: str) -> None:
         self._proto.type_name = value
 
 
@@ -541,7 +541,7 @@ class BoardImpedanceControl(Wrapper):
 
     .. versionadded:: 0.8.0 (KiCad 10.0.6)"""
 
-    def __init__(self, proto: board_pb2.BoardImpedanceControl | None = None):
+    def __init__(self, proto: board_pb2.BoardImpedanceControl | None = None) -> None:
         self._proto = board_pb2.BoardImpedanceControl()
         if proto:
             self._proto.CopyFrom(proto)
@@ -552,7 +552,7 @@ class BoardImpedanceControl(Wrapper):
         return self._proto.is_controlled
 
     @is_controlled.setter
-    def is_controlled(self, value: bool):
+    def is_controlled(self, value: bool) -> None:
         self._proto.is_controlled = value
 
 
@@ -561,7 +561,7 @@ class BoardEdgeConnector(Wrapper):
 
     .. versionadded:: 0.8.0 (KiCad 10.0.6)"""
 
-    def __init__(self, proto: board_pb2.BoardEdgeConnector | None = None):
+    def __init__(self, proto: board_pb2.BoardEdgeConnector | None = None) -> None:
         self._proto = board_pb2.BoardEdgeConnector()
         if proto:
             self._proto.CopyFrom(proto)
@@ -571,7 +571,7 @@ class BoardEdgeConnector(Wrapper):
         return self._proto.type
 
     @type.setter
-    def type(self, value: board_pb2.BoardEdgeConnectorType.ValueType):
+    def type(self, value: board_pb2.BoardEdgeConnectorType.ValueType) -> None:
         self._proto.type = value
 
 
@@ -580,7 +580,7 @@ class EdgePlating(Wrapper):
 
     .. versionadded:: 0.8.0 (KiCad 10.0.6)"""
 
-    def __init__(self, proto: board_pb2.EdgePlating | None = None):
+    def __init__(self, proto: board_pb2.EdgePlating | None = None) -> None:
         self._proto = board_pb2.EdgePlating()
         if proto:
             self._proto.CopyFrom(proto)
@@ -591,7 +591,7 @@ class EdgePlating(Wrapper):
         return self._proto.has_edge_plating
 
     @has_edge_plating.setter
-    def has_edge_plating(self, value: bool):
+    def has_edge_plating(self, value: bool) -> None:
         self._proto.has_edge_plating = value
 
 
@@ -600,7 +600,7 @@ class BoardEdgeSettings(Wrapper):
 
     .. versionadded:: 0.8.0 (KiCad 10.0.6)"""
 
-    def __init__(self, proto: board_pb2.BoardEdgeSettings | None = None):
+    def __init__(self, proto: board_pb2.BoardEdgeSettings | None = None) -> None:
         self._proto = board_pb2.BoardEdgeSettings()
         if proto:
             self._proto.CopyFrom(proto)
@@ -610,7 +610,7 @@ class BoardEdgeSettings(Wrapper):
         return BoardEdgeConnector(self._proto.connector)
 
     @connector.setter
-    def connector(self, value: BoardEdgeConnector):
+    def connector(self, value: BoardEdgeConnector) -> None:
         self._proto.connector.CopyFrom(value.proto)
 
     @property
@@ -618,12 +618,12 @@ class BoardEdgeSettings(Wrapper):
         return EdgePlating(self._proto.plating)
 
     @plating.setter
-    def plating(self, value: EdgePlating):
+    def plating(self, value: EdgePlating) -> None:
         self._proto.plating.CopyFrom(value.proto)
 
 
 class BoardStackup(Wrapper):
-    def __init__(self, proto: board_pb2.BoardStackup | None = None):
+    def __init__(self, proto: board_pb2.BoardStackup | None = None) -> None:
         self._proto = board_pb2.BoardStackup()
         if proto:
             self._proto.CopyFrom(proto)
@@ -640,7 +640,7 @@ class BoardStackup(Wrapper):
         return BoardFinish(self._proto.finish)
 
     @finish.setter
-    def finish(self, value: BoardFinish):
+    def finish(self, value: BoardFinish) -> None:
         self._proto.finish.CopyFrom(value.proto)
 
     @property
@@ -652,7 +652,7 @@ class BoardStackup(Wrapper):
         return BoardImpedanceControl(self._proto.impedance)
 
     @impedance.setter
-    def impedance(self, value: BoardImpedanceControl):
+    def impedance(self, value: BoardImpedanceControl) -> None:
         self._proto.impedance.CopyFrom(value.proto)
 
     @property
@@ -664,7 +664,7 @@ class BoardStackup(Wrapper):
         return BoardEdgeSettings(self._proto.edge)
 
     @edge.setter
-    def edge(self, value: BoardEdgeSettings):
+    def edge(self, value: BoardEdgeSettings) -> None:
         self._proto.edge.CopyFrom(value.proto)
 
     @property
@@ -674,7 +674,7 @@ class BoardStackup(Wrapper):
 
 
 class Board(EditorCommandsHandler["BoardItem"], VariantsCommandHandler):
-    def __init__(self, kicad: KiCadClient, document: DocumentSpecifier):
+    def __init__(self, kicad: KiCadClient, document: DocumentSpecifier) -> None:
         """Represents an open board (.kicad_pcb) document in KiCad"""
         self._kicad = kicad
         self._doc = document
@@ -1565,7 +1565,7 @@ class Board(EditorCommandsHandler["BoardItem"], VariantsCommandHandler):
         response = self._kicad.send(cmd, embedded_files_pb2.EmbeddedFiles)
         return EmbeddedFiles(response)
 
-    def add_embedded_files(self, files: EmbeddedFile | Sequence[EmbeddedFile]):
+    def add_embedded_files(self, files: EmbeddedFile | Sequence[EmbeddedFile]) -> None:
         """Appends the given file(s) to the board's embedded files
 
         .. versionadded:: 0.9.0 (KiCad 10.0.7)"""
@@ -1575,7 +1575,7 @@ class Board(EditorCommandsHandler["BoardItem"], VariantsCommandHandler):
         cmd.files.files.extend([file.proto for file in files_list])
         self._kicad.send(cmd, Empty)
 
-    def set_embedded_files(self, files: EmbeddedFile | Sequence[EmbeddedFile]):
+    def set_embedded_files(self, files: EmbeddedFile | Sequence[EmbeddedFile]) -> None:
         """Replaces all files embedded in the board with the given file(s)
 
         .. versionadded:: 0.9.0 (KiCad 10.0.7)"""
@@ -1591,7 +1591,7 @@ class Board(EditorCommandsHandler["BoardItem"], VariantsCommandHandler):
         cmd.document.CopyFrom(self._doc)
         return TitleBlockInfo(self._kicad.send(cmd, base_types_pb2.TitleBlockInfo))
 
-    def set_title_block_info(self, title_block: TitleBlockInfo):
+    def set_title_block_info(self, title_block: TitleBlockInfo) -> None:
         """Sets the title block information for the board
 
         .. versionadded:: 0.7.0 (with KiCad 10.0.1)"""
@@ -1611,7 +1611,7 @@ class Board(EditorCommandsHandler["BoardItem"], VariantsCommandHandler):
 
     def set_origin(
         self, origin_type: board_commands_pb2.BoardOriginType.ValueType, origin: Vector2
-    ):
+    ) -> None:
         """Sets the specified (grid or drill/place) board origin
 
         .. versionadded:: 0.3.0"""
@@ -1803,7 +1803,7 @@ class Board(EditorCommandsHandler["BoardItem"], VariantsCommandHandler):
 
         return result
 
-    def interactive_move(self, items: KIID | Iterable[KIID]):
+    def interactive_move(self, items: KIID | Iterable[KIID]) -> None:
         """Initiates an interactive move operation on one or more items on the board.  The user
         will be able to move the items interactively in the KiCad editor.  This is a blocking
         operation; this function will return immediately but future API calls will return ``AS_BUSY``
@@ -1821,10 +1821,10 @@ class Board(EditorCommandsHandler["BoardItem"], VariantsCommandHandler):
     def refill_zones(
         self,
         zones: KIID | Iterable[KIID] | None = None,
-        block=True,
+        block: bool = True,
         max_poll_seconds: float = 30.0,
         poll_interval_seconds: float = 0.5,
-    ):
+    ) -> None:
         """Refills all zones on the board.  If block is True, this function will block until the
         refill operation is complete.  If block is False, this function will return immediately,
         and future API calls will return ``AS_BUSY`` until the refill operation is complete.
@@ -1886,7 +1886,7 @@ class Board(EditorCommandsHandler["BoardItem"], VariantsCommandHandler):
         response = self._kicad.send(cmd, board_commands_pb2.BoardLayers)
         return response.layers
 
-    def set_visible_layers(self, layers: Sequence[board_types_pb2.BoardLayer.ValueType]):
+    def set_visible_layers(self, layers: Sequence[board_types_pb2.BoardLayer.ValueType]) -> None:
         cmd = board_commands_pb2.SetVisibleLayers()
         cmd.board.CopyFrom(self._doc)
         cmd.layers.extend(layers)
@@ -1898,7 +1898,7 @@ class Board(EditorCommandsHandler["BoardItem"], VariantsCommandHandler):
         response = self._kicad.send(cmd, board_commands_pb2.BoardLayerResponse)
         return response.layer
 
-    def set_active_layer(self, layer: board_types_pb2.BoardLayer.ValueType):
+    def set_active_layer(self, layer: board_types_pb2.BoardLayer.ValueType) -> None:
         cmd = board_commands_pb2.SetActiveLayer()
         cmd.board.CopyFrom(self._doc)
         cmd.layer = layer
@@ -1909,7 +1909,7 @@ class Board(EditorCommandsHandler["BoardItem"], VariantsCommandHandler):
         response = self._kicad.send(cmd, board_commands_pb2.BoardEditorAppearanceSettings)
         return BoardEditorAppearanceSettings(response)
 
-    def set_editor_appearance_settings(self, settings: BoardEditorAppearanceSettings):
+    def set_editor_appearance_settings(self, settings: BoardEditorAppearanceSettings) -> None:
         cmd = board_commands_pb2.SetBoardEditorAppearanceSettings()
         cmd.settings.CopyFrom(settings.proto)
         self._kicad.send(cmd, Empty)
@@ -1924,7 +1924,7 @@ class Board(EditorCommandsHandler["BoardItem"], VariantsCommandHandler):
         response = self._kicad.send(cmd, board_commands_pb2.BoardPlotSettingsResponse)
         return PlotSettings(response.plot_settings)
 
-    def set_plot_settings(self, plot_settings: PlotSettings):
+    def set_plot_settings(self, plot_settings: PlotSettings) -> None:
         """Sets the board plot settings stored in the board file.
 
         .. versionadded:: 0.x.0

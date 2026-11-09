@@ -55,12 +55,14 @@ class EditorCommandsHandler(Generic[_ItemT_co]):
         """Converts an unwrapped protobuf message into a concrete item wrapper"""
         raise NotImplementedError
 
-    def save(self):
+    def save(self) -> None:
         command = project_commands_pb2.SaveDocument()
         command.document.CopyFrom(self._doc)
         self._kicad.send(command, Empty)
 
-    def save_as(self, filename: str, overwrite: bool = False, include_project: bool = True):
+    def save_as(
+        self, filename: str, overwrite: bool = False, include_project: bool = True
+    ) -> None:
         """
         Saves the document to a new file.  Does not open the newly-saved file.
 
@@ -76,7 +78,7 @@ class EditorCommandsHandler(Generic[_ItemT_co]):
         command.options.include_project = include_project
         self._kicad.send(command, Empty)
 
-    def revert(self):
+    def revert(self) -> None:
         """Reverts the document to the last saved state"""
         command = editor_commands_pb2.RevertDocument()
         command.document.CopyFrom(self._doc)
@@ -99,7 +101,7 @@ class EditorCommandsHandler(Generic[_ItemT_co]):
         command.header.document.CopyFrom(self._doc)
         return Commit(self._kicad.send(command, editor_commands_pb2.BeginCommitResponse).id)
 
-    def push_commit(self, commit: Commit, message: str = ""):
+    def push_commit(self, commit: Commit, message: str = "") -> None:
         """If a commit is open, pushes the changes to the document and closes the commit.  This
         will result in a single undo step being added to the undo history."""
         command = editor_commands_pb2.EndCommit()
@@ -109,7 +111,7 @@ class EditorCommandsHandler(Generic[_ItemT_co]):
         command.message = message
         self._kicad.send(command, editor_commands_pb2.EndCommitResponse)
 
-    def drop_commit(self, commit: Commit):
+    def drop_commit(self, commit: Commit) -> None:
         """Cancels a commit, discarding any changes made since the commit was opened"""
         command = editor_commands_pb2.EndCommit()
         command.id.CopyFrom(commit.id)
@@ -231,7 +233,7 @@ class EditorCommandsHandler(Generic[_ItemT_co]):
             raise ApiError(f"Failed to update items: {'; '.join(failures)}")
         return results
 
-    def remove_items(self, items: _ItemT_co | Sequence[_ItemT_co]):
+    def remove_items(self, items: _ItemT_co | Sequence[_ItemT_co]) -> None:
         """Deletes one or more items from the document"""
         command = editor_commands_pb2.DeleteItems()
         command.header.document.CopyFrom(self._doc)
@@ -261,7 +263,7 @@ class EditorCommandsHandler(Generic[_ItemT_co]):
             )
             raise ApiError(f"Failed to delete items: {failures}")
 
-    def remove_items_by_id(self, items: KIID | Sequence[KIID]):
+    def remove_items_by_id(self, items: KIID | Sequence[KIID]) -> None:
         """
         Deletes one or more items from the document using their unique IDs
 
@@ -347,7 +349,7 @@ class EditorCommandsHandler(Generic[_ItemT_co]):
             for item in self._kicad.send(command, editor_commands_pb2.SelectionResponse).items
         ]
 
-    def clear_selection(self):
+    def clear_selection(self) -> None:
         command = editor_commands_pb2.ClearSelection()
         command.header.document.CopyFrom(self._doc)
         self._kicad.send(command, Empty)
