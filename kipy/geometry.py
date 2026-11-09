@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import math
 import sys
+from collections.abc import Iterator
 
 from kipy.proto.common import types
 from kipy.util import from_mm
@@ -41,13 +42,13 @@ class Vector2(Wrapper):
         self,
         proto: types.Vector2 | Wrapper | None = None,
         proto_ref: types.Vector2 | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.Vector2()
 
         if proto is not None:
             self._proto.CopyFrom(proto.proto if isinstance(proto, Wrapper) else proto)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Vector2({self.x}, {self.y})"
 
     @classmethod
@@ -83,7 +84,7 @@ class Vector2(Wrapper):
         return self._proto.x_nm
 
     @x.setter
-    def x(self, val: int):
+    def x(self, val: int) -> None:
         self._proto.x_nm = val
 
     @property
@@ -91,13 +92,13 @@ class Vector2(Wrapper):
         return self._proto.y_nm
 
     @y.setter
-    def y(self, val: int):
+    def y(self, val: int) -> None:
         self._proto.y_nm = val
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((self.x, self.y))
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if isinstance(other, Vector2):
             return self.x == other.x and self.y == other.y
         return NotImplemented
@@ -187,13 +188,13 @@ class Vector2(Wrapper):
 class Vector3D(Wrapper):
     """Wraps a kiapi.common.types.Vector3D"""
 
-    def __init__(self, proto: types.Vector3D | None = None):
+    def __init__(self, proto: types.Vector3D | None = None) -> None:
         self._proto = types.Vector3D()
 
         if proto is not None:
             self._proto.CopyFrom(proto)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Vector3D({self.x}, {self.y}, {self.z})"
 
     @classmethod
@@ -210,7 +211,7 @@ class Vector3D(Wrapper):
         return self._proto.x_nm
 
     @x.setter
-    def x(self, val: float):
+    def x(self, val: float) -> None:
         self._proto.x_nm = val
 
     @property
@@ -218,7 +219,7 @@ class Vector3D(Wrapper):
         return self._proto.y_nm
 
     @y.setter
-    def y(self, val: float):
+    def y(self, val: float) -> None:
         self._proto.y_nm = val
 
     @property
@@ -226,13 +227,13 @@ class Vector3D(Wrapper):
         return self._proto.z_nm
 
     @z.setter
-    def z(self, val: float):
+    def z(self, val: float) -> None:
         self._proto.z_nm = val
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((self.x, self.y, self.z))
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if isinstance(other, Vector3D):
             return self.x == other.x and self.y == other.y and self.z == other.z
         return NotImplemented
@@ -274,7 +275,7 @@ class Box2:
         self,
         pos_proto: types.Vector2 | None = None,
         size_proto: types.Vector2 | None = None,
-    ):
+    ) -> None:
         self._pos_proto = types.Vector2()
         self._size_proto = types.Vector2()
 
@@ -284,7 +285,7 @@ class Box2:
         if size_proto is not None:
             self._size_proto.CopyFrom(size_proto)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Box2(pos={self.pos}, size={self.size})"
 
     @classmethod
@@ -324,7 +325,7 @@ class Box2:
     def size(self) -> Vector2:
         return Vector2(self._size_proto)
 
-    def move(self, delta: Vector2):
+    def move(self, delta: Vector2) -> None:
         self._pos_proto.x_nm += delta.x
         self._pos_proto.y_nm += delta.y
 
@@ -333,7 +334,7 @@ class Box2:
         center_y = self._pos_proto.y_nm + self._size_proto.y_nm // 2
         return Vector2.from_xy(center_x, center_y)
 
-    def merge(self, other: Vector2 | Box2):
+    def merge(self, other: Vector2 | Box2) -> None:
         if isinstance(other, Vector2):
             min_x = min(self.pos.x, other.x)
             min_y = min(self.pos.y, other.y)
@@ -350,7 +351,7 @@ class Box2:
         self._size_proto.x_nm = max_x - min_x
         self._size_proto.y_nm = max_y - min_y
 
-    def inflate(self, amount: int):
+    def inflate(self, amount: int) -> None:
         new_width = self.size.x + amount
         new_height = self.size.y + amount
         self._pos_proto.x_nm -= (new_width - self.size.x) // 2
@@ -364,13 +365,13 @@ class Angle(Wrapper):
         self,
         proto: types.Angle | Wrapper | None = None,
         proto_ref: types.Angle | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.Angle()
 
         if proto is not None:
             self._proto.CopyFrom(proto.proto if isinstance(proto, Wrapper) else proto)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Angle({self.degrees})"
 
     @classmethod
@@ -385,10 +386,10 @@ class Angle(Wrapper):
         return self._proto.value_degrees
 
     @degrees.setter
-    def degrees(self, val: float):
+    def degrees(self, val: float) -> None:
         self._proto.value_degrees = val
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if isinstance(other, Angle):
             return self.degrees == other.degrees
         return NotImplemented
@@ -446,13 +447,13 @@ class ArcStartMidEnd(Wrapper):
         self,
         proto: types.ArcStartMidEnd | None = None,
         proto_ref: types.ArcStartMidEnd | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.ArcStartMidEnd()
 
         if proto is not None:
             self._proto.CopyFrom(proto)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"ArcStartMidEnd(start={self.start}, mid={self.mid}, end={self.end})"
 
     @property
@@ -460,7 +461,7 @@ class ArcStartMidEnd(Wrapper):
         return Vector2(self._proto.start)
 
     @start.setter
-    def start(self, val: Vector2):
+    def start(self, val: Vector2) -> None:
         self._proto.start.CopyFrom(val._proto)
 
     @property
@@ -468,7 +469,7 @@ class ArcStartMidEnd(Wrapper):
         return Vector2(self._proto.mid)
 
     @mid.setter
-    def mid(self, val: Vector2):
+    def mid(self, val: Vector2) -> None:
         self._proto.mid.CopyFrom(val._proto)
 
     @property
@@ -476,7 +477,7 @@ class ArcStartMidEnd(Wrapper):
         return Vector2(self._proto.end)
 
     @end.setter
-    def end(self, val: Vector2):
+    def end(self, val: Vector2) -> None:
         self._proto.end.CopyFrom(val._proto)
 
     def center(self) -> Vector2 | None:
@@ -519,7 +520,7 @@ class PolyLineNode(Wrapper):
         self,
         proto: types.PolyLineNode | None = None,
         proto_ref: types.PolyLineNode | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.PolyLineNode()
 
         if proto is not None:
@@ -537,7 +538,7 @@ class PolyLineNode(Wrapper):
         n.point = Vector2.from_xy(x, y)
         return n
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         if self.has_point:
             return f"PolyLineNode(point={self.point})"
         elif self.has_arc:
@@ -553,7 +554,7 @@ class PolyLineNode(Wrapper):
         return Vector2(self._proto.point)
 
     @point.setter
-    def point(self, val: Vector2):
+    def point(self, val: Vector2) -> None:
         self._proto.point.CopyFrom(val._proto)
 
     @property
@@ -565,7 +566,7 @@ class PolyLineNode(Wrapper):
         return ArcStartMidEnd(proto_ref=self._proto.arc)
 
     @arc.setter
-    def arc(self, val: ArcStartMidEnd):
+    def arc(self, val: ArcStartMidEnd) -> None:
         self._proto.arc.CopyFrom(val._proto)
 
 
@@ -574,13 +575,13 @@ class PolyLine(Wrapper):
         self,
         proto: types.PolyLine | None = None,
         proto_ref: types.PolyLine | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.PolyLine()
 
         if proto is not None:
             self._proto.CopyFrom(proto)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"PolyLine(nodes={self.nodes}, closed={self.closed})"
 
     @property
@@ -592,34 +593,34 @@ class PolyLine(Wrapper):
         return self._proto.closed
 
     @closed.setter
-    def closed(self, val: bool):
+    def closed(self, val: bool) -> None:
         self._proto.closed = val
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[PolyLineNode]:
         return iter(self.nodes)
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.nodes)
 
     def __getitem__(self, index: int) -> PolyLineNode:
         return self.nodes[index]
 
-    def __setitem__(self, index: int, value: PolyLineNode):
+    def __setitem__(self, index: int, value: PolyLineNode) -> None:
         self._proto.nodes[index].CopyFrom(value._proto)
 
-    def append(self, node: PolyLineNode):
+    def append(self, node: PolyLineNode) -> None:
         self._proto.nodes.append(node._proto)
 
-    def insert(self, index: int, node: PolyLineNode):
+    def insert(self, index: int, node: PolyLineNode) -> None:
         self._proto.nodes.insert(index, node._proto)
 
-    def remove(self, node: PolyLineNode):
+    def remove(self, node: PolyLineNode) -> None:
         self._proto.nodes.remove(node._proto)
 
-    def clear(self):
+    def clear(self) -> None:
         self._proto.ClearField("nodes")
 
-    def rotate(self, delta: Angle, center: Vector2):
+    def rotate(self, delta: Angle, center: Vector2) -> None:
         for node in self.nodes:
             if node.has_point:
                 node.point = node.point.rotate(delta, center)
@@ -635,7 +636,7 @@ class PolygonWithHoles(Wrapper):
         proto: types.PolygonWithHoles | None = None,
         proto_ref: types.PolygonWithHoles | None = None,
         auto_close: bool = True,
-    ):
+    ) -> None:
         """Creates a polygon with an outline and optional holes.
 
         :param auto_close: If true (the default), assigning :attr:`outline` forces the
@@ -650,7 +651,7 @@ class PolygonWithHoles(Wrapper):
 
         self._auto_close = auto_close
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"PolygonWithHoles(outline={self.outline}, holes={self.holes})"
 
     @property
@@ -658,7 +659,7 @@ class PolygonWithHoles(Wrapper):
         return PolyLine(proto_ref=self._proto.outline)
 
     @outline.setter
-    def outline(self, outline: PolyLine):
+    def outline(self, outline: PolyLine) -> None:
         self._proto.outline.CopyFrom(outline._proto)
 
         if self._auto_close:
@@ -668,12 +669,12 @@ class PolygonWithHoles(Wrapper):
     def holes(self) -> MutableWrapperSequence[PolyLine]:
         return MutableWrapperSequence(self._proto.holes, PolyLine)
 
-    def add_hole(self, hole: PolyLine):
+    def add_hole(self, hole: PolyLine) -> None:
         # Holes must be a closed shape
         hole.closed = True
         self._proto.holes.append(hole._proto)
 
-    def remove_hole(self, hole: PolyLine):
+    def remove_hole(self, hole: PolyLine) -> None:
         self._proto.holes.remove(hole._proto)
 
     def bounding_box(self) -> Box2:
@@ -703,7 +704,7 @@ class PolygonWithHoles(Wrapper):
             Vector2.from_xy(int(max_x - min_x), int(max_y - min_y)),
         )
 
-    def move(self, delta: Vector2):
+    def move(self, delta: Vector2) -> None:
         for node in self.outline:
             if node.has_point:
                 node.point += delta
@@ -721,7 +722,7 @@ class PolygonWithHoles(Wrapper):
                     node.arc.mid += delta
                     node.arc.end += delta
 
-    def rotate(self, delta: Angle, center: Vector2 | None = None):
+    def rotate(self, delta: Angle, center: Vector2 | None = None) -> None:
         if center is None:
             center = self.bounding_box().center()
 
@@ -744,7 +745,7 @@ def arc_center(start: Vector2, mid: Vector2, end: Vector2) -> Vector2 | None:
     if start == end:
         return (start + mid) * 0.5
 
-    def perpendicular_bisector(p1: Vector2, p2: Vector2):
+    def perpendicular_bisector(p1: Vector2, p2: Vector2) -> tuple[Vector2, Vector2]:
         mid_point = (p1 + p2) * 0.5
         direction = p2 - p1
         perpendicular_direction = Vector2.from_xy(-direction.y, direction.x)

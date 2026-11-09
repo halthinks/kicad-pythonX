@@ -30,6 +30,7 @@ import sys
 import time
 from collections.abc import Sequence
 from tempfile import gettempdir
+from types import TracebackType
 from typing import cast
 
 from google.protobuf.empty_pb2 import Empty
@@ -109,7 +110,7 @@ def _default_kicad_token() -> str:
 
 
 class KiCadVersion:
-    def __init__(self, major: int, minor: int, patch: int, full_version: str):
+    def __init__(self, major: int, minor: int, patch: int, full_version: str) -> None:
         self.major = major
         self.minor = minor
         self.patch = patch
@@ -138,27 +139,27 @@ class KiCadVersion:
 
         return KiCadVersion(major, minor, patch, f"{version_part}")
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.major}.{self.minor}.{self.patch} ({self.full_version})"
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, KiCadVersion):
             return NotImplemented
 
         return (self.major, self.minor, self.patch) == (other.major, other.minor, other.patch)
 
-    def __lt__(self, other):
+    def __lt__(self, other: KiCadVersion) -> bool:
         if not isinstance(other, KiCadVersion):
             return NotImplemented
         return (self.major, self.minor, self.patch) < (other.major, other.minor, other.patch)
 
-    def __le__(self, other):
+    def __le__(self, other: KiCadVersion) -> bool:
         return self == other or self < other
 
-    def __gt__(self, other):
+    def __gt__(self, other: KiCadVersion) -> bool:
         return not self <= other
 
-    def __ge__(self, other):
+    def __ge__(self, other: KiCadVersion) -> bool:
         return not self < other
 
 
@@ -172,7 +173,7 @@ class KiCad:
         headless: bool = False,
         kicad_cli_path: str | None = None,
         file_path: str | None = None,
-    ):
+    ) -> None:
         """Creates a connection to a running KiCad instance
 
         :param socket_path: The path to the IPC API socket (leave default to read from the
@@ -217,14 +218,14 @@ class KiCad:
             raise
 
     @staticmethod
-    def from_client(client: KiCadClient):
+    def from_client(client: KiCadClient) -> KiCad:
         """Creates a KiCad object from an existing KiCad client"""
         k = KiCad.__new__(KiCad)
         k._client = client
         k._server = None
         return k
 
-    def close(self):
+    def close(self) -> None:
         """Close the KiCad connection and stop any headless server started by this object."""
         if hasattr(self, "_client"):
             self._client.close()
@@ -236,10 +237,15 @@ class KiCad:
     def __enter__(self) -> Self:
         return self
 
-    def __exit__(self, exc_type, exc, traceback):
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc: BaseException | None,
+        traceback: TracebackType | None,
+    ) -> None:
         self.close()
 
-    def __del__(self):
+    def __del__(self) -> None:
         self.close()
 
     def get_version(self) -> KiCadVersion:
@@ -270,7 +276,7 @@ class KiCad:
 
         return True
 
-    def ping(self):
+    def ping(self) -> None:
         self._client.send(commands.Ping(), Empty)
 
     def get_kicad_binary_path(self, binary_name: str) -> str:
@@ -310,7 +316,7 @@ class KiCad:
         cmd.identifier = identifier
         return self._client.send(cmd, commands.StringResponse).response
 
-    def run_action(self, action: str):
+    def run_action(self, action: str) -> commands.RunActionResponse:
         """Runs a KiCad tool action, if it is available
 
         WARNING: This is an unstable API and is not intended for use other
@@ -341,7 +347,7 @@ class KiCad:
         response = self._client.send(command, project_commands_pb2.OpenDocumentResponse)
         return response.document
 
-    def close_document(self, document: DocumentSpecifier):
+    def close_document(self, document: DocumentSpecifier) -> None:
         """In headless mode, closes an open document.  Not currently supported for GUI mode.
 
         .. versionadded:: 0.7.0
@@ -370,7 +376,7 @@ class KiCad:
         library: str,
         name: str,
         type: DocumentType.ValueType,
-    ):
+    ) -> None:
         """Loads a library item (e.g. a footprint) into the matching editor.
 
         At present, only ``DOCTYPE_FOOTPRINT`` is supported by KiCad; the
@@ -561,7 +567,7 @@ class KiCad:
     def load_all_libraries(
         self,
         types: LibraryType.ValueType | Sequence[LibraryType.ValueType] | None = None,
-    ):
+    ) -> None:
         """Starts a background load of all libraries of the given type(s) that are listed
         in the library tables
 
@@ -597,7 +603,7 @@ class KiCad:
         type: LibraryType.ValueType,
         scope: LibraryTableScope.ValueType,
         nicknames: Sequence[str] = (),
-    ):
+    ) -> None:
         """Reloads library table row(s) from disk
 
         The reload process operates asynchronously; updated library content will not be

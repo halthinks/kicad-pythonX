@@ -45,16 +45,16 @@ class ValidationReport:
     root: Path
     messages: list[ValidationMessage] = field(default_factory=list)
 
-    def add_error(self, message: str, path: str | None = None):
+    def add_error(self, message: str, path: str | None = None) -> None:
         self.messages.append(ValidationMessage(level="error", message=message, path=path))
 
-    def add_warning(self, message: str, path: str | None = None):
+    def add_warning(self, message: str, path: str | None = None) -> None:
         self.messages.append(ValidationMessage(level="warning", message=message, path=path))
 
-    def add_info(self, message: str, path: str | None = None):
+    def add_info(self, message: str, path: str | None = None) -> None:
         self.messages.append(ValidationMessage(level="info", message=message, path=path))
 
-    def add(self, message: ValidationMessage):
+    def add(self, message: ValidationMessage) -> None:
         self.messages.append(message)
 
     @property

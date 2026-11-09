@@ -24,6 +24,7 @@ import base64
 import sys
 from collections.abc import Sequence
 from pathlib import Path
+from typing import Any
 
 import zstandard
 
@@ -81,7 +82,7 @@ else:
 
 
 class Commit:
-    def __init__(self, id: KIID):
+    def __init__(self, id: KIID) -> None:
         self._id = id
 
     @property
@@ -96,7 +97,7 @@ class SheetPath(Wrapper):
         self,
         proto: types.SheetPath | None = None,
         proto_ref: types.SheetPath | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.SheetPath()
 
         if proto is not None:
@@ -110,7 +111,7 @@ class SheetPath(Wrapper):
         return list(self._proto.path)
 
     @path.setter
-    def path(self, path: list[KIID]):
+    def path(self, path: list[KIID]) -> None:
         del self._proto.path[:]
         self._proto.path.extend(path)
 
@@ -131,7 +132,7 @@ class MinOptMax(Wrapper):
         self,
         proto: base_types_pb2.MinOptMax | None = None,
         proto_ref: base_types_pb2.MinOptMax | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else base_types_pb2.MinOptMax()
 
         if proto is not None:
@@ -145,7 +146,7 @@ class MinOptMax(Wrapper):
         return self._proto.min if self._proto.HasField("min") else None
 
     @min.setter
-    def min(self, value: int | None):
+    def min(self, value: int | None) -> None:
         if value is None:
             self._proto.ClearField("min")
         else:
@@ -156,7 +157,7 @@ class MinOptMax(Wrapper):
         return self._proto.opt if self._proto.HasField("opt") else None
 
     @opt.setter
-    def opt(self, value: int | None):
+    def opt(self, value: int | None) -> None:
         if value is None:
             self._proto.ClearField("opt")
         else:
@@ -167,7 +168,7 @@ class MinOptMax(Wrapper):
         return self._proto.max if self._proto.HasField("max") else None
 
     @max.setter
-    def max(self, value: int | None):
+    def max(self, value: int | None) -> None:
         if value is None:
             self._proto.ClearField("max")
         else:
@@ -179,7 +180,7 @@ class Color(Wrapper):
         self,
         proto: types.Color | None = None,
         proto_ref: types.Color | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.Color()
 
         if proto is not None:
@@ -190,7 +191,7 @@ class Color(Wrapper):
         return self._proto.r
 
     @red.setter
-    def red(self, red: float):
+    def red(self, red: float) -> None:
         self._proto.r = red
 
     @property
@@ -198,7 +199,7 @@ class Color(Wrapper):
         return self._proto.g
 
     @green.setter
-    def green(self, green: float):
+    def green(self, green: float) -> None:
         self._proto.g = green
 
     @property
@@ -206,7 +207,7 @@ class Color(Wrapper):
         return self._proto.b
 
     @blue.setter
-    def blue(self, blue: float):
+    def blue(self, blue: float) -> None:
         self._proto.b = blue
 
     @property
@@ -214,7 +215,7 @@ class Color(Wrapper):
         return self._proto.a
 
     @alpha.setter
-    def alpha(self, alpha: float):
+    def alpha(self, alpha: float) -> None:
         self._proto.a = alpha
 
 
@@ -223,7 +224,7 @@ class TextAttributes(Wrapper):
         self,
         proto: types.TextAttributes | None = None,
         proto_ref: types.TextAttributes | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.TextAttributes()
 
         if proto is not None:
@@ -250,7 +251,7 @@ class TextAttributes(Wrapper):
         return self._proto.visible
 
     @visible.setter
-    def visible(self, visible: bool):
+    def visible(self, visible: bool) -> None:
         self._proto.visible = visible
 
     @property
@@ -258,7 +259,7 @@ class TextAttributes(Wrapper):
         return self._proto.font_name
 
     @font_name.setter
-    def font_name(self, font_name: str):
+    def font_name(self, font_name: str) -> None:
         self._proto.font_name = font_name
 
     @property
@@ -267,7 +268,7 @@ class TextAttributes(Wrapper):
         return self._proto.angle.value_degrees
 
     @angle.setter
-    def angle(self, angle: float):
+    def angle(self, angle: float) -> None:
         self._proto.angle.value_degrees = angle
 
     @property
@@ -275,7 +276,7 @@ class TextAttributes(Wrapper):
         return self._proto.line_spacing
 
     @line_spacing.setter
-    def line_spacing(self, line_spacing: float):
+    def line_spacing(self, line_spacing: float) -> None:
         self._proto.line_spacing = line_spacing
 
     @property
@@ -283,7 +284,7 @@ class TextAttributes(Wrapper):
         return self._proto.stroke_width.value_nm
 
     @stroke_width.setter
-    def stroke_width(self, stroke_width: int):
+    def stroke_width(self, stroke_width: int) -> None:
         self._proto.stroke_width.value_nm = stroke_width
 
     @property
@@ -291,7 +292,7 @@ class TextAttributes(Wrapper):
         return self._proto.italic
 
     @italic.setter
-    def italic(self, italic: bool):
+    def italic(self, italic: bool) -> None:
         self._proto.italic = italic
 
     @property
@@ -299,7 +300,7 @@ class TextAttributes(Wrapper):
         return self._proto.bold
 
     @bold.setter
-    def bold(self, bold: bool):
+    def bold(self, bold: bool) -> None:
         self._proto.bold = bold
 
     @property
@@ -307,7 +308,7 @@ class TextAttributes(Wrapper):
         return self._proto.underlined
 
     @underlined.setter
-    def underlined(self, underlined: bool):
+    def underlined(self, underlined: bool) -> None:
         self._proto.underlined = underlined
 
     @property
@@ -315,7 +316,7 @@ class TextAttributes(Wrapper):
         return self._proto.mirrored
 
     @mirrored.setter
-    def mirrored(self, mirrored: bool):
+    def mirrored(self, mirrored: bool) -> None:
         self._proto.mirrored = mirrored
 
     @property
@@ -323,7 +324,7 @@ class TextAttributes(Wrapper):
         return self._proto.multiline
 
     @multiline.setter
-    def multiline(self, multiline: bool):
+    def multiline(self, multiline: bool) -> None:
         self._proto.multiline = multiline
 
     @property
@@ -331,7 +332,7 @@ class TextAttributes(Wrapper):
         return self._proto.keep_upright
 
     @keep_upright.setter
-    def keep_upright(self, keep_upright: bool):
+    def keep_upright(self, keep_upright: bool) -> None:
         self._proto.keep_upright = keep_upright
 
     @property
@@ -339,7 +340,7 @@ class TextAttributes(Wrapper):
         return Vector2(proto_ref=self._proto.size)
 
     @size.setter
-    def size(self, size: Vector2):
+    def size(self, size: Vector2) -> None:
         self._proto.size.CopyFrom(size.proto)
 
     @property
@@ -347,7 +348,7 @@ class TextAttributes(Wrapper):
         return self._proto.horizontal_alignment
 
     @horizontal_alignment.setter
-    def horizontal_alignment(self, alignment: types.HorizontalAlignment.ValueType):
+    def horizontal_alignment(self, alignment: types.HorizontalAlignment.ValueType) -> None:
         self._proto.horizontal_alignment = alignment
 
     @property
@@ -355,7 +356,7 @@ class TextAttributes(Wrapper):
         return self._proto.vertical_alignment
 
     @vertical_alignment.setter
-    def vertical_alignment(self, alignment: types.VerticalAlignment.ValueType):
+    def vertical_alignment(self, alignment: types.VerticalAlignment.ValueType) -> None:
         self._proto.vertical_alignment = alignment
 
 
@@ -366,7 +367,7 @@ class LibraryIdentifier(Wrapper):
         self,
         proto: types.LibraryIdentifier | None = None,
         proto_ref: types.LibraryIdentifier | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.LibraryIdentifier()
 
         if proto is not None:
@@ -377,7 +378,7 @@ class LibraryIdentifier(Wrapper):
         return self._proto.library_nickname
 
     @library.setter
-    def library(self, library: str):
+    def library(self, library: str) -> None:
         self._proto.library_nickname = library
 
     @property
@@ -385,7 +386,7 @@ class LibraryIdentifier(Wrapper):
         return self._proto.entry_name
 
     @name.setter
-    def name(self, name: str):
+    def name(self, name: str) -> None:
         self._proto.entry_name = name
 
     def __str__(self) -> str:
@@ -397,7 +398,7 @@ class LibraryStatus(Wrapper):
         self,
         proto: types.LibraryStatusEntry | None = None,
         proto_ref: types.LibraryStatusEntry | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.LibraryStatusEntry()
 
         if proto is not None:
@@ -441,7 +442,7 @@ class StrokeAttributes(Wrapper):
         self,
         proto: types.StrokeAttributes | None = None,
         proto_ref: types.StrokeAttributes | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.StrokeAttributes()
 
         if proto is not None:
@@ -453,7 +454,7 @@ class StrokeAttributes(Wrapper):
         return Color(proto_ref=self._proto.color)
 
     @color.setter
-    def color(self, color: Color):
+    def color(self, color: Color) -> None:
         self._proto.color.CopyFrom(color.proto)
 
     @property
@@ -462,7 +463,7 @@ class StrokeAttributes(Wrapper):
         return self._proto.width.value_nm
 
     @width.setter
-    def width(self, width: int):
+    def width(self, width: int) -> None:
         self._proto.width.value_nm = width
 
     @property
@@ -470,7 +471,7 @@ class StrokeAttributes(Wrapper):
         return self._proto.style
 
     @style.setter
-    def style(self, style: types.StrokeLineStyle.ValueType):
+    def style(self, style: types.StrokeLineStyle.ValueType) -> None:
         self._proto.style = style
 
 
@@ -479,7 +480,7 @@ class GraphicFillAttributes(Wrapper):
         self,
         proto: types.GraphicFillAttributes | None = None,
         proto_ref: types.GraphicFillAttributes | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.GraphicFillAttributes()
 
         if proto is not None:
@@ -490,7 +491,7 @@ class GraphicFillAttributes(Wrapper):
         return self._proto.fill_type == types.GraphicFillType.GFT_FILLED
 
     @filled.setter
-    def filled(self, fill: bool):
+    def filled(self, fill: bool) -> None:
         self._proto.fill_type = (
             types.GraphicFillType.GFT_FILLED if fill else types.GraphicFillType.GFT_UNFILLED
         )
@@ -501,7 +502,7 @@ class GraphicFillAttributes(Wrapper):
         return Color(proto_ref=self._proto.color)
 
     @color.setter
-    def color(self, color: Color):
+    def color(self, color: Color) -> None:
         self._proto.color.CopyFrom(color.proto)
 
 
@@ -510,7 +511,7 @@ class GraphicAttributes(Wrapper):
         self,
         proto: types.GraphicAttributes | None = None,
         proto_ref: types.GraphicAttributes | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.GraphicAttributes()
 
         if proto is not None:
@@ -531,7 +532,9 @@ class GraphicAttributes(Wrapper):
 class Text(Wrapper):
     """Common text properties (wrapper for KiCad's EDA_TEXT) shared between board and schematic"""
 
-    def __init__(self, proto: types.Text | None = None, proto_ref: types.Text | None = None):
+    def __init__(
+        self, proto: types.Text | None = None, proto_ref: types.Text | None = None
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.Text()
 
         if proto is not None:
@@ -542,7 +545,7 @@ class Text(Wrapper):
         return Vector2(proto_ref=self._proto.position)
 
     @position.setter
-    def position(self, pos: Vector2):
+    def position(self, pos: Vector2) -> None:
         self._proto.position.CopyFrom(pos.proto)
 
     @property
@@ -550,7 +553,7 @@ class Text(Wrapper):
         return self._proto.text
 
     @value.setter
-    def value(self, text: str):
+    def value(self, text: str) -> None:
         self._proto.text = text
 
     @property
@@ -558,7 +561,7 @@ class Text(Wrapper):
         return TextAttributes(proto_ref=self._proto.attributes)
 
     @attributes.setter
-    def attributes(self, attributes: TextAttributes):
+    def attributes(self, attributes: TextAttributes) -> None:
         self._proto.attributes.CopyFrom(attributes.proto)
 
 
@@ -567,7 +570,7 @@ class TextBox(Wrapper):
         self,
         proto: types.TextBox | None = None,
         proto_ref: types.TextBox | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.TextBox()
 
         if proto is not None:
@@ -578,7 +581,7 @@ class TextBox(Wrapper):
         return Vector2(proto_ref=self._proto.top_left)
 
     @top_left.setter
-    def top_left(self, pos: Vector2):
+    def top_left(self, pos: Vector2) -> None:
         self._proto.top_left.CopyFrom(pos.proto)
 
     @property
@@ -586,7 +589,7 @@ class TextBox(Wrapper):
         return Vector2(proto_ref=self._proto.bottom_right)
 
     @bottom_right.setter
-    def bottom_right(self, pos: Vector2):
+    def bottom_right(self, pos: Vector2) -> None:
         self._proto.bottom_right.CopyFrom(pos.proto)
 
     @property
@@ -594,7 +597,7 @@ class TextBox(Wrapper):
         return TextAttributes(proto_ref=self._proto.attributes)
 
     @attributes.setter
-    def attributes(self, attributes: TextAttributes):
+    def attributes(self, attributes: TextAttributes) -> None:
         self._proto.attributes.CopyFrom(attributes.proto)
 
     @property
@@ -602,7 +605,7 @@ class TextBox(Wrapper):
         return self._proto.text
 
     @value.setter
-    def value(self, text: str):
+    def value(self, text: str) -> None:
         self._proto.text = text
 
     @property
@@ -610,7 +613,7 @@ class TextBox(Wrapper):
         return self.bottom_right - self.top_left
 
     @size.setter
-    def size(self, size: Vector2):
+    def size(self, size: Vector2) -> None:
         new_br = self.top_left + size
         self._proto.bottom_right.CopyFrom(new_br.proto)
 
@@ -622,14 +625,15 @@ class GraphicShape(Wrapper):
         self,
         proto: base_types_pb2.GraphicShape | None = None,
         proto_ref: base_types_pb2.GraphicShape | None = None,
-    ):
+    ) -> None:
         self._graphic_proto = proto_ref if proto_ref is not None else base_types_pb2.GraphicShape()
 
         if proto is not None:
             self._graphic_proto.CopyFrom(proto)
 
     @property
-    def proto(self):
+    def proto(self) -> Any:
+        # Board shape subclasses expose their outer message through the same property.
         self._pack()
         return self._graphic_proto
 
@@ -648,7 +652,7 @@ class GraphicShape(Wrapper):
         return GraphicAttributes(proto_ref=self._graphic_proto.attributes)
 
     @attributes.setter
-    def attributes(self, attributes: GraphicAttributes):
+    def attributes(self, attributes: GraphicAttributes) -> None:
         self._graphic_proto.attributes.CopyFrom(attributes.proto)
 
     def bounding_box(self) -> Box2:
@@ -662,7 +666,7 @@ class Segment(GraphicShape):
         self,
         proto: base_types_pb2.GraphicShape | None = None,
         proto_ref: base_types_pb2.GraphicShape | None = None,
-    ):
+    ) -> None:
         self._graphic_proto = proto_ref if proto_ref is not None else base_types_pb2.GraphicShape()
 
         if proto is not None:
@@ -685,7 +689,7 @@ class Segment(GraphicShape):
         return Vector2(proto_ref=self._graphic_proto.segment.start)
 
     @start.setter
-    def start(self, point: Vector2):
+    def start(self, point: Vector2) -> None:
         self._graphic_proto.segment.start.CopyFrom(point.proto)
 
     @property
@@ -693,7 +697,7 @@ class Segment(GraphicShape):
         return Vector2(proto_ref=self._graphic_proto.segment.end)
 
     @end.setter
-    def end(self, point: Vector2):
+    def end(self, point: Vector2) -> None:
         self._graphic_proto.segment.end.CopyFrom(point.proto)
 
     def __repr__(self) -> str:
@@ -711,7 +715,7 @@ class Arc(GraphicShape):
         self,
         proto: base_types_pb2.GraphicShape | None = None,
         proto_ref: base_types_pb2.GraphicShape | None = None,
-    ):
+    ) -> None:
         self._graphic_proto = proto_ref if proto_ref is not None else base_types_pb2.GraphicShape()
 
         if proto is not None:
@@ -735,7 +739,7 @@ class Arc(GraphicShape):
         return Vector2(proto_ref=self._graphic_proto.arc.start)
 
     @start.setter
-    def start(self, point: Vector2):
+    def start(self, point: Vector2) -> None:
         self._graphic_proto.arc.start.CopyFrom(point.proto)
 
     @property
@@ -743,7 +747,7 @@ class Arc(GraphicShape):
         return Vector2(proto_ref=self._graphic_proto.arc.mid)
 
     @mid.setter
-    def mid(self, point: Vector2):
+    def mid(self, point: Vector2) -> None:
         self._graphic_proto.arc.mid.CopyFrom(point.proto)
 
     @property
@@ -751,7 +755,7 @@ class Arc(GraphicShape):
         return Vector2(proto_ref=self._graphic_proto.arc.end)
 
     @end.setter
-    def end(self, point: Vector2):
+    def end(self, point: Vector2) -> None:
         self._graphic_proto.arc.end.CopyFrom(point.proto)
 
     def center(self) -> Vector2 | None:
@@ -806,7 +810,7 @@ class Circle(GraphicShape):
         self,
         proto: base_types_pb2.GraphicShape | None = None,
         proto_ref: base_types_pb2.GraphicShape | None = None,
-    ):
+    ) -> None:
         self._graphic_proto = proto_ref if proto_ref is not None else base_types_pb2.GraphicShape()
 
         if proto is not None:
@@ -829,7 +833,7 @@ class Circle(GraphicShape):
         return Vector2(proto_ref=self._graphic_proto.circle.center)
 
     @center.setter
-    def center(self, point: Vector2):
+    def center(self, point: Vector2) -> None:
         self._graphic_proto.circle.center.CopyFrom(point.proto)
 
     @property
@@ -837,7 +841,7 @@ class Circle(GraphicShape):
         return Vector2(proto_ref=self._graphic_proto.circle.radius_point)
 
     @radius_point.setter
-    def radius_point(self, radius_point: Vector2):
+    def radius_point(self, radius_point: Vector2) -> None:
         self._graphic_proto.circle.radius_point.CopyFrom(radius_point.proto)
 
     def radius(self) -> float:
@@ -866,7 +870,7 @@ class Rectangle(GraphicShape):
         self,
         proto: base_types_pb2.GraphicShape | None = None,
         proto_ref: base_types_pb2.GraphicShape | None = None,
-    ):
+    ) -> None:
         self._graphic_proto = proto_ref if proto_ref is not None else base_types_pb2.GraphicShape()
 
         if proto is not None:
@@ -889,7 +893,7 @@ class Rectangle(GraphicShape):
         return Vector2(proto_ref=self._graphic_proto.rectangle.top_left)
 
     @top_left.setter
-    def top_left(self, point: Vector2):
+    def top_left(self, point: Vector2) -> None:
         self._graphic_proto.rectangle.top_left.CopyFrom(point.proto)
 
     @property
@@ -897,7 +901,7 @@ class Rectangle(GraphicShape):
         return Vector2(proto_ref=self._graphic_proto.rectangle.bottom_right)
 
     @bottom_right.setter
-    def bottom_right(self, point: Vector2):
+    def bottom_right(self, point: Vector2) -> None:
         self._graphic_proto.rectangle.bottom_right.CopyFrom(point.proto)
 
     def __repr__(self) -> str:
@@ -915,7 +919,7 @@ class Polygon(GraphicShape):
         self,
         proto: base_types_pb2.GraphicShape | None = None,
         proto_ref: base_types_pb2.GraphicShape | None = None,
-    ):
+    ) -> None:
         self._graphic_proto = proto_ref if proto_ref is not None else base_types_pb2.GraphicShape()
 
         if proto is not None:
@@ -966,7 +970,7 @@ class Bezier(GraphicShape):
         self,
         proto: base_types_pb2.GraphicShape | None = None,
         proto_ref: base_types_pb2.GraphicShape | None = None,
-    ):
+    ) -> None:
         self._graphic_proto = proto_ref if proto_ref is not None else base_types_pb2.GraphicShape()
 
         if proto is not None:
@@ -993,7 +997,7 @@ class Bezier(GraphicShape):
         return Vector2(proto_ref=self._graphic_proto.bezier.start)
 
     @start.setter
-    def start(self, point: Vector2):
+    def start(self, point: Vector2) -> None:
         self._graphic_proto.bezier.start.CopyFrom(point.proto)
 
     @property
@@ -1001,7 +1005,7 @@ class Bezier(GraphicShape):
         return Vector2(proto_ref=self._graphic_proto.bezier.control1)
 
     @control1.setter
-    def control1(self, point: Vector2):
+    def control1(self, point: Vector2) -> None:
         self._graphic_proto.bezier.control1.CopyFrom(point.proto)
 
     @property
@@ -1009,7 +1013,7 @@ class Bezier(GraphicShape):
         return Vector2(proto_ref=self._graphic_proto.bezier.control2)
 
     @control2.setter
-    def control2(self, point: Vector2):
+    def control2(self, point: Vector2) -> None:
         self._graphic_proto.bezier.control2.CopyFrom(point.proto)
 
     @property
@@ -1017,7 +1021,7 @@ class Bezier(GraphicShape):
         return Vector2(proto_ref=self._graphic_proto.bezier.end)
 
     @end.setter
-    def end(self, point: Vector2):
+    def end(self, point: Vector2) -> None:
         self._graphic_proto.bezier.end.CopyFrom(point.proto)
 
     def __repr__(self) -> str:
@@ -1041,7 +1045,7 @@ class Ellipse(GraphicShape):
         self,
         proto: base_types_pb2.GraphicShape | None = None,
         proto_ref: base_types_pb2.GraphicShape | None = None,
-    ):
+    ) -> None:
         self._graphic_proto = proto_ref if proto_ref is not None else base_types_pb2.GraphicShape()
         if proto is not None:
             self._graphic_proto.CopyFrom(proto)
@@ -1054,7 +1058,7 @@ class Ellipse(GraphicShape):
         return Vector2(proto_ref=self._graphic_proto.ellipse.center)
 
     @center.setter
-    def center(self, center: Vector2):
+    def center(self, center: Vector2) -> None:
         self._graphic_proto.ellipse.center.CopyFrom(center.proto)
 
     @property
@@ -1062,7 +1066,7 @@ class Ellipse(GraphicShape):
         return self._graphic_proto.ellipse.major_radius.value_nm
 
     @major_radius.setter
-    def major_radius(self, radius: int):
+    def major_radius(self, radius: int) -> None:
         self._graphic_proto.ellipse.major_radius.value_nm = radius
 
     @property
@@ -1070,7 +1074,7 @@ class Ellipse(GraphicShape):
         return self._graphic_proto.ellipse.minor_radius.value_nm
 
     @minor_radius.setter
-    def minor_radius(self, radius: int):
+    def minor_radius(self, radius: int) -> None:
         self._graphic_proto.ellipse.minor_radius.value_nm = radius
 
     @property
@@ -1078,7 +1082,7 @@ class Ellipse(GraphicShape):
         return Angle(proto_ref=self._graphic_proto.ellipse.rotation)
 
     @rotation.setter
-    def rotation(self, rotation: Angle):
+    def rotation(self, rotation: Angle) -> None:
         self._graphic_proto.ellipse.rotation.CopyFrom(rotation.proto)
 
     def __repr__(self) -> str:
@@ -1113,7 +1117,7 @@ class EllipseArc(GraphicShape):
         self,
         proto: base_types_pb2.GraphicShape | None = None,
         proto_ref: base_types_pb2.GraphicShape | None = None,
-    ):
+    ) -> None:
         self._graphic_proto = proto_ref if proto_ref is not None else base_types_pb2.GraphicShape()
         if proto is not None:
             self._graphic_proto.CopyFrom(proto)
@@ -1126,7 +1130,7 @@ class EllipseArc(GraphicShape):
         return Vector2(proto_ref=self._graphic_proto.ellipse_arc.center)
 
     @center.setter
-    def center(self, center: Vector2):
+    def center(self, center: Vector2) -> None:
         self._graphic_proto.ellipse_arc.center.CopyFrom(center.proto)
 
     @property
@@ -1134,7 +1138,7 @@ class EllipseArc(GraphicShape):
         return self._graphic_proto.ellipse_arc.major_radius.value_nm
 
     @major_radius.setter
-    def major_radius(self, radius: int):
+    def major_radius(self, radius: int) -> None:
         self._graphic_proto.ellipse_arc.major_radius.value_nm = radius
 
     @property
@@ -1142,7 +1146,7 @@ class EllipseArc(GraphicShape):
         return self._graphic_proto.ellipse_arc.minor_radius.value_nm
 
     @minor_radius.setter
-    def minor_radius(self, radius: int):
+    def minor_radius(self, radius: int) -> None:
         self._graphic_proto.ellipse_arc.minor_radius.value_nm = radius
 
     @property
@@ -1150,7 +1154,7 @@ class EllipseArc(GraphicShape):
         return Angle(proto_ref=self._graphic_proto.ellipse_arc.rotation)
 
     @rotation.setter
-    def rotation(self, rotation: Angle):
+    def rotation(self, rotation: Angle) -> None:
         self._graphic_proto.ellipse_arc.rotation.CopyFrom(rotation.proto)
 
     @property
@@ -1158,7 +1162,7 @@ class EllipseArc(GraphicShape):
         return Angle(proto_ref=self._graphic_proto.ellipse_arc.start_angle)
 
     @start_angle.setter
-    def start_angle(self, angle: Angle):
+    def start_angle(self, angle: Angle) -> None:
         self._graphic_proto.ellipse_arc.start_angle.CopyFrom(angle.proto)
 
     @property
@@ -1166,7 +1170,7 @@ class EllipseArc(GraphicShape):
         return Angle(proto_ref=self._graphic_proto.ellipse_arc.end_angle)
 
     @end_angle.setter
-    def end_angle(self, angle: Angle):
+    def end_angle(self, angle: Angle) -> None:
         self._graphic_proto.ellipse_arc.end_angle.CopyFrom(angle.proto)
 
     def __repr__(self) -> str:
@@ -1221,7 +1225,7 @@ def to_concrete_shape(shape: GraphicShape) -> GraphicShape | None:
 class CompoundShape(Wrapper):
     """Represents a compound shape (a collection of other shapes)"""
 
-    def __init__(self, proto: base_types_pb2.CompoundShape | None = None):
+    def __init__(self, proto: base_types_pb2.CompoundShape | None = None) -> None:
         self._proto = base_types_pb2.CompoundShape()
 
         if proto is not None:
@@ -1237,7 +1241,7 @@ class TitleBlockInfo(Wrapper):
         self,
         proto: types.TitleBlockInfo | None = None,
         proto_ref: types.TitleBlockInfo | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.TitleBlockInfo()
 
         if proto is not None:
@@ -1248,7 +1252,7 @@ class TitleBlockInfo(Wrapper):
         return self._proto.title
 
     @title.setter
-    def title(self, title: str):
+    def title(self, title: str) -> None:
         self._proto.title = title
 
     @property
@@ -1256,7 +1260,7 @@ class TitleBlockInfo(Wrapper):
         return self._proto.date
 
     @date.setter
-    def date(self, date: str):
+    def date(self, date: str) -> None:
         self._proto.date = date
 
     @property
@@ -1264,7 +1268,7 @@ class TitleBlockInfo(Wrapper):
         return self._proto.revision
 
     @revision.setter
-    def revision(self, revision: str):
+    def revision(self, revision: str) -> None:
         self._proto.revision = revision
 
     @property
@@ -1272,7 +1276,7 @@ class TitleBlockInfo(Wrapper):
         return self._proto.company
 
     @company.setter
-    def company(self, company: str):
+    def company(self, company: str) -> None:
         self._proto.company = company
 
     @property
@@ -1290,7 +1294,7 @@ class TitleBlockInfo(Wrapper):
         }
 
     @comments.setter
-    def comments(self, comments: dict[int, str]):
+    def comments(self, comments: dict[int, str]) -> None:
         if 1 in comments:
             self._proto.comment1 = comments[1]
         if 2 in comments:
@@ -1316,7 +1320,7 @@ class PageSettings(Wrapper):
         self,
         proto: base_types_pb2.PageSettings | None = None,
         proto_ref: base_types_pb2.PageSettings | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else base_types_pb2.PageSettings()
 
         if proto is not None:
@@ -1327,7 +1331,7 @@ class PageSettings(Wrapper):
         return self._proto.page_size
 
     @page_size.setter
-    def page_size(self, value: base_types_pb2.PageSize.ValueType):
+    def page_size(self, value: base_types_pb2.PageSize.ValueType) -> None:
         self._proto.page_size = value
 
     @property
@@ -1336,7 +1340,7 @@ class PageSettings(Wrapper):
         return Vector2(proto_ref=self._proto.user_page_size)
 
     @user_page_size.setter
-    def user_page_size(self, value: Vector2):
+    def user_page_size(self, value: Vector2) -> None:
         self._proto.user_page_size.CopyFrom(value.proto)
 
     @property
@@ -1344,7 +1348,7 @@ class PageSettings(Wrapper):
         return self._proto.orientation
 
     @orientation.setter
-    def orientation(self, value: base_types_pb2.PageOrientation.ValueType):
+    def orientation(self, value: base_types_pb2.PageOrientation.ValueType) -> None:
         self._proto.orientation = value
 
     @property
@@ -1354,7 +1358,7 @@ class PageSettings(Wrapper):
         return self._proto.drawing_sheet
 
     @drawing_sheet.setter
-    def drawing_sheet(self, value: str):
+    def drawing_sheet(self, value: str) -> None:
         self._proto.drawing_sheet = value
 
 
@@ -1367,7 +1371,7 @@ class EmbeddedFile(Wrapper):
         self,
         proto: embedded_files_pb2.EmbeddedFile | None = None,
         proto_ref: embedded_files_pb2.EmbeddedFile | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else embedded_files_pb2.EmbeddedFile()
 
         if proto is not None:
@@ -1378,7 +1382,7 @@ class EmbeddedFile(Wrapper):
         return self._proto.name
 
     @name.setter
-    def name(self, name: str):
+    def name(self, name: str) -> None:
         self._proto.name = name
 
     @property
@@ -1386,7 +1390,7 @@ class EmbeddedFile(Wrapper):
         return self._proto.type
 
     @type.setter
-    def type(self, type: EmbeddedFileType.ValueType):
+    def type(self, type: EmbeddedFileType.ValueType) -> None:
         self._proto.type = type
 
     @property
@@ -1395,7 +1399,7 @@ class EmbeddedFile(Wrapper):
         return self._proto.data
 
     @data.setter
-    def data(self, data: bytes):
+    def data(self, data: bytes) -> None:
         self._proto.data = data
 
     @property
@@ -1404,7 +1408,7 @@ class EmbeddedFile(Wrapper):
         return self._proto.data_hash
 
     @data_hash.setter
-    def data_hash(self, data_hash: str):
+    def data_hash(self, data_hash: str) -> None:
         self._proto.data_hash = data_hash
 
     @classmethod
@@ -1454,7 +1458,7 @@ class EmbeddedFiles(Wrapper):
         self,
         proto: embedded_files_pb2.EmbeddedFiles | None = None,
         proto_ref: embedded_files_pb2.EmbeddedFiles | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else embedded_files_pb2.EmbeddedFiles()
 
         if proto is not None:
@@ -1465,7 +1469,7 @@ class EmbeddedFiles(Wrapper):
         return MutableWrapperSequence(self._proto.files, EmbeddedFile)
 
     @files.setter
-    def files(self, files: Sequence[EmbeddedFile]):
+    def files(self, files: Sequence[EmbeddedFile]) -> None:
         del self._proto.files[:]
         self._proto.files.extend(f.proto for f in files)
 
@@ -1479,7 +1483,7 @@ class CustomProperty(Wrapper):
         self,
         proto: base_types_pb2.CustomProperty | None = None,
         proto_ref: base_types_pb2.CustomProperty | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else base_types_pb2.CustomProperty()
 
         if proto is not None:
@@ -1490,7 +1494,7 @@ class CustomProperty(Wrapper):
         return self._proto.key
 
     @key.setter
-    def key(self, key: str):
+    def key(self, key: str) -> None:
         self._proto.key = key
 
     @property
@@ -1498,7 +1502,7 @@ class CustomProperty(Wrapper):
         return self._proto.value
 
     @value.setter
-    def value(self, value: str):
+    def value(self, value: str) -> None:
         self._proto.value = value
 
     def __repr__(self) -> str:
@@ -1512,7 +1516,7 @@ class LineEnding(Wrapper):
         self,
         proto: base_types_pb2.LineEnding | None = None,
         proto_ref: base_types_pb2.LineEnding | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else base_types_pb2.LineEnding()
 
         if proto is not None:
@@ -1523,7 +1527,7 @@ class LineEnding(Wrapper):
         return self._proto.style
 
     @style.setter
-    def style(self, style: LineEndingStyle.ValueType):
+    def style(self, style: LineEndingStyle.ValueType) -> None:
         self._proto.style = style
 
     @property
@@ -1533,7 +1537,7 @@ class LineEnding(Wrapper):
         return None
 
     @length.setter
-    def length(self, length: int | None):
+    def length(self, length: int | None) -> None:
         if length is None:
             self._proto.ClearField("length")
         else:
@@ -1546,7 +1550,7 @@ class LineEnding(Wrapper):
         return None
 
     @width.setter
-    def width(self, width: int | None):
+    def width(self, width: int | None) -> None:
         if width is None:
             self._proto.ClearField("width")
         else:
@@ -1557,7 +1561,7 @@ class LineEnding(Wrapper):
         return StrokeAttributes(proto_ref=self._proto.stroke)
 
     @stroke.setter
-    def stroke(self, stroke: StrokeAttributes):
+    def stroke(self, stroke: StrokeAttributes) -> None:
         self._proto.stroke.CopyFrom(stroke.proto)
 
 
@@ -1566,7 +1570,7 @@ class DesignVariant(Wrapper):
         self,
         proto: variants_pb2.DesignVariant | None = None,
         proto_ref: variants_pb2.DesignVariant | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else variants_pb2.DesignVariant()
 
         if proto is not None:
@@ -1578,7 +1582,7 @@ class DesignVariant(Wrapper):
         return self._proto.name
 
     @name.setter
-    def name(self, value: str):
+    def name(self, value: str) -> None:
         self._proto.name = value
 
     @property
@@ -1587,7 +1591,7 @@ class DesignVariant(Wrapper):
         return self._proto.description
 
     @description.setter
-    def description(self, value: str):
+    def description(self, value: str) -> None:
         self._proto.description = value
 
 
@@ -1599,7 +1603,7 @@ class JobResult(Wrapper):
         self,
         proto: jobs_pb2.RunJobResponse | None = None,
         proto_ref: jobs_pb2.RunJobResponse | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else jobs_pb2.RunJobResponse()
         if proto is not None:
             self._proto.CopyFrom(proto)

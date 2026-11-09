@@ -50,7 +50,7 @@ class WizardMetaInfo(Wrapper):
         self,
         proto: types.WizardMetaInfo | None = None,
         proto_ref: types.WizardMetaInfo | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.WizardMetaInfo()
 
         if proto is not None:
@@ -61,7 +61,7 @@ class WizardMetaInfo(Wrapper):
         return self._proto.identifier
 
     @identifier.setter
-    def identifier(self, value: str):
+    def identifier(self, value: str) -> None:
         self._proto.identifier = value
 
     @property
@@ -69,7 +69,7 @@ class WizardMetaInfo(Wrapper):
         return self._proto.name
 
     @name.setter
-    def name(self, value: str):
+    def name(self, value: str) -> None:
         self._proto.name = value
 
     @property
@@ -77,7 +77,7 @@ class WizardMetaInfo(Wrapper):
         return self._proto.description
 
     @description.setter
-    def description(self, value: str):
+    def description(self, value: str) -> None:
         self._proto.description = value
 
     @property
@@ -85,7 +85,7 @@ class WizardMetaInfo(Wrapper):
         return list(self._proto.types_generated)
 
     @types_generated.setter
-    def types_generated(self, value: list[types.WizardContentType.ValueType]):
+    def types_generated(self, value: list[types.WizardContentType.ValueType]) -> None:
         del self._proto.types_generated[:]
         self._proto.types_generated.extend(value)
 
@@ -95,7 +95,7 @@ class WizardIntParameter(Wrapper):
         self,
         proto: types.WizardIntParameter | None = None,
         proto_ref: types.WizardIntParameter | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.WizardIntParameter()
 
         if proto is not None:
@@ -106,7 +106,7 @@ class WizardIntParameter(Wrapper):
         return self._proto.value
 
     @value.setter
-    def value(self, value: int):
+    def value(self, value: int) -> None:
         self._proto.value = value
 
     @property
@@ -114,7 +114,7 @@ class WizardIntParameter(Wrapper):
         return self._proto.default
 
     @default.setter
-    def default(self, value: int):
+    def default(self, value: int) -> None:
         self._proto.default = value
 
     @property
@@ -124,7 +124,7 @@ class WizardIntParameter(Wrapper):
         return None
 
     @min.setter
-    def min(self, value: int | None):
+    def min(self, value: int | None) -> None:
         if value is None:
             self._proto.ClearField("min")
         else:
@@ -137,7 +137,7 @@ class WizardIntParameter(Wrapper):
         return None
 
     @max.setter
-    def max(self, value: int | None):
+    def max(self, value: int | None) -> None:
         if value is None:
             self._proto.ClearField("max")
         else:
@@ -150,7 +150,7 @@ class WizardIntParameter(Wrapper):
         return None
 
     @multiple.setter
-    def multiple(self, value: int | None):
+    def multiple(self, value: int | None) -> None:
         if value is None:
             self._proto.ClearField("multiple")
         else:
@@ -162,7 +162,7 @@ class WizardRealParameter(Wrapper):
         self,
         proto: types.WizardRealParameter | None = None,
         proto_ref: types.WizardRealParameter | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.WizardRealParameter()
 
         if proto is not None:
@@ -173,7 +173,7 @@ class WizardRealParameter(Wrapper):
         return self._proto.value
 
     @value.setter
-    def value(self, value: float):
+    def value(self, value: float) -> None:
         self._proto.value = value
 
     @property
@@ -181,7 +181,7 @@ class WizardRealParameter(Wrapper):
         return self._proto.default
 
     @default.setter
-    def default(self, value: float):
+    def default(self, value: float) -> None:
         self._proto.default = value
 
     @property
@@ -191,7 +191,7 @@ class WizardRealParameter(Wrapper):
         return None
 
     @min.setter
-    def min(self, value: float | None):
+    def min(self, value: float | None) -> None:
         if value is None:
             self._proto.ClearField("min")
         else:
@@ -204,7 +204,7 @@ class WizardRealParameter(Wrapper):
         return None
 
     @max.setter
-    def max(self, value: float | None):
+    def max(self, value: float | None) -> None:
         if value is None:
             self._proto.ClearField("max")
         else:
@@ -216,7 +216,7 @@ class WizardBoolParameter(Wrapper):
         self,
         proto: types.WizardBoolParameter | None = None,
         proto_ref: types.WizardBoolParameter | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.WizardBoolParameter()
 
         if proto is not None:
@@ -227,7 +227,7 @@ class WizardBoolParameter(Wrapper):
         return self._proto.value
 
     @value.setter
-    def value(self, value: bool):
+    def value(self, value: bool) -> None:
         self._proto.value = value
 
     @property
@@ -235,7 +235,7 @@ class WizardBoolParameter(Wrapper):
         return self._proto.default
 
     @default.setter
-    def default(self, value: bool):
+    def default(self, value: bool) -> None:
         self._proto.default = value
 
 
@@ -244,7 +244,7 @@ class WizardStringParameter(Wrapper):
         self,
         proto: types.WizardStringParameter | None = None,
         proto_ref: types.WizardStringParameter | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.WizardStringParameter()
 
         if proto is not None:
@@ -255,7 +255,7 @@ class WizardStringParameter(Wrapper):
         return self._proto.value
 
     @value.setter
-    def value(self, value: str):
+    def value(self, value: str) -> None:
         self._proto.value = value
 
     @property
@@ -263,7 +263,7 @@ class WizardStringParameter(Wrapper):
         return self._proto.default
 
     @default.setter
-    def default(self, value: str):
+    def default(self, value: str) -> None:
         self._proto.default = value
 
     @property
@@ -273,7 +273,7 @@ class WizardStringParameter(Wrapper):
         return None
 
     @validation_regex.setter
-    def validation_regex(self, value: str | None):
+    def validation_regex(self, value: str | None) -> None:
         if value is None:
             self._proto.ClearField("validation_regex")
         else:
@@ -285,7 +285,7 @@ class WizardParameter(Wrapper):
         self,
         proto: types.WizardParameter | None = None,
         proto_ref: types.WizardParameter | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.WizardParameter()
 
         if proto is not None:
@@ -375,7 +375,7 @@ class WizardParameter(Wrapper):
         return self._proto.identifier
 
     @identifier.setter
-    def identifier(self, value: str):
+    def identifier(self, value: str) -> None:
         self._proto.identifier = value
 
     @property
@@ -383,7 +383,7 @@ class WizardParameter(Wrapper):
         return self._proto.name
 
     @name.setter
-    def name(self, value: str):
+    def name(self, value: str) -> None:
         self._proto.name = value
 
     @property
@@ -391,7 +391,7 @@ class WizardParameter(Wrapper):
         return self._proto.description
 
     @description.setter
-    def description(self, value: str):
+    def description(self, value: str) -> None:
         self._proto.description = value
 
     @property
@@ -399,7 +399,7 @@ class WizardParameter(Wrapper):
         return self._proto.category
 
     @category.setter
-    def category(self, value: types.WizardParameterCategory.ValueType):
+    def category(self, value: types.WizardParameterCategory.ValueType) -> None:
         self._proto.category = value
 
     @property
@@ -407,13 +407,13 @@ class WizardParameter(Wrapper):
         return self._proto.type
 
     @type.setter
-    def type(self, value: types.WizardParameterDataType.ValueType):
+    def type(self, value: types.WizardParameterDataType.ValueType) -> None:
         self._proto.type = value
 
     def which_value(self) -> str | None:
         return self._proto.WhichOneof("value")
 
-    def clear_value(self):
+    def clear_value(self) -> None:
         which = self.which_value()
         if which == "int":
             self._proto.ClearField("int")
@@ -440,7 +440,7 @@ class WizardParameter(Wrapper):
         return None
 
     @value.setter
-    def value(self, value: WizardParameterValue | None):
+    def value(self, value: WizardParameterValue | None) -> None:
         if value is None:
             self.clear_value()
             return
@@ -481,7 +481,7 @@ class WizardParameter(Wrapper):
         return None
 
     @default_value.setter
-    def default_value(self, value: WizardParameterValue | None):
+    def default_value(self, value: WizardParameterValue | None) -> None:
         if value is None:
             return
         if self.type in (
@@ -507,7 +507,7 @@ class WizardParameter(Wrapper):
         return WizardIntParameter(proto_ref=self._proto.int)
 
     @int_param.setter
-    def int_param(self, value: WizardIntParameter):
+    def int_param(self, value: WizardIntParameter) -> None:
         self._proto.int.CopyFrom(value.proto)
 
     @property
@@ -515,7 +515,7 @@ class WizardParameter(Wrapper):
         return WizardRealParameter(proto_ref=self._proto.real)
 
     @real_param.setter
-    def real_param(self, value: WizardRealParameter):
+    def real_param(self, value: WizardRealParameter) -> None:
         self._proto.real.CopyFrom(value.proto)
 
     @property
@@ -523,7 +523,7 @@ class WizardParameter(Wrapper):
         return WizardBoolParameter(proto_ref=self._proto.bool)
 
     @bool_param.setter
-    def bool_param(self, value: WizardBoolParameter):
+    def bool_param(self, value: WizardBoolParameter) -> None:
         self._proto.bool.CopyFrom(value.proto)
 
     @property
@@ -531,7 +531,7 @@ class WizardParameter(Wrapper):
         return WizardStringParameter(proto_ref=self._proto.string)
 
     @string_param.setter
-    def string_param(self, value: WizardStringParameter):
+    def string_param(self, value: WizardStringParameter) -> None:
         self._proto.string.CopyFrom(value.proto)
 
     @property
@@ -539,7 +539,7 @@ class WizardParameter(Wrapper):
         return self._proto.int.value
 
     @int_value.setter
-    def int_value(self, value: int):
+    def int_value(self, value: int) -> None:
         self._proto.int.value = value
 
     @property
@@ -547,7 +547,7 @@ class WizardParameter(Wrapper):
         return self._proto.int.default
 
     @int_default.setter
-    def int_default(self, value: int):
+    def int_default(self, value: int) -> None:
         self._proto.int.default = value
 
     @property
@@ -557,7 +557,7 @@ class WizardParameter(Wrapper):
         return None
 
     @int_min.setter
-    def int_min(self, value: int | None):
+    def int_min(self, value: int | None) -> None:
         if value is None:
             self._proto.int.ClearField("min")
         else:
@@ -570,7 +570,7 @@ class WizardParameter(Wrapper):
         return None
 
     @int_max.setter
-    def int_max(self, value: int | None):
+    def int_max(self, value: int | None) -> None:
         if value is None:
             self._proto.int.ClearField("max")
         else:
@@ -583,7 +583,7 @@ class WizardParameter(Wrapper):
         return None
 
     @int_multiple.setter
-    def int_multiple(self, value: int | None):
+    def int_multiple(self, value: int | None) -> None:
         if value is None:
             self._proto.int.ClearField("multiple")
         else:
@@ -594,7 +594,7 @@ class WizardParameter(Wrapper):
         return self._proto.real.value
 
     @real_value.setter
-    def real_value(self, value: float):
+    def real_value(self, value: float) -> None:
         self._proto.real.value = value
 
     @property
@@ -602,7 +602,7 @@ class WizardParameter(Wrapper):
         return self._proto.real.default
 
     @real_default.setter
-    def real_default(self, value: float):
+    def real_default(self, value: float) -> None:
         self._proto.real.default = value
 
     @property
@@ -612,7 +612,7 @@ class WizardParameter(Wrapper):
         return None
 
     @real_min.setter
-    def real_min(self, value: float | None):
+    def real_min(self, value: float | None) -> None:
         if value is None:
             self._proto.real.ClearField("min")
         else:
@@ -625,7 +625,7 @@ class WizardParameter(Wrapper):
         return None
 
     @real_max.setter
-    def real_max(self, value: float | None):
+    def real_max(self, value: float | None) -> None:
         if value is None:
             self._proto.real.ClearField("max")
         else:
@@ -636,7 +636,7 @@ class WizardParameter(Wrapper):
         return self._proto.bool.value
 
     @bool_value.setter
-    def bool_value(self, value: bool):
+    def bool_value(self, value: bool) -> None:
         self._proto.bool.value = value
 
     @property
@@ -644,7 +644,7 @@ class WizardParameter(Wrapper):
         return self._proto.bool.default
 
     @bool_default.setter
-    def bool_default(self, value: bool):
+    def bool_default(self, value: bool) -> None:
         self._proto.bool.default = value
 
     @property
@@ -652,7 +652,7 @@ class WizardParameter(Wrapper):
         return self._proto.string.value
 
     @string_value.setter
-    def string_value(self, value: str):
+    def string_value(self, value: str) -> None:
         self._proto.string.value = value
 
     @property
@@ -660,7 +660,7 @@ class WizardParameter(Wrapper):
         return self._proto.string.default
 
     @string_default.setter
-    def string_default(self, value: str):
+    def string_default(self, value: str) -> None:
         self._proto.string.default = value
 
     @property
@@ -670,7 +670,7 @@ class WizardParameter(Wrapper):
         return None
 
     @string_validation_regex.setter
-    def string_validation_regex(self, value: str | None):
+    def string_validation_regex(self, value: str | None) -> None:
         if value is None:
             self._proto.string.ClearField("validation_regex")
         else:
@@ -682,7 +682,7 @@ class WizardInfo(Wrapper):
         self,
         proto: types.WizardInfo | None = None,
         proto_ref: types.WizardInfo | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else types.WizardInfo()
 
         if proto is not None:
@@ -691,7 +691,7 @@ class WizardInfo(Wrapper):
         self._meta = WizardMetaInfo(proto_ref=self._proto.meta)
         self._parameters = [WizardParameter(proto_ref=p) for p in self._proto.parameters]
 
-    def _pack(self):
+    def _pack(self) -> None:
         self._proto.meta.CopyFrom(self._meta.proto)
         del self._proto.parameters[:]
         self._proto.parameters.extend([p.proto for p in self._parameters])
@@ -701,7 +701,7 @@ class WizardInfo(Wrapper):
         return WizardMetaInfo(proto_ref=self._proto.meta)
 
     @meta.setter
-    def meta(self, value: WizardMetaInfo):
+    def meta(self, value: WizardMetaInfo) -> None:
         self._proto.meta.CopyFrom(value.proto)
         self._meta = WizardMetaInfo(proto_ref=self._proto.meta)
 
@@ -710,7 +710,7 @@ class WizardInfo(Wrapper):
         return self._parameters
 
     @parameters.setter
-    def parameters(self, value: list[WizardParameter]):
+    def parameters(self, value: list[WizardParameter]) -> None:
         self._parameters = value
 
 
@@ -726,7 +726,7 @@ class WizardBase:
             "Implement generate to generate content based on the provided parameters"
         )
 
-    def run(self):
+    def run(self) -> None:
         args = self.parse_args(sys.argv[1:])
         proto = None
 
@@ -743,7 +743,7 @@ class WizardBase:
             )
             print(output_json)
 
-    def parse_args(self, argv: list[str]):
+    def parse_args(self, argv: list[str]) -> argparse.Namespace:
         parser = argparse.ArgumentParser(description=self.description)
         parser.add_argument(
             "--get-info",

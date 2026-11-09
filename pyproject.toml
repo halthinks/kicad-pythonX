@@ -84,7 +84,9 @@ exclude = [
 line-length = 99
 
 [tool.mypy]
-python_version = 3.9
+python_version = "3.9"
+# Require annotations on all library functions.
+disallow_untyped_defs = true
 exclude = [
     "kipy/proto"
 ]

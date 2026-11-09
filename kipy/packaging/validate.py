@@ -139,7 +139,7 @@ def _load_plugin_json(
     return data
 
 
-def _validate_requirements(root: Path, report: ValidationReport):
+def _validate_requirements(root: Path, report: ValidationReport) -> None:
     requirements_path = root / "requirements.txt"
 
     if not requirements_path.exists():
@@ -168,7 +168,7 @@ def _validate_requirements(root: Path, report: ValidationReport):
         )
 
 
-def _validate_plugin_schema(plugin: dict[str, Any], report: ValidationReport):
+def _validate_plugin_schema(plugin: dict[str, Any], report: ValidationReport) -> None:
     if "$schema" not in plugin:
         report.add_error("plugin.json must include a $schema reference")
     elif (
@@ -198,7 +198,7 @@ def _validate_plugin_schema(plugin: dict[str, Any], report: ValidationReport):
         )
 
 
-def _validate_plugin_data(root: Path, plugin: dict[str, Any], report: ValidationReport):
+def _validate_plugin_data(root: Path, plugin: dict[str, Any], report: ValidationReport) -> None:
     actions = plugin.get("actions")
     if not isinstance(actions, list):
         # Type checker assertion; should be enforced by schema
@@ -247,7 +247,7 @@ def _validate_plugin_data(root: Path, plugin: dict[str, Any], report: Validation
                 )
 
 
-def _validate_pcm_package_data(root: Path, report: ValidationReport):
+def _validate_pcm_package_data(root: Path, report: ValidationReport) -> None:
     metadata = _load_metadata_json(root, report)
     if metadata is None:
         return
@@ -353,7 +353,7 @@ def _validate_file_path(
     report: ValidationReport,
     path: str,
     description: str,
-):
+) -> None:
     candidate = Path(value)
 
     if candidate.is_absolute():

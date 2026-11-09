@@ -35,7 +35,7 @@ class PlotSettings(Wrapper):
         self,
         proto: board_jobs_pb2.BoardPlotSettings | None = None,
         proto_ref: board_jobs_pb2.BoardPlotSettings | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_jobs_pb2.BoardPlotSettings()
         if proto is not None:
             self._proto.CopyFrom(proto)
@@ -46,7 +46,7 @@ class PlotSettings(Wrapper):
         return list(self._proto.layers)
 
     @layers.setter
-    def layers(self, value: Sequence[board_types_pb2.BoardLayer.ValueType]):
+    def layers(self, value: Sequence[board_types_pb2.BoardLayer.ValueType]) -> None:
         del self._proto.layers[:]
         self._proto.layers.extend(value)
 
@@ -55,7 +55,7 @@ class PlotSettings(Wrapper):
         return list(self._proto.common_layers)
 
     @common_layers.setter
-    def common_layers(self, value: Sequence[board_types_pb2.BoardLayer.ValueType]):
+    def common_layers(self, value: Sequence[board_types_pb2.BoardLayer.ValueType]) -> None:
         del self._proto.common_layers[:]
         self._proto.common_layers.extend(value)
 
@@ -64,7 +64,7 @@ class PlotSettings(Wrapper):
         return self._proto.color_theme
 
     @color_theme.setter
-    def color_theme(self, value: str):
+    def color_theme(self, value: str) -> None:
         self._proto.color_theme = value
 
     @property
@@ -72,7 +72,7 @@ class PlotSettings(Wrapper):
         return self._proto.drawing_sheet
 
     @drawing_sheet.setter
-    def drawing_sheet(self, value: str):
+    def drawing_sheet(self, value: str) -> None:
         self._proto.drawing_sheet = value
 
     @property
@@ -80,7 +80,7 @@ class PlotSettings(Wrapper):
         return self._proto.variant
 
     @variant.setter
-    def variant(self, value: str):
+    def variant(self, value: str) -> None:
         self._proto.variant = value
 
     @property
@@ -88,7 +88,7 @@ class PlotSettings(Wrapper):
         return self._proto.mirror
 
     @mirror.setter
-    def mirror(self, value: bool):
+    def mirror(self, value: bool) -> None:
         self._proto.mirror = value
 
     @property
@@ -96,7 +96,7 @@ class PlotSettings(Wrapper):
         return self._proto.black_and_white
 
     @black_and_white.setter
-    def black_and_white(self, value: bool):
+    def black_and_white(self, value: bool) -> None:
         self._proto.black_and_white = value
 
     @property
@@ -104,7 +104,7 @@ class PlotSettings(Wrapper):
         return self._proto.negative
 
     @negative.setter
-    def negative(self, value: bool):
+    def negative(self, value: bool) -> None:
         self._proto.negative = value
 
     @property
@@ -112,7 +112,7 @@ class PlotSettings(Wrapper):
         return self._proto.scale
 
     @scale.setter
-    def scale(self, value: float):
+    def scale(self, value: float) -> None:
         self._proto.scale = value
 
     @property
@@ -120,7 +120,7 @@ class PlotSettings(Wrapper):
         return self._proto.sketch_pads_on_fab_layers
 
     @sketch_pads_on_fab_layers.setter
-    def sketch_pads_on_fab_layers(self, value: bool):
+    def sketch_pads_on_fab_layers(self, value: bool) -> None:
         self._proto.sketch_pads_on_fab_layers = value
 
     @property
@@ -128,7 +128,7 @@ class PlotSettings(Wrapper):
         return self._proto.hide_dnp_footprints_on_fab_layers
 
     @hide_dnp_footprints_on_fab_layers.setter
-    def hide_dnp_footprints_on_fab_layers(self, value: bool):
+    def hide_dnp_footprints_on_fab_layers(self, value: bool) -> None:
         self._proto.hide_dnp_footprints_on_fab_layers = value
 
     @property
@@ -136,7 +136,7 @@ class PlotSettings(Wrapper):
         return self._proto.sketch_dnp_footprints_on_fab_layers
 
     @sketch_dnp_footprints_on_fab_layers.setter
-    def sketch_dnp_footprints_on_fab_layers(self, value: bool):
+    def sketch_dnp_footprints_on_fab_layers(self, value: bool) -> None:
         self._proto.sketch_dnp_footprints_on_fab_layers = value
 
     @property
@@ -144,7 +144,7 @@ class PlotSettings(Wrapper):
         return self._proto.crossout_dnp_footprints_on_fab_layers
 
     @crossout_dnp_footprints_on_fab_layers.setter
-    def crossout_dnp_footprints_on_fab_layers(self, value: bool):
+    def crossout_dnp_footprints_on_fab_layers(self, value: bool) -> None:
         self._proto.crossout_dnp_footprints_on_fab_layers = value
 
     @property
@@ -152,7 +152,7 @@ class PlotSettings(Wrapper):
         return self._proto.plot_footprint_values
 
     @plot_footprint_values.setter
-    def plot_footprint_values(self, value: bool):
+    def plot_footprint_values(self, value: bool) -> None:
         self._proto.plot_footprint_values = value
 
     @property
@@ -160,7 +160,7 @@ class PlotSettings(Wrapper):
         return self._proto.plot_reference_designators
 
     @plot_reference_designators.setter
-    def plot_reference_designators(self, value: bool):
+    def plot_reference_designators(self, value: bool) -> None:
         self._proto.plot_reference_designators = value
 
     @property
@@ -168,7 +168,7 @@ class PlotSettings(Wrapper):
         return self._proto.plot_drawing_sheet
 
     @plot_drawing_sheet.setter
-    def plot_drawing_sheet(self, value: bool):
+    def plot_drawing_sheet(self, value: bool) -> None:
         self._proto.plot_drawing_sheet = value
 
     @property
@@ -176,7 +176,7 @@ class PlotSettings(Wrapper):
         return self._proto.subtract_solder_mask_from_silk
 
     @subtract_solder_mask_from_silk.setter
-    def subtract_solder_mask_from_silk(self, value: bool):
+    def subtract_solder_mask_from_silk(self, value: bool) -> None:
         self._proto.subtract_solder_mask_from_silk = value
 
     @property
@@ -184,7 +184,7 @@ class PlotSettings(Wrapper):
         return self._proto.plot_pad_numbers
 
     @plot_pad_numbers.setter
-    def plot_pad_numbers(self, value: bool):
+    def plot_pad_numbers(self, value: bool) -> None:
         self._proto.plot_pad_numbers = value
 
     @property
@@ -192,7 +192,7 @@ class PlotSettings(Wrapper):
         return self._proto.drill_marks
 
     @drill_marks.setter
-    def drill_marks(self, value: board_jobs_pb2.PlotDrillMarks.ValueType):
+    def drill_marks(self, value: board_jobs_pb2.PlotDrillMarks.ValueType) -> None:
         self._proto.drill_marks = value
 
     @property
@@ -200,7 +200,7 @@ class PlotSettings(Wrapper):
         return self._proto.use_drill_origin
 
     @use_drill_origin.setter
-    def use_drill_origin(self, value: bool):
+    def use_drill_origin(self, value: bool) -> None:
         self._proto.use_drill_origin = value
 
     @property
@@ -208,7 +208,7 @@ class PlotSettings(Wrapper):
         return self._proto.check_zones_before_plot
 
     @check_zones_before_plot.setter
-    def check_zones_before_plot(self, value: bool):
+    def check_zones_before_plot(self, value: bool) -> None:
         self._proto.check_zones_before_plot = value
 
 
@@ -219,7 +219,7 @@ class Export3DSettings(Wrapper):
         self,
         proto: board_jobs_pb2.RunBoardJobExport3D | None = None,
         proto_ref: board_jobs_pb2.RunBoardJobExport3D | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_jobs_pb2.RunBoardJobExport3D()
         if proto is not None:
             self._proto.CopyFrom(proto)
@@ -229,7 +229,7 @@ class Export3DSettings(Wrapper):
         return self._proto.format
 
     @format.setter
-    def format(self, value: board_jobs_pb2.Board3DFormat.ValueType):
+    def format(self, value: board_jobs_pb2.Board3DFormat.ValueType) -> None:
         self._proto.format = value
 
     @property
@@ -237,7 +237,7 @@ class Export3DSettings(Wrapper):
         return self._proto.variant
 
     @variant.setter
-    def variant(self, value: str):
+    def variant(self, value: str) -> None:
         self._proto.variant = value
 
     @property
@@ -245,7 +245,7 @@ class Export3DSettings(Wrapper):
         return self._proto.net_filter
 
     @net_filter.setter
-    def net_filter(self, value: str):
+    def net_filter(self, value: str) -> None:
         self._proto.net_filter = value
 
     @property
@@ -253,7 +253,7 @@ class Export3DSettings(Wrapper):
         return self._proto.component_filter
 
     @component_filter.setter
-    def component_filter(self, value: str):
+    def component_filter(self, value: str) -> None:
         self._proto.component_filter = value
 
     @property
@@ -261,7 +261,7 @@ class Export3DSettings(Wrapper):
         return self._proto.has_user_origin
 
     @has_user_origin.setter
-    def has_user_origin(self, value: bool):
+    def has_user_origin(self, value: bool) -> None:
         self._proto.has_user_origin = value
 
     @property
@@ -269,7 +269,7 @@ class Export3DSettings(Wrapper):
         return Vector2(self._proto.origin)
 
     @origin.setter
-    def origin(self, value: Vector2):
+    def origin(self, value: Vector2) -> None:
         self._proto.origin.CopyFrom(value.proto)
         self._proto.has_user_origin = True
 
@@ -278,7 +278,7 @@ class Export3DSettings(Wrapper):
         return self._proto.overwrite
 
     @overwrite.setter
-    def overwrite(self, value: bool):
+    def overwrite(self, value: bool) -> None:
         self._proto.overwrite = value
 
     @property
@@ -286,7 +286,7 @@ class Export3DSettings(Wrapper):
         return self._proto.use_grid_origin
 
     @use_grid_origin.setter
-    def use_grid_origin(self, value: bool):
+    def use_grid_origin(self, value: bool) -> None:
         self._proto.use_grid_origin = value
 
     @property
@@ -294,7 +294,7 @@ class Export3DSettings(Wrapper):
         return self._proto.use_drill_origin
 
     @use_drill_origin.setter
-    def use_drill_origin(self, value: bool):
+    def use_drill_origin(self, value: bool) -> None:
         self._proto.use_drill_origin = value
 
     @property
@@ -302,7 +302,7 @@ class Export3DSettings(Wrapper):
         return self._proto.use_defined_origin
 
     @use_defined_origin.setter
-    def use_defined_origin(self, value: bool):
+    def use_defined_origin(self, value: bool) -> None:
         self._proto.use_defined_origin = value
 
     @property
@@ -310,7 +310,7 @@ class Export3DSettings(Wrapper):
         return self._proto.use_pcb_center_origin
 
     @use_pcb_center_origin.setter
-    def use_pcb_center_origin(self, value: bool):
+    def use_pcb_center_origin(self, value: bool) -> None:
         self._proto.use_pcb_center_origin = value
 
     @property
@@ -318,7 +318,7 @@ class Export3DSettings(Wrapper):
         return self._proto.include_unspecified
 
     @include_unspecified.setter
-    def include_unspecified(self, value: bool):
+    def include_unspecified(self, value: bool) -> None:
         self._proto.include_unspecified = value
 
     @property
@@ -326,7 +326,7 @@ class Export3DSettings(Wrapper):
         return self._proto.include_dnp
 
     @include_dnp.setter
-    def include_dnp(self, value: bool):
+    def include_dnp(self, value: bool) -> None:
         self._proto.include_dnp = value
 
     @property
@@ -334,7 +334,7 @@ class Export3DSettings(Wrapper):
         return self._proto.substitute_models
 
     @substitute_models.setter
-    def substitute_models(self, value: bool):
+    def substitute_models(self, value: bool) -> None:
         self._proto.substitute_models = value
 
     @property
@@ -342,7 +342,7 @@ class Export3DSettings(Wrapper):
         return self._proto.board_outlines_chaining_epsilon
 
     @board_outlines_chaining_epsilon.setter
-    def board_outlines_chaining_epsilon(self, value: float):
+    def board_outlines_chaining_epsilon(self, value: float) -> None:
         self._proto.board_outlines_chaining_epsilon = value
 
     @property
@@ -350,7 +350,7 @@ class Export3DSettings(Wrapper):
         return self._proto.board_only
 
     @board_only.setter
-    def board_only(self, value: bool):
+    def board_only(self, value: bool) -> None:
         self._proto.board_only = value
 
     @property
@@ -358,7 +358,7 @@ class Export3DSettings(Wrapper):
         return self._proto.cut_vias_in_body
 
     @cut_vias_in_body.setter
-    def cut_vias_in_body(self, value: bool):
+    def cut_vias_in_body(self, value: bool) -> None:
         self._proto.cut_vias_in_body = value
 
     @property
@@ -366,7 +366,7 @@ class Export3DSettings(Wrapper):
         return self._proto.export_board_body
 
     @export_board_body.setter
-    def export_board_body(self, value: bool):
+    def export_board_body(self, value: bool) -> None:
         self._proto.export_board_body = value
 
     @property
@@ -374,7 +374,7 @@ class Export3DSettings(Wrapper):
         return self._proto.export_components
 
     @export_components.setter
-    def export_components(self, value: bool):
+    def export_components(self, value: bool) -> None:
         self._proto.export_components = value
 
     @property
@@ -382,7 +382,7 @@ class Export3DSettings(Wrapper):
         return self._proto.export_tracks_and_vias
 
     @export_tracks_and_vias.setter
-    def export_tracks_and_vias(self, value: bool):
+    def export_tracks_and_vias(self, value: bool) -> None:
         self._proto.export_tracks_and_vias = value
 
     @property
@@ -390,7 +390,7 @@ class Export3DSettings(Wrapper):
         return self._proto.export_pads
 
     @export_pads.setter
-    def export_pads(self, value: bool):
+    def export_pads(self, value: bool) -> None:
         self._proto.export_pads = value
 
     @property
@@ -398,7 +398,7 @@ class Export3DSettings(Wrapper):
         return self._proto.export_zones
 
     @export_zones.setter
-    def export_zones(self, value: bool):
+    def export_zones(self, value: bool) -> None:
         self._proto.export_zones = value
 
     @property
@@ -406,7 +406,7 @@ class Export3DSettings(Wrapper):
         return self._proto.export_inner_copper
 
     @export_inner_copper.setter
-    def export_inner_copper(self, value: bool):
+    def export_inner_copper(self, value: bool) -> None:
         self._proto.export_inner_copper = value
 
     @property
@@ -414,7 +414,7 @@ class Export3DSettings(Wrapper):
         return self._proto.export_silkscreen
 
     @export_silkscreen.setter
-    def export_silkscreen(self, value: bool):
+    def export_silkscreen(self, value: bool) -> None:
         self._proto.export_silkscreen = value
 
     @property
@@ -422,7 +422,7 @@ class Export3DSettings(Wrapper):
         return self._proto.export_soldermask
 
     @export_soldermask.setter
-    def export_soldermask(self, value: bool):
+    def export_soldermask(self, value: bool) -> None:
         self._proto.export_soldermask = value
 
     @property
@@ -430,7 +430,7 @@ class Export3DSettings(Wrapper):
         return self._proto.fuse_shapes
 
     @fuse_shapes.setter
-    def fuse_shapes(self, value: bool):
+    def fuse_shapes(self, value: bool) -> None:
         self._proto.fuse_shapes = value
 
     @property
@@ -438,7 +438,7 @@ class Export3DSettings(Wrapper):
         return self._proto.fill_all_vias
 
     @fill_all_vias.setter
-    def fill_all_vias(self, value: bool):
+    def fill_all_vias(self, value: bool) -> None:
         self._proto.fill_all_vias = value
 
     @property
@@ -446,7 +446,7 @@ class Export3DSettings(Wrapper):
         return self._proto.optimize_step
 
     @optimize_step.setter
-    def optimize_step(self, value: bool):
+    def optimize_step(self, value: bool) -> None:
         self._proto.optimize_step = value
 
     @property
@@ -454,7 +454,7 @@ class Export3DSettings(Wrapper):
         return self._proto.extra_pad_thickness
 
     @extra_pad_thickness.setter
-    def extra_pad_thickness(self, value: bool):
+    def extra_pad_thickness(self, value: bool) -> None:
         self._proto.extra_pad_thickness = value
 
     @property
@@ -463,7 +463,7 @@ class Export3DSettings(Wrapper):
         return self._proto.vrml_units
 
     @vrml_units.setter
-    def vrml_units(self, value: enums_pb2.Units.ValueType):
+    def vrml_units(self, value: enums_pb2.Units.ValueType) -> None:
         self._proto.vrml_units = value
 
     @property
@@ -471,7 +471,7 @@ class Export3DSettings(Wrapper):
         return self._proto.vrml_model_dir
 
     @vrml_model_dir.setter
-    def vrml_model_dir(self, value: str):
+    def vrml_model_dir(self, value: str) -> None:
         self._proto.vrml_model_dir = value
 
     @property
@@ -479,7 +479,7 @@ class Export3DSettings(Wrapper):
         return self._proto.vrml_relative_paths
 
     @vrml_relative_paths.setter
-    def vrml_relative_paths(self, value: bool):
+    def vrml_relative_paths(self, value: bool) -> None:
         self._proto.vrml_relative_paths = value
 
 
@@ -490,7 +490,7 @@ class RenderSettings(Wrapper):
         self,
         proto: board_jobs_pb2.RunBoardJobExportRender | None = None,
         proto_ref: board_jobs_pb2.RunBoardJobExportRender | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_jobs_pb2.RunBoardJobExportRender()
         )
@@ -502,7 +502,7 @@ class RenderSettings(Wrapper):
         return self._proto.format
 
     @format.setter
-    def format(self, value: board_jobs_pb2.RenderFormat.ValueType):
+    def format(self, value: board_jobs_pb2.RenderFormat.ValueType) -> None:
         self._proto.format = value
 
     @property
@@ -510,7 +510,7 @@ class RenderSettings(Wrapper):
         return self._proto.quality
 
     @quality.setter
-    def quality(self, value: board_jobs_pb2.RenderQuality.ValueType):
+    def quality(self, value: board_jobs_pb2.RenderQuality.ValueType) -> None:
         self._proto.quality = value
 
     @property
@@ -518,7 +518,7 @@ class RenderSettings(Wrapper):
         return self._proto.background_style
 
     @background_style.setter
-    def background_style(self, value: board_jobs_pb2.RenderBackgroundStyle.ValueType):
+    def background_style(self, value: board_jobs_pb2.RenderBackgroundStyle.ValueType) -> None:
         self._proto.background_style = value
 
     @property
@@ -526,7 +526,7 @@ class RenderSettings(Wrapper):
         return self._proto.width
 
     @width.setter
-    def width(self, value: int):
+    def width(self, value: int) -> None:
         self._proto.width = value
 
     @property
@@ -534,7 +534,7 @@ class RenderSettings(Wrapper):
         return self._proto.height
 
     @height.setter
-    def height(self, value: int):
+    def height(self, value: int) -> None:
         self._proto.height = value
 
     @property
@@ -542,7 +542,7 @@ class RenderSettings(Wrapper):
         return self._proto.appearance_preset
 
     @appearance_preset.setter
-    def appearance_preset(self, value: str):
+    def appearance_preset(self, value: str) -> None:
         self._proto.appearance_preset = value
 
     @property
@@ -550,7 +550,7 @@ class RenderSettings(Wrapper):
         return self._proto.use_board_stackup_colors
 
     @use_board_stackup_colors.setter
-    def use_board_stackup_colors(self, value: bool):
+    def use_board_stackup_colors(self, value: bool) -> None:
         self._proto.use_board_stackup_colors = value
 
     @property
@@ -558,7 +558,7 @@ class RenderSettings(Wrapper):
         return self._proto.side
 
     @side.setter
-    def side(self, value: board_jobs_pb2.RenderSide.ValueType):
+    def side(self, value: board_jobs_pb2.RenderSide.ValueType) -> None:
         self._proto.side = value
 
     @property
@@ -566,7 +566,7 @@ class RenderSettings(Wrapper):
         return self._proto.zoom
 
     @zoom.setter
-    def zoom(self, value: float):
+    def zoom(self, value: float) -> None:
         self._proto.zoom = value
 
     @property
@@ -574,7 +574,7 @@ class RenderSettings(Wrapper):
         return self._proto.perspective
 
     @perspective.setter
-    def perspective(self, value: bool):
+    def perspective(self, value: bool) -> None:
         self._proto.perspective = value
 
     @property
@@ -582,7 +582,7 @@ class RenderSettings(Wrapper):
         return Vector3D(self._proto.rotation)
 
     @rotation.setter
-    def rotation(self, value: Vector3D):
+    def rotation(self, value: Vector3D) -> None:
         self._proto.rotation.CopyFrom(value.proto)
 
     @property
@@ -590,7 +590,7 @@ class RenderSettings(Wrapper):
         return Vector3D(self._proto.pan)
 
     @pan.setter
-    def pan(self, value: Vector3D):
+    def pan(self, value: Vector3D) -> None:
         self._proto.pan.CopyFrom(value.proto)
 
     @property
@@ -598,7 +598,7 @@ class RenderSettings(Wrapper):
         return Vector3D(self._proto.pivot)
 
     @pivot.setter
-    def pivot(self, value: Vector3D):
+    def pivot(self, value: Vector3D) -> None:
         self._proto.pivot.CopyFrom(value.proto)
 
     @property
@@ -606,7 +606,7 @@ class RenderSettings(Wrapper):
         return self._proto.procedural_textures
 
     @procedural_textures.setter
-    def procedural_textures(self, value: bool):
+    def procedural_textures(self, value: bool) -> None:
         self._proto.procedural_textures = value
 
     @property
@@ -614,7 +614,7 @@ class RenderSettings(Wrapper):
         return self._proto.floor
 
     @floor.setter
-    def floor(self, value: bool):
+    def floor(self, value: bool) -> None:
         self._proto.floor = value
 
     @property
@@ -622,7 +622,7 @@ class RenderSettings(Wrapper):
         return self._proto.anti_alias
 
     @anti_alias.setter
-    def anti_alias(self, value: bool):
+    def anti_alias(self, value: bool) -> None:
         self._proto.anti_alias = value
 
     @property
@@ -630,7 +630,7 @@ class RenderSettings(Wrapper):
         return self._proto.post_process
 
     @post_process.setter
-    def post_process(self, value: bool):
+    def post_process(self, value: bool) -> None:
         self._proto.post_process = value
 
     @property
@@ -638,7 +638,7 @@ class RenderSettings(Wrapper):
         return Vector3D(self._proto.light_top_intensity)
 
     @light_top_intensity.setter
-    def light_top_intensity(self, value: Vector3D):
+    def light_top_intensity(self, value: Vector3D) -> None:
         self._proto.light_top_intensity.CopyFrom(value.proto)
 
     @property
@@ -646,7 +646,7 @@ class RenderSettings(Wrapper):
         return Vector3D(self._proto.light_bottom_intensity)
 
     @light_bottom_intensity.setter
-    def light_bottom_intensity(self, value: Vector3D):
+    def light_bottom_intensity(self, value: Vector3D) -> None:
         self._proto.light_bottom_intensity.CopyFrom(value.proto)
 
     @property
@@ -654,7 +654,7 @@ class RenderSettings(Wrapper):
         return Vector3D(self._proto.light_camera_intensity)
 
     @light_camera_intensity.setter
-    def light_camera_intensity(self, value: Vector3D):
+    def light_camera_intensity(self, value: Vector3D) -> None:
         self._proto.light_camera_intensity.CopyFrom(value.proto)
 
     @property
@@ -662,7 +662,7 @@ class RenderSettings(Wrapper):
         return Vector3D(self._proto.light_side_intensity)
 
     @light_side_intensity.setter
-    def light_side_intensity(self, value: Vector3D):
+    def light_side_intensity(self, value: Vector3D) -> None:
         self._proto.light_side_intensity.CopyFrom(value.proto)
 
     @property
@@ -670,7 +670,7 @@ class RenderSettings(Wrapper):
         return self._proto.light_side_elevation
 
     @light_side_elevation.setter
-    def light_side_elevation(self, value: int):
+    def light_side_elevation(self, value: int) -> None:
         self._proto.light_side_elevation = value
 
 
@@ -681,7 +681,7 @@ class PositionExportSettings(Wrapper):
         self,
         proto: board_jobs_pb2.RunBoardJobExportPosition | None = None,
         proto_ref: board_jobs_pb2.RunBoardJobExportPosition | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_jobs_pb2.RunBoardJobExportPosition()
         )
@@ -695,7 +695,7 @@ class PositionExportSettings(Wrapper):
         return self._proto.use_drill_place_file_origin
 
     @use_drill_place_file_origin.setter
-    def use_drill_place_file_origin(self, value: bool | None):
+    def use_drill_place_file_origin(self, value: bool | None) -> None:
         if value is None:
             self._proto.ClearField("use_drill_place_file_origin")
             return
@@ -706,7 +706,7 @@ class PositionExportSettings(Wrapper):
         return self._proto.smd_only
 
     @smd_only.setter
-    def smd_only(self, value: bool):
+    def smd_only(self, value: bool) -> None:
         self._proto.smd_only = value
 
     @property
@@ -714,7 +714,7 @@ class PositionExportSettings(Wrapper):
         return self._proto.exclude_footprints_with_th
 
     @exclude_footprints_with_th.setter
-    def exclude_footprints_with_th(self, value: bool):
+    def exclude_footprints_with_th(self, value: bool) -> None:
         self._proto.exclude_footprints_with_th = value
 
     @property
@@ -722,7 +722,7 @@ class PositionExportSettings(Wrapper):
         return self._proto.exclude_dnp
 
     @exclude_dnp.setter
-    def exclude_dnp(self, value: bool):
+    def exclude_dnp(self, value: bool) -> None:
         self._proto.exclude_dnp = value
 
     @property
@@ -730,7 +730,7 @@ class PositionExportSettings(Wrapper):
         return self._proto.exclude_from_bom
 
     @exclude_from_bom.setter
-    def exclude_from_bom(self, value: bool):
+    def exclude_from_bom(self, value: bool) -> None:
         self._proto.exclude_from_bom = value
 
     @property
@@ -738,7 +738,7 @@ class PositionExportSettings(Wrapper):
         return self._proto.negate_bottom_x
 
     @negate_bottom_x.setter
-    def negate_bottom_x(self, value: bool):
+    def negate_bottom_x(self, value: bool) -> None:
         self._proto.negate_bottom_x = value
 
     @property
@@ -746,7 +746,7 @@ class PositionExportSettings(Wrapper):
         return self._proto.single_file
 
     @single_file.setter
-    def single_file(self, value: bool):
+    def single_file(self, value: bool) -> None:
         self._proto.single_file = value
 
     @property
@@ -754,7 +754,7 @@ class PositionExportSettings(Wrapper):
         return self._proto.naked_filename
 
     @naked_filename.setter
-    def naked_filename(self, value: bool):
+    def naked_filename(self, value: bool) -> None:
         self._proto.naked_filename = value
 
     @property
@@ -762,7 +762,7 @@ class PositionExportSettings(Wrapper):
         return self._proto.side
 
     @side.setter
-    def side(self, value: board_jobs_pb2.PositionSide.ValueType):
+    def side(self, value: board_jobs_pb2.PositionSide.ValueType) -> None:
         self._proto.side = value
 
     @property
@@ -771,7 +771,7 @@ class PositionExportSettings(Wrapper):
         return self._proto.units
 
     @units.setter
-    def units(self, value: enums_pb2.Units.ValueType):
+    def units(self, value: enums_pb2.Units.ValueType) -> None:
         self._proto.units = value
 
     @property
@@ -779,7 +779,7 @@ class PositionExportSettings(Wrapper):
         return self._proto.format
 
     @format.setter
-    def format(self, value: board_jobs_pb2.PositionFormat.ValueType):
+    def format(self, value: board_jobs_pb2.PositionFormat.ValueType) -> None:
         self._proto.format = value
 
     @property
@@ -789,7 +789,7 @@ class PositionExportSettings(Wrapper):
         return self._proto.include_board_edge_for_gerber
 
     @include_board_edge_for_gerber.setter
-    def include_board_edge_for_gerber(self, value: bool | None):
+    def include_board_edge_for_gerber(self, value: bool | None) -> None:
         if value is None:
             self._proto.ClearField("include_board_edge_for_gerber")
             return
@@ -800,7 +800,7 @@ class PositionExportSettings(Wrapper):
         return self._proto.variant
 
     @variant.setter
-    def variant(self, value: str):
+    def variant(self, value: str) -> None:
         self._proto.variant = value
 
 
@@ -811,7 +811,7 @@ class Ipc2581ExportSettings(Wrapper):
         self,
         proto: board_jobs_pb2.RunBoardJobExportIpc2581 | None = None,
         proto_ref: board_jobs_pb2.RunBoardJobExportIpc2581 | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_jobs_pb2.RunBoardJobExportIpc2581()
         )
@@ -823,7 +823,7 @@ class Ipc2581ExportSettings(Wrapper):
         return self._proto.drawing_sheet
 
     @drawing_sheet.setter
-    def drawing_sheet(self, value: str):
+    def drawing_sheet(self, value: str) -> None:
         self._proto.drawing_sheet = value
 
     @property
@@ -831,7 +831,7 @@ class Ipc2581ExportSettings(Wrapper):
         return self._proto.variant
 
     @variant.setter
-    def variant(self, value: str):
+    def variant(self, value: str) -> None:
         self._proto.variant = value
 
     @property
@@ -840,7 +840,7 @@ class Ipc2581ExportSettings(Wrapper):
         return self._proto.units
 
     @units.setter
-    def units(self, value: enums_pb2.Units.ValueType):
+    def units(self, value: enums_pb2.Units.ValueType) -> None:
         self._proto.units = value
 
     @property
@@ -848,7 +848,7 @@ class Ipc2581ExportSettings(Wrapper):
         return self._proto.version
 
     @version.setter
-    def version(self, value: board_jobs_pb2.Ipc2581Version.ValueType):
+    def version(self, value: board_jobs_pb2.Ipc2581Version.ValueType) -> None:
         self._proto.version = value
 
     @property
@@ -858,7 +858,7 @@ class Ipc2581ExportSettings(Wrapper):
         return self._proto.precision
 
     @precision.setter
-    def precision(self, value: int | None):
+    def precision(self, value: int | None) -> None:
         if value is None:
             self._proto.ClearField("precision")
             return
@@ -869,7 +869,7 @@ class Ipc2581ExportSettings(Wrapper):
         return self._proto.compress
 
     @compress.setter
-    def compress(self, value: bool):
+    def compress(self, value: bool) -> None:
         self._proto.compress = value
 
     @property
@@ -877,7 +877,7 @@ class Ipc2581ExportSettings(Wrapper):
         return self._proto.internal_id_column
 
     @internal_id_column.setter
-    def internal_id_column(self, value: str):
+    def internal_id_column(self, value: str) -> None:
         self._proto.internal_id_column = value
 
     @property
@@ -885,7 +885,7 @@ class Ipc2581ExportSettings(Wrapper):
         return self._proto.manufacturer_part_number_column
 
     @manufacturer_part_number_column.setter
-    def manufacturer_part_number_column(self, value: str):
+    def manufacturer_part_number_column(self, value: str) -> None:
         self._proto.manufacturer_part_number_column = value
 
     @property
@@ -893,7 +893,7 @@ class Ipc2581ExportSettings(Wrapper):
         return self._proto.manufacturer_column
 
     @manufacturer_column.setter
-    def manufacturer_column(self, value: str):
+    def manufacturer_column(self, value: str) -> None:
         self._proto.manufacturer_column = value
 
     @property
@@ -901,7 +901,7 @@ class Ipc2581ExportSettings(Wrapper):
         return self._proto.distributor_part_number_column
 
     @distributor_part_number_column.setter
-    def distributor_part_number_column(self, value: str):
+    def distributor_part_number_column(self, value: str) -> None:
         self._proto.distributor_part_number_column = value
 
     @property
@@ -909,7 +909,7 @@ class Ipc2581ExportSettings(Wrapper):
         return self._proto.distributor_column
 
     @distributor_column.setter
-    def distributor_column(self, value: str):
+    def distributor_column(self, value: str) -> None:
         self._proto.distributor_column = value
 
     @property
@@ -917,7 +917,7 @@ class Ipc2581ExportSettings(Wrapper):
         return self._proto.bom_revision
 
     @bom_revision.setter
-    def bom_revision(self, value: str):
+    def bom_revision(self, value: str) -> None:
         self._proto.bom_revision = value
 
 
@@ -928,7 +928,7 @@ class SvgExportSettings(Wrapper):
         self,
         proto: board_jobs_pb2.RunBoardJobExportSvg | None = None,
         proto_ref: board_jobs_pb2.RunBoardJobExportSvg | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_jobs_pb2.RunBoardJobExportSvg()
         if proto is not None:
             self._proto.CopyFrom(proto)
@@ -938,7 +938,7 @@ class SvgExportSettings(Wrapper):
         return PlotSettings(proto_ref=self._proto.plot_settings)
 
     @plot_settings.setter
-    def plot_settings(self, value: PlotSettings):
+    def plot_settings(self, value: PlotSettings) -> None:
         self._proto.plot_settings.CopyFrom(value.proto)
 
     @property
@@ -946,7 +946,7 @@ class SvgExportSettings(Wrapper):
         return self._proto.fit_page_to_board
 
     @fit_page_to_board.setter
-    def fit_page_to_board(self, value: bool):
+    def fit_page_to_board(self, value: bool) -> None:
         self._proto.fit_page_to_board = value
 
     @property
@@ -954,7 +954,7 @@ class SvgExportSettings(Wrapper):
         return self._proto.precision
 
     @precision.setter
-    def precision(self, value: int):
+    def precision(self, value: int) -> None:
         self._proto.precision = value
 
     @property
@@ -963,7 +963,7 @@ class SvgExportSettings(Wrapper):
         return self._proto.page_mode
 
     @page_mode.setter
-    def page_mode(self, value: board_jobs_pb2.BoardJobPaginationMode.ValueType):
+    def page_mode(self, value: board_jobs_pb2.BoardJobPaginationMode.ValueType) -> None:
         self._proto.page_mode = value
 
 
@@ -974,7 +974,7 @@ class DxfExportSettings(Wrapper):
         self,
         proto: board_jobs_pb2.RunBoardJobExportDxf | None = None,
         proto_ref: board_jobs_pb2.RunBoardJobExportDxf | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_jobs_pb2.RunBoardJobExportDxf()
         if proto is not None:
             self._proto.CopyFrom(proto)
@@ -984,7 +984,7 @@ class DxfExportSettings(Wrapper):
         return PlotSettings(proto_ref=self._proto.plot_settings)
 
     @plot_settings.setter
-    def plot_settings(self, value: PlotSettings):
+    def plot_settings(self, value: PlotSettings) -> None:
         self._proto.plot_settings.CopyFrom(value.proto)
 
     @property
@@ -992,7 +992,7 @@ class DxfExportSettings(Wrapper):
         return self._proto.plot_graphic_items_using_contours
 
     @plot_graphic_items_using_contours.setter
-    def plot_graphic_items_using_contours(self, value: bool):
+    def plot_graphic_items_using_contours(self, value: bool) -> None:
         self._proto.plot_graphic_items_using_contours = value
 
     @property
@@ -1000,7 +1000,7 @@ class DxfExportSettings(Wrapper):
         return self._proto.polygon_mode
 
     @polygon_mode.setter
-    def polygon_mode(self, value: bool):
+    def polygon_mode(self, value: bool) -> None:
         self._proto.polygon_mode = value
 
     @property
@@ -1009,7 +1009,7 @@ class DxfExportSettings(Wrapper):
         return self._proto.units
 
     @units.setter
-    def units(self, value: enums_pb2.Units.ValueType):
+    def units(self, value: enums_pb2.Units.ValueType) -> None:
         self._proto.units = value
 
     @property
@@ -1018,7 +1018,7 @@ class DxfExportSettings(Wrapper):
         return self._proto.page_mode
 
     @page_mode.setter
-    def page_mode(self, value: board_jobs_pb2.BoardJobPaginationMode.ValueType):
+    def page_mode(self, value: board_jobs_pb2.BoardJobPaginationMode.ValueType) -> None:
         self._proto.page_mode = value
 
 
@@ -1029,7 +1029,7 @@ class PdfExportSettings(Wrapper):
         self,
         proto: board_jobs_pb2.RunBoardJobExportPdf | None = None,
         proto_ref: board_jobs_pb2.RunBoardJobExportPdf | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_jobs_pb2.RunBoardJobExportPdf()
         if proto is not None:
             self._proto.CopyFrom(proto)
@@ -1039,7 +1039,7 @@ class PdfExportSettings(Wrapper):
         return PlotSettings(proto_ref=self._proto.plot_settings)
 
     @plot_settings.setter
-    def plot_settings(self, value: PlotSettings):
+    def plot_settings(self, value: PlotSettings) -> None:
         self._proto.plot_settings.CopyFrom(value.proto)
 
     @property
@@ -1047,7 +1047,7 @@ class PdfExportSettings(Wrapper):
         return self._proto.front_footprint_property_popups
 
     @front_footprint_property_popups.setter
-    def front_footprint_property_popups(self, value: bool):
+    def front_footprint_property_popups(self, value: bool) -> None:
         self._proto.front_footprint_property_popups = value
 
     @property
@@ -1055,7 +1055,7 @@ class PdfExportSettings(Wrapper):
         return self._proto.back_footprint_property_popups
 
     @back_footprint_property_popups.setter
-    def back_footprint_property_popups(self, value: bool):
+    def back_footprint_property_popups(self, value: bool) -> None:
         self._proto.back_footprint_property_popups = value
 
     @property
@@ -1063,7 +1063,7 @@ class PdfExportSettings(Wrapper):
         return self._proto.include_metadata
 
     @include_metadata.setter
-    def include_metadata(self, value: bool):
+    def include_metadata(self, value: bool) -> None:
         self._proto.include_metadata = value
 
     @property
@@ -1071,7 +1071,7 @@ class PdfExportSettings(Wrapper):
         return self._proto.single_document
 
     @single_document.setter
-    def single_document(self, value: bool):
+    def single_document(self, value: bool) -> None:
         self._proto.single_document = value
 
     @property
@@ -1079,7 +1079,7 @@ class PdfExportSettings(Wrapper):
         return self._proto.page_mode
 
     @page_mode.setter
-    def page_mode(self, value: board_jobs_pb2.BoardJobPaginationMode.ValueType):
+    def page_mode(self, value: board_jobs_pb2.BoardJobPaginationMode.ValueType) -> None:
         self._proto.page_mode = value
 
     @property
@@ -1087,7 +1087,7 @@ class PdfExportSettings(Wrapper):
         return self._proto.background_color
 
     @background_color.setter
-    def background_color(self, value: str):
+    def background_color(self, value: str) -> None:
         self._proto.background_color = value
 
 
@@ -1098,7 +1098,7 @@ class PsExportSettings(Wrapper):
         self,
         proto: board_jobs_pb2.RunBoardJobExportPs | None = None,
         proto_ref: board_jobs_pb2.RunBoardJobExportPs | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_jobs_pb2.RunBoardJobExportPs()
         if proto is not None:
             self._proto.CopyFrom(proto)
@@ -1108,7 +1108,7 @@ class PsExportSettings(Wrapper):
         return PlotSettings(proto_ref=self._proto.plot_settings)
 
     @plot_settings.setter
-    def plot_settings(self, value: PlotSettings):
+    def plot_settings(self, value: PlotSettings) -> None:
         self._proto.plot_settings.CopyFrom(value.proto)
 
     @property
@@ -1117,7 +1117,7 @@ class PsExportSettings(Wrapper):
         return self._proto.page_mode
 
     @page_mode.setter
-    def page_mode(self, value: board_jobs_pb2.BoardJobPaginationMode.ValueType):
+    def page_mode(self, value: board_jobs_pb2.BoardJobPaginationMode.ValueType) -> None:
         self._proto.page_mode = value
 
     @property
@@ -1125,7 +1125,7 @@ class PsExportSettings(Wrapper):
         return self._proto.track_width_correction
 
     @track_width_correction.setter
-    def track_width_correction(self, value: float):
+    def track_width_correction(self, value: float) -> None:
         self._proto.track_width_correction = value
 
     @property
@@ -1133,7 +1133,7 @@ class PsExportSettings(Wrapper):
         return self._proto.x_scale_adjust
 
     @x_scale_adjust.setter
-    def x_scale_adjust(self, value: float):
+    def x_scale_adjust(self, value: float) -> None:
         self._proto.x_scale_adjust = value
 
     @property
@@ -1141,7 +1141,7 @@ class PsExportSettings(Wrapper):
         return self._proto.y_scale_adjust
 
     @y_scale_adjust.setter
-    def y_scale_adjust(self, value: float):
+    def y_scale_adjust(self, value: float) -> None:
         self._proto.y_scale_adjust = value
 
     @property
@@ -1149,7 +1149,7 @@ class PsExportSettings(Wrapper):
         return self._proto.force_a4
 
     @force_a4.setter
-    def force_a4(self, value: bool):
+    def force_a4(self, value: bool) -> None:
         self._proto.force_a4 = value
 
     @property
@@ -1157,7 +1157,7 @@ class PsExportSettings(Wrapper):
         return self._proto.use_global_settings
 
     @use_global_settings.setter
-    def use_global_settings(self, value: bool):
+    def use_global_settings(self, value: bool) -> None:
         self._proto.use_global_settings = value
 
 
@@ -1168,7 +1168,7 @@ class GerberExportSettings(Wrapper):
         self,
         proto: board_jobs_pb2.RunBoardJobExportGerbers | None = None,
         proto_ref: board_jobs_pb2.RunBoardJobExportGerbers | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_jobs_pb2.RunBoardJobExportGerbers()
         )
@@ -1180,7 +1180,7 @@ class GerberExportSettings(Wrapper):
         return PlotSettings(proto_ref=self._proto.plot_settings)
 
     @plot_settings.setter
-    def plot_settings(self, value: PlotSettings):
+    def plot_settings(self, value: PlotSettings) -> None:
         self._proto.plot_settings.CopyFrom(value.proto)
 
     @property
@@ -1191,7 +1191,7 @@ class GerberExportSettings(Wrapper):
         return self._proto.use_board_plot_params
 
     @use_board_plot_params.setter
-    def use_board_plot_params(self, value: bool):
+    def use_board_plot_params(self, value: bool) -> None:
         self._proto.use_board_plot_params = value
 
     @property
@@ -1200,7 +1200,7 @@ class GerberExportSettings(Wrapper):
         return self._proto.create_gerber_job_file
 
     @create_gerber_job_file.setter
-    def create_gerber_job_file(self, value: bool):
+    def create_gerber_job_file(self, value: bool) -> None:
         self._proto.create_gerber_job_file = value
 
     @property
@@ -1209,7 +1209,7 @@ class GerberExportSettings(Wrapper):
         return self._proto.include_netlist_attributes
 
     @include_netlist_attributes.setter
-    def include_netlist_attributes(self, value: bool):
+    def include_netlist_attributes(self, value: bool) -> None:
         self._proto.include_netlist_attributes = value
 
     @property
@@ -1218,7 +1218,7 @@ class GerberExportSettings(Wrapper):
         return self._proto.use_x2_format
 
     @use_x2_format.setter
-    def use_x2_format(self, value: bool):
+    def use_x2_format(self, value: bool) -> None:
         self._proto.use_x2_format = value
 
     @property
@@ -1227,7 +1227,7 @@ class GerberExportSettings(Wrapper):
         return self._proto.disable_aperture_macros
 
     @disable_aperture_macros.setter
-    def disable_aperture_macros(self, value: bool):
+    def disable_aperture_macros(self, value: bool) -> None:
         self._proto.disable_aperture_macros = value
 
     @property
@@ -1236,7 +1236,7 @@ class GerberExportSettings(Wrapper):
         return self._proto.use_protel_file_extensions
 
     @use_protel_file_extensions.setter
-    def use_protel_file_extensions(self, value: bool):
+    def use_protel_file_extensions(self, value: bool) -> None:
         self._proto.use_protel_file_extensions = value
 
     @property
@@ -1244,7 +1244,7 @@ class GerberExportSettings(Wrapper):
         return self._proto.precision
 
     @precision.setter
-    def precision(self, value: board_jobs_pb2.GerberPrecision.ValueType):
+    def precision(self, value: board_jobs_pb2.GerberPrecision.ValueType) -> None:
         self._proto.precision = value
 
 
@@ -1255,7 +1255,7 @@ class ExcellonFormatOptions(Wrapper):
         self,
         proto: board_jobs_pb2.ExcellonFormatOptions | None = None,
         proto_ref: board_jobs_pb2.ExcellonFormatOptions | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_jobs_pb2.ExcellonFormatOptions()
         )
@@ -1269,7 +1269,7 @@ class ExcellonFormatOptions(Wrapper):
         return self._proto.mirror_y
 
     @mirror_y.setter
-    def mirror_y(self, value: bool | None):
+    def mirror_y(self, value: bool | None) -> None:
         if value is None:
             self._proto.ClearField("mirror_y")
             return
@@ -1282,7 +1282,7 @@ class ExcellonFormatOptions(Wrapper):
         return self._proto.minimal_header
 
     @minimal_header.setter
-    def minimal_header(self, value: bool | None):
+    def minimal_header(self, value: bool | None) -> None:
         if value is None:
             self._proto.ClearField("minimal_header")
             return
@@ -1295,7 +1295,7 @@ class ExcellonFormatOptions(Wrapper):
         return self._proto.combine_pth_npth
 
     @combine_pth_npth.setter
-    def combine_pth_npth(self, value: bool | None):
+    def combine_pth_npth(self, value: bool | None) -> None:
         if value is None:
             self._proto.ClearField("combine_pth_npth")
             return
@@ -1308,7 +1308,7 @@ class ExcellonFormatOptions(Wrapper):
         return self._proto.route_oval_holes
 
     @route_oval_holes.setter
-    def route_oval_holes(self, value: bool | None):
+    def route_oval_holes(self, value: bool | None) -> None:
         if value is None:
             self._proto.ClearField("route_oval_holes")
             return
@@ -1322,7 +1322,7 @@ class DrillExportSettings(Wrapper):
         self,
         proto: board_jobs_pb2.RunBoardJobExportDrill | None = None,
         proto_ref: board_jobs_pb2.RunBoardJobExportDrill | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_jobs_pb2.RunBoardJobExportDrill()
         )
@@ -1334,7 +1334,7 @@ class DrillExportSettings(Wrapper):
         return self._proto.format
 
     @format.setter
-    def format(self, value: board_jobs_pb2.DrillFormat.ValueType):
+    def format(self, value: board_jobs_pb2.DrillFormat.ValueType) -> None:
         self._proto.format = value
 
     @property
@@ -1343,7 +1343,7 @@ class DrillExportSettings(Wrapper):
         return self._proto.units
 
     @units.setter
-    def units(self, value: enums_pb2.Units.ValueType):
+    def units(self, value: enums_pb2.Units.ValueType) -> None:
         self._proto.units = value
 
     @property
@@ -1351,7 +1351,7 @@ class DrillExportSettings(Wrapper):
         return self._proto.origin
 
     @origin.setter
-    def origin(self, value: board_jobs_pb2.DrillOrigin.ValueType):
+    def origin(self, value: board_jobs_pb2.DrillOrigin.ValueType) -> None:
         self._proto.origin = value
 
     @property
@@ -1359,7 +1359,7 @@ class DrillExportSettings(Wrapper):
         return self._proto.zeros_format
 
     @zeros_format.setter
-    def zeros_format(self, value: board_jobs_pb2.DrillZerosFormat.ValueType):
+    def zeros_format(self, value: board_jobs_pb2.DrillZerosFormat.ValueType) -> None:
         self._proto.zeros_format = value
 
     @property
@@ -1367,7 +1367,7 @@ class DrillExportSettings(Wrapper):
         return ExcellonFormatOptions(proto_ref=self._proto.excellon)
 
     @excellon.setter
-    def excellon(self, value: ExcellonFormatOptions):
+    def excellon(self, value: ExcellonFormatOptions) -> None:
         self._proto.excellon.CopyFrom(value.proto)
 
     @property
@@ -1376,7 +1376,7 @@ class DrillExportSettings(Wrapper):
         return self._proto.map_format
 
     @map_format.setter
-    def map_format(self, value: board_jobs_pb2.DrillMapFormat.ValueType):
+    def map_format(self, value: board_jobs_pb2.DrillMapFormat.ValueType) -> None:
         self._proto.map_format = value
 
     @property
@@ -1385,7 +1385,7 @@ class DrillExportSettings(Wrapper):
         return self._proto.gerber_precision
 
     @gerber_precision.setter
-    def gerber_precision(self, value: board_jobs_pb2.DrillGerberPrecision.ValueType):
+    def gerber_precision(self, value: board_jobs_pb2.DrillGerberPrecision.ValueType) -> None:
         self._proto.gerber_precision = value
 
     @property
@@ -1395,7 +1395,7 @@ class DrillExportSettings(Wrapper):
         return self._proto.gerber_generate_tenting
 
     @gerber_generate_tenting.setter
-    def gerber_generate_tenting(self, value: bool | None):
+    def gerber_generate_tenting(self, value: bool | None) -> None:
         if value is None:
             self._proto.ClearField("gerber_generate_tenting")
             return
@@ -1407,7 +1407,7 @@ class DrillExportSettings(Wrapper):
         return self._proto.report_format
 
     @report_format.setter
-    def report_format(self, value: board_jobs_pb2.DrillReportFormat.ValueType):
+    def report_format(self, value: board_jobs_pb2.DrillReportFormat.ValueType) -> None:
         self._proto.report_format = value
 
     @property
@@ -1417,7 +1417,7 @@ class DrillExportSettings(Wrapper):
         return self._proto.report_filename
 
     @report_filename.setter
-    def report_filename(self, value: str | None):
+    def report_filename(self, value: str | None) -> None:
         if value is None:
             self._proto.ClearField("report_filename")
             return
@@ -1431,7 +1431,7 @@ class GencadExportSettings(Wrapper):
         self,
         proto: board_jobs_pb2.RunBoardJobExportGencad | None = None,
         proto_ref: board_jobs_pb2.RunBoardJobExportGencad | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_jobs_pb2.RunBoardJobExportGencad()
         )
@@ -1443,7 +1443,7 @@ class GencadExportSettings(Wrapper):
         return self._proto.flip_bottom_pads
 
     @flip_bottom_pads.setter
-    def flip_bottom_pads(self, value: bool):
+    def flip_bottom_pads(self, value: bool) -> None:
         self._proto.flip_bottom_pads = value
 
     @property
@@ -1451,7 +1451,7 @@ class GencadExportSettings(Wrapper):
         return self._proto.use_individual_shapes
 
     @use_individual_shapes.setter
-    def use_individual_shapes(self, value: bool):
+    def use_individual_shapes(self, value: bool) -> None:
         self._proto.use_individual_shapes = value
 
     @property
@@ -1459,7 +1459,7 @@ class GencadExportSettings(Wrapper):
         return self._proto.store_origin_coords
 
     @store_origin_coords.setter
-    def store_origin_coords(self, value: bool):
+    def store_origin_coords(self, value: bool) -> None:
         self._proto.store_origin_coords = value
 
     @property
@@ -1467,7 +1467,7 @@ class GencadExportSettings(Wrapper):
         return self._proto.use_drill_origin
 
     @use_drill_origin.setter
-    def use_drill_origin(self, value: bool):
+    def use_drill_origin(self, value: bool) -> None:
         self._proto.use_drill_origin = value
 
     @property
@@ -1475,7 +1475,7 @@ class GencadExportSettings(Wrapper):
         return self._proto.use_unique_pins
 
     @use_unique_pins.setter
-    def use_unique_pins(self, value: bool):
+    def use_unique_pins(self, value: bool) -> None:
         self._proto.use_unique_pins = value
 
 
@@ -1486,7 +1486,7 @@ class IpcD356ExportSettings(Wrapper):
         self,
         proto: board_jobs_pb2.RunBoardJobExportIpcD356 | None = None,
         proto_ref: board_jobs_pb2.RunBoardJobExportIpcD356 | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_jobs_pb2.RunBoardJobExportIpcD356()
         )
@@ -1501,7 +1501,7 @@ class OdbExportSettings(Wrapper):
         self,
         proto: board_jobs_pb2.RunBoardJobExportODB | None = None,
         proto_ref: board_jobs_pb2.RunBoardJobExportODB | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else board_jobs_pb2.RunBoardJobExportODB()
         if proto is not None:
             self._proto.CopyFrom(proto)
@@ -1511,7 +1511,7 @@ class OdbExportSettings(Wrapper):
         return self._proto.drawing_sheet
 
     @drawing_sheet.setter
-    def drawing_sheet(self, value: str):
+    def drawing_sheet(self, value: str) -> None:
         self._proto.drawing_sheet = value
 
     @property
@@ -1519,7 +1519,7 @@ class OdbExportSettings(Wrapper):
         return self._proto.variant
 
     @variant.setter
-    def variant(self, value: str):
+    def variant(self, value: str) -> None:
         self._proto.variant = value
 
     @property
@@ -1528,7 +1528,7 @@ class OdbExportSettings(Wrapper):
         return self._proto.units
 
     @units.setter
-    def units(self, value: enums_pb2.Units.ValueType):
+    def units(self, value: enums_pb2.Units.ValueType) -> None:
         self._proto.units = value
 
     @property
@@ -1538,7 +1538,7 @@ class OdbExportSettings(Wrapper):
         return self._proto.precision
 
     @precision.setter
-    def precision(self, value: int | None):
+    def precision(self, value: int | None) -> None:
         if value is None:
             self._proto.ClearField("precision")
             return
@@ -1549,7 +1549,7 @@ class OdbExportSettings(Wrapper):
         return self._proto.compression
 
     @compression.setter
-    def compression(self, value: board_jobs_pb2.OdbCompression.ValueType):
+    def compression(self, value: board_jobs_pb2.OdbCompression.ValueType) -> None:
         self._proto.compression = value
 
 
@@ -1560,7 +1560,7 @@ class StatsExportSettings(Wrapper):
         self,
         proto: board_jobs_pb2.RunBoardJobExportStats | None = None,
         proto_ref: board_jobs_pb2.RunBoardJobExportStats | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else board_jobs_pb2.RunBoardJobExportStats()
         )
@@ -1572,7 +1572,7 @@ class StatsExportSettings(Wrapper):
         return self._proto.format
 
     @format.setter
-    def format(self, value: board_jobs_pb2.StatsOutputFormat.ValueType):
+    def format(self, value: board_jobs_pb2.StatsOutputFormat.ValueType) -> None:
         self._proto.format = value
 
     @property
@@ -1581,7 +1581,7 @@ class StatsExportSettings(Wrapper):
         return self._proto.units
 
     @units.setter
-    def units(self, value: enums_pb2.Units.ValueType):
+    def units(self, value: enums_pb2.Units.ValueType) -> None:
         self._proto.units = value
 
     @property
@@ -1589,7 +1589,7 @@ class StatsExportSettings(Wrapper):
         return self._proto.exclude_footprints_without_pads
 
     @exclude_footprints_without_pads.setter
-    def exclude_footprints_without_pads(self, value: bool):
+    def exclude_footprints_without_pads(self, value: bool) -> None:
         self._proto.exclude_footprints_without_pads = value
 
     @property
@@ -1597,7 +1597,7 @@ class StatsExportSettings(Wrapper):
         return self._proto.subtract_holes_from_board_area
 
     @subtract_holes_from_board_area.setter
-    def subtract_holes_from_board_area(self, value: bool):
+    def subtract_holes_from_board_area(self, value: bool) -> None:
         self._proto.subtract_holes_from_board_area = value
 
     @property
@@ -1605,5 +1605,5 @@ class StatsExportSettings(Wrapper):
         return self._proto.subtract_holes_from_copper_areas
 
     @subtract_holes_from_copper_areas.setter
-    def subtract_holes_from_copper_areas(self, value: bool):
+    def subtract_holes_from_copper_areas(self, value: bool) -> None:
         self._proto.subtract_holes_from_copper_areas = value

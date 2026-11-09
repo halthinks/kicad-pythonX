@@ -63,4 +63,4 @@ are no other instances of KiCad open at the time).
 
 Before committing, run `nox`, which will run checks such as linting.
 
-We'll eventually add tests which will run here too :)
+Run `nox -s mypy` for type checking or `nox -s tests` for unit tests.

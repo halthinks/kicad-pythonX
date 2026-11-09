@@ -135,7 +135,7 @@ class KiCadServer:
         kicad_cli_path: str,
         file_path: str | None = None,
         socket_path: str | None = None,
-    ):
+    ) -> None:
         self._kicad_cli_path = kicad_cli_path
         self._file_path = file_path
         self._socket_path = socket_path or self._generate_socket_path()
@@ -155,14 +155,14 @@ class KiCadServer:
         token = uuid.uuid4().hex[:8]
         return str(temp_root / f"api-{os.getpid()}-{token}.sock")
 
-    def _drain_stream(self, stream: IO[str] | None, out_queue: queue.Queue[str]):
+    def _drain_stream(self, stream: IO[str] | None, out_queue: queue.Queue[str]) -> None:
         if stream is None:
             return
 
         for line in stream:
             out_queue.put(line.rstrip("\n"))
 
-    def start(self):
+    def start(self) -> None:
         if self._process is not None and self._process.poll() is None:
             return
 
@@ -279,7 +279,7 @@ class KiCadServer:
     def socket_url(self) -> str:
         return f"ipc://{self._socket_path}"
 
-    def stop(self):
+    def stop(self) -> None:
         process = self._process
 
         if process is None:

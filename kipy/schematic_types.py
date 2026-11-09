@@ -20,7 +20,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable, Sequence
+from collections.abc import Callable, Iterator, Sequence
 from typing import cast
 
 from google.protobuf.any_pb2 import Any
@@ -82,7 +82,7 @@ class SchematicField(SchematicItem):
         self,
         proto: schematic_types_pb2.SchematicField | None = None,
         proto_ref: schematic_types_pb2.SchematicField | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.SchematicField()
 
         if proto is not None:
@@ -96,7 +96,7 @@ class SchematicField(SchematicItem):
         return self._proto.name
 
     @name.setter
-    def name(self, value: str):
+    def name(self, value: str) -> None:
         self._proto.name = value
 
     @property
@@ -104,7 +104,7 @@ class SchematicField(SchematicItem):
         return Text(proto_ref=self._proto.text)
 
     @text.setter
-    def text(self, value: Text):
+    def text(self, value: Text) -> None:
         self._proto.text.CopyFrom(value.proto)
 
     @property
@@ -112,7 +112,7 @@ class SchematicField(SchematicItem):
         return self._proto.visible
 
     @visible.setter
-    def visible(self, value: bool):
+    def visible(self, value: bool) -> None:
         self._proto.visible = value
 
     @property
@@ -120,7 +120,7 @@ class SchematicField(SchematicItem):
         return self._proto.show_name
 
     @show_name.setter
-    def show_name(self, value: bool):
+    def show_name(self, value: bool) -> None:
         self._proto.show_name = value
 
     @property
@@ -128,7 +128,7 @@ class SchematicField(SchematicItem):
         return self._proto.allow_auto_place
 
     @allow_auto_place.setter
-    def allow_auto_place(self, value: bool):
+    def allow_auto_place(self, value: bool) -> None:
         self._proto.allow_auto_place = value
 
     @property
@@ -136,7 +136,7 @@ class SchematicField(SchematicItem):
         return self._proto.is_private
 
     @is_private.setter
-    def is_private(self, value: bool):
+    def is_private(self, value: bool) -> None:
         self._proto.is_private = value
 
     @property
@@ -145,7 +145,7 @@ class SchematicField(SchematicItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, value: Sequence[CustomProperty]):
+    def custom_properties(self, value: Sequence[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(prop.proto for prop in value)
 
@@ -164,7 +164,7 @@ class SchematicLine(SchematicItem):
         self,
         proto: schematic_types_pb2.SchematicLine | None = None,
         proto_ref: schematic_types_pb2.SchematicLine | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.SchematicLine()
 
         if proto is not None:
@@ -181,7 +181,7 @@ class SchematicLine(SchematicItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -192,7 +192,7 @@ class SchematicLine(SchematicItem):
         return Vector2(proto_ref=self._proto.start)
 
     @start.setter
-    def start(self, value: Vector2):
+    def start(self, value: Vector2) -> None:
         self._proto.start.CopyFrom(value.proto)
 
     @property
@@ -200,7 +200,7 @@ class SchematicLine(SchematicItem):
         return Vector2(proto_ref=self._proto.end)
 
     @end.setter
-    def end(self, value: Vector2):
+    def end(self, value: Vector2) -> None:
         self._proto.end.CopyFrom(value.proto)
 
     @property
@@ -208,7 +208,7 @@ class SchematicLine(SchematicItem):
         return self._proto.type
 
     @type.setter
-    def type(self, value: SchematicLineType.ValueType):
+    def type(self, value: SchematicLineType.ValueType) -> None:
         self._proto.type = value
 
     @property
@@ -216,7 +216,7 @@ class SchematicLine(SchematicItem):
         return StrokeAttributes(proto_ref=self._proto.stroke)
 
     @stroke.setter
-    def stroke(self, value: StrokeAttributes):
+    def stroke(self, value: StrokeAttributes) -> None:
         self._proto.stroke.CopyFrom(value.proto)
 
     @property
@@ -226,7 +226,7 @@ class SchematicLine(SchematicItem):
         return None
 
     @start_ending.setter
-    def start_ending(self, value: LineEnding | None):
+    def start_ending(self, value: LineEnding | None) -> None:
         if value is not None:
             self._proto.start_ending.CopyFrom(value.proto)
         else:
@@ -239,7 +239,7 @@ class SchematicLine(SchematicItem):
         return None
 
     @end_ending.setter
-    def end_ending(self, value: LineEnding | None):
+    def end_ending(self, value: LineEnding | None) -> None:
         if value is not None:
             self._proto.end_ending.CopyFrom(value.proto)
         else:
@@ -251,7 +251,7 @@ class SchematicLine(SchematicItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, value: Sequence[CustomProperty]):
+    def custom_properties(self, value: Sequence[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(prop.proto for prop in value)
 
@@ -267,7 +267,7 @@ class Junction(SchematicItem):
         self,
         proto: schematic_types_pb2.Junction | None = None,
         proto_ref: schematic_types_pb2.Junction | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.Junction()
 
         if proto is not None:
@@ -281,7 +281,7 @@ class Junction(SchematicItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -292,7 +292,7 @@ class Junction(SchematicItem):
         return Vector2(proto_ref=self._proto.position)
 
     @position.setter
-    def position(self, value: Vector2):
+    def position(self, value: Vector2) -> None:
         self._proto.position.CopyFrom(value.proto)
 
     @property
@@ -300,7 +300,7 @@ class Junction(SchematicItem):
         return self._proto.diameter.value_nm
 
     @diameter.setter
-    def diameter(self, value: int):
+    def diameter(self, value: int) -> None:
         self._proto.diameter.value_nm = value
 
     @property
@@ -308,7 +308,7 @@ class Junction(SchematicItem):
         return Color(proto_ref=self._proto.color)
 
     @color.setter
-    def color(self, value: Color):
+    def color(self, value: Color) -> None:
         self._proto.color.CopyFrom(value.proto)
 
     @property
@@ -317,7 +317,7 @@ class Junction(SchematicItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, value: Sequence[CustomProperty]):
+    def custom_properties(self, value: Sequence[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(prop.proto for prop in value)
 
@@ -333,7 +333,7 @@ class NoConnectMarker(SchematicItem):
         self,
         proto: schematic_types_pb2.NoConnectMarker | None = None,
         proto_ref: schematic_types_pb2.NoConnectMarker | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.NoConnectMarker()
 
         if proto is not None:
@@ -347,7 +347,7 @@ class NoConnectMarker(SchematicItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -358,7 +358,7 @@ class NoConnectMarker(SchematicItem):
         return Vector2(proto_ref=self._proto.position)
 
     @position.setter
-    def position(self, value: Vector2):
+    def position(self, value: Vector2) -> None:
         self._proto.position.CopyFrom(value.proto)
 
     @property
@@ -366,7 +366,7 @@ class NoConnectMarker(SchematicItem):
         return self._proto.size.value_nm
 
     @size.setter
-    def size(self, value: int):
+    def size(self, value: int) -> None:
         self._proto.size.value_nm = value
 
     @property
@@ -375,7 +375,7 @@ class NoConnectMarker(SchematicItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, value: Sequence[CustomProperty]):
+    def custom_properties(self, value: Sequence[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(prop.proto for prop in value)
 
@@ -390,7 +390,7 @@ class BusEntry(SchematicItem):
         self,
         proto: schematic_types_pb2.BusEntry | None = None,
         proto_ref: schematic_types_pb2.BusEntry | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.BusEntry()
 
         if proto is not None:
@@ -404,7 +404,7 @@ class BusEntry(SchematicItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -415,7 +415,7 @@ class BusEntry(SchematicItem):
         return Vector2(proto_ref=self._proto.position)
 
     @position.setter
-    def position(self, value: Vector2):
+    def position(self, value: Vector2) -> None:
         self._proto.position.CopyFrom(value.proto)
 
     @property
@@ -423,7 +423,7 @@ class BusEntry(SchematicItem):
         return Vector2(proto_ref=self._proto.size)
 
     @size.setter
-    def size(self, value: Vector2):
+    def size(self, value: Vector2) -> None:
         self._proto.size.CopyFrom(value.proto)
 
     @property
@@ -431,7 +431,7 @@ class BusEntry(SchematicItem):
         return StrokeAttributes(proto_ref=self._proto.stroke)
 
     @stroke.setter
-    def stroke(self, value: StrokeAttributes):
+    def stroke(self, value: StrokeAttributes) -> None:
         self._proto.stroke.CopyFrom(value.proto)
 
     @property
@@ -439,7 +439,7 @@ class BusEntry(SchematicItem):
         return self._proto.type
 
     @type.setter
-    def type(self, value: BusEntryType.ValueType):
+    def type(self, value: BusEntryType.ValueType) -> None:
         self._proto.type = value
 
     @property
@@ -448,7 +448,7 @@ class BusEntry(SchematicItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, value: Sequence[CustomProperty]):
+    def custom_properties(self, value: Sequence[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(prop.proto for prop in value)
 
@@ -464,7 +464,7 @@ class SchematicText(SchematicItem):
         self,
         proto: schematic_types_pb2.SchematicText | None = None,
         proto_ref: schematic_types_pb2.SchematicText | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.SchematicText()
 
         if proto is not None:
@@ -478,7 +478,7 @@ class SchematicText(SchematicItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -489,7 +489,7 @@ class SchematicText(SchematicItem):
         return Text(proto_ref=self._proto.text)
 
     @text.setter
-    def text(self, value: Text):
+    def text(self, value: Text) -> None:
         self._proto.text.CopyFrom(value.proto)
 
     @property
@@ -497,7 +497,7 @@ class SchematicText(SchematicItem):
         return Vector2(proto_ref=self._proto.text.position)
 
     @position.setter
-    def position(self, value: Vector2):
+    def position(self, value: Vector2) -> None:
         self._proto.text.position.CopyFrom(value.proto)
 
     @property
@@ -505,7 +505,7 @@ class SchematicText(SchematicItem):
         return self._proto.text.text
 
     @value.setter
-    def value(self, value: str):
+    def value(self, value: str) -> None:
         self._proto.text.text = value
 
     @property
@@ -513,7 +513,7 @@ class SchematicText(SchematicItem):
         return self._proto.exclude_from_sim
 
     @exclude_from_sim.setter
-    def exclude_from_sim(self, value: bool):
+    def exclude_from_sim(self, value: bool) -> None:
         self._proto.exclude_from_sim = value
 
     @property
@@ -522,7 +522,7 @@ class SchematicText(SchematicItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, value: Sequence[CustomProperty]):
+    def custom_properties(self, value: Sequence[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(prop.proto for prop in value)
 
@@ -537,7 +537,7 @@ class SchematicTextBox(SchematicItem):
         self,
         proto: schematic_types_pb2.SchematicTextBox | None = None,
         proto_ref: schematic_types_pb2.SchematicTextBox | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else schematic_types_pb2.SchematicTextBox()
         )
@@ -556,7 +556,7 @@ class SchematicTextBox(SchematicItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -567,7 +567,7 @@ class SchematicTextBox(SchematicItem):
         return TextBox(proto_ref=self._proto.textbox)
 
     @textbox.setter
-    def textbox(self, value: TextBox):
+    def textbox(self, value: TextBox) -> None:
         self._proto.textbox.CopyFrom(value.proto)
 
     @property
@@ -575,7 +575,7 @@ class SchematicTextBox(SchematicItem):
         return Vector2(proto_ref=self._proto.textbox.top_left)
 
     @top_left.setter
-    def top_left(self, value: Vector2):
+    def top_left(self, value: Vector2) -> None:
         self._proto.textbox.top_left.CopyFrom(value.proto)
 
     @property
@@ -583,7 +583,7 @@ class SchematicTextBox(SchematicItem):
         return Vector2(proto_ref=self._proto.textbox.bottom_right)
 
     @bottom_right.setter
-    def bottom_right(self, value: Vector2):
+    def bottom_right(self, value: Vector2) -> None:
         self._proto.textbox.bottom_right.CopyFrom(value.proto)
 
     @property
@@ -591,7 +591,7 @@ class SchematicTextBox(SchematicItem):
         return self._proto.textbox.text
 
     @value.setter
-    def value(self, value: str):
+    def value(self, value: str) -> None:
         self._proto.textbox.text = value
 
     @property
@@ -599,7 +599,7 @@ class SchematicTextBox(SchematicItem):
         return GraphicAttributes(proto_ref=self._proto.graphic_attributes)
 
     @graphic_attributes.setter
-    def graphic_attributes(self, value: GraphicAttributes):
+    def graphic_attributes(self, value: GraphicAttributes) -> None:
         self._proto.graphic_attributes.CopyFrom(value.proto)
 
     @property
@@ -607,7 +607,7 @@ class SchematicTextBox(SchematicItem):
         return self._proto.exclude_from_sim
 
     @exclude_from_sim.setter
-    def exclude_from_sim(self, value: bool):
+    def exclude_from_sim(self, value: bool) -> None:
         self._proto.exclude_from_sim = value
 
     @property
@@ -615,7 +615,7 @@ class SchematicTextBox(SchematicItem):
         return self._proto.margin_left.value_nm
 
     @margin_left.setter
-    def margin_left(self, value: int):
+    def margin_left(self, value: int) -> None:
         self._proto.margin_left.value_nm = value
 
     @property
@@ -623,7 +623,7 @@ class SchematicTextBox(SchematicItem):
         return self._proto.margin_top.value_nm
 
     @margin_top.setter
-    def margin_top(self, value: int):
+    def margin_top(self, value: int) -> None:
         self._proto.margin_top.value_nm = value
 
     @property
@@ -631,7 +631,7 @@ class SchematicTextBox(SchematicItem):
         return self._proto.margin_right.value_nm
 
     @margin_right.setter
-    def margin_right(self, value: int):
+    def margin_right(self, value: int) -> None:
         self._proto.margin_right.value_nm = value
 
     @property
@@ -639,7 +639,7 @@ class SchematicTextBox(SchematicItem):
         return self._proto.margin_bottom.value_nm
 
     @margin_bottom.setter
-    def margin_bottom(self, value: int):
+    def margin_bottom(self, value: int) -> None:
         self._proto.margin_bottom.value_nm = value
 
     @property
@@ -648,7 +648,7 @@ class SchematicTextBox(SchematicItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, value: Sequence[CustomProperty]):
+    def custom_properties(self, value: Sequence[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(prop.proto for prop in value)
 
@@ -675,7 +675,7 @@ class SchematicGraphicShape(SchematicItem):
         self,
         proto: schematic_types_pb2.SchematicGraphicShape | None = None,
         proto_ref: schematic_types_pb2.SchematicGraphicShape | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else schematic_types_pb2.SchematicGraphicShape()
         )
@@ -694,7 +694,7 @@ class SchematicGraphicShape(SchematicItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -705,7 +705,7 @@ class SchematicGraphicShape(SchematicItem):
         return to_concrete_shape(GraphicShape(self._proto.shape))
 
     @shape.setter
-    def shape(self, value: GraphicShape):
+    def shape(self, value: GraphicShape) -> None:
         if value.proto.WhichOneof("geometry") == "segment":
             raise ValueError(
                 "SchematicGraphicShape cannot be a segment; use SchematicLine instead,"
@@ -719,7 +719,7 @@ class SchematicGraphicShape(SchematicItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, value: Sequence[CustomProperty]):
+    def custom_properties(self, value: Sequence[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(prop.proto for prop in value)
 
@@ -734,7 +734,7 @@ class SchematicImage(SchematicItem):
         self,
         proto: schematic_types_pb2.SchematicImage | None = None,
         proto_ref: schematic_types_pb2.SchematicImage | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.SchematicImage()
 
         if proto is not None:
@@ -748,7 +748,7 @@ class SchematicImage(SchematicItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -759,7 +759,7 @@ class SchematicImage(SchematicItem):
         return Vector2(proto_ref=self._proto.position)
 
     @position.setter
-    def position(self, value: Vector2):
+    def position(self, value: Vector2) -> None:
         self._proto.position.CopyFrom(value.proto)
 
     @property
@@ -767,7 +767,7 @@ class SchematicImage(SchematicItem):
         return Vector2(proto_ref=self._proto.transform_origin_offset)
 
     @transform_origin_offset.setter
-    def transform_origin_offset(self, value: Vector2):
+    def transform_origin_offset(self, value: Vector2) -> None:
         self._proto.transform_origin_offset.CopyFrom(value.proto)
 
     @property
@@ -775,7 +775,7 @@ class SchematicImage(SchematicItem):
         return self._proto.image_scale.value
 
     @image_scale.setter
-    def image_scale(self, value: float):
+    def image_scale(self, value: float) -> None:
         self._proto.image_scale.value = value
 
     @property
@@ -783,7 +783,7 @@ class SchematicImage(SchematicItem):
         return self._proto.image_data
 
     @image_data.setter
-    def image_data(self, value: bytes):
+    def image_data(self, value: bytes) -> None:
         self._proto.image_data = value
 
     @property
@@ -792,7 +792,7 @@ class SchematicImage(SchematicItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, value: Sequence[CustomProperty]):
+    def custom_properties(self, value: Sequence[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(prop.proto for prop in value)
 
@@ -817,7 +817,7 @@ class BaseLabel(SchematicItem):
         return self.proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self.proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -828,7 +828,7 @@ class BaseLabel(SchematicItem):
         return Vector2(proto_ref=self.proto.position)
 
     @position.setter
-    def position(self, value: Vector2):
+    def position(self, value: Vector2) -> None:
         self.proto.position.CopyFrom(value.proto)
 
     @property
@@ -838,7 +838,7 @@ class BaseLabel(SchematicItem):
         return LabelText(proto_ref=self.proto.text)
 
     @text.setter
-    def text(self, value: Text):
+    def text(self, value: Text) -> None:
         self.proto.text.CopyFrom(value.proto)
 
     @property
@@ -846,7 +846,7 @@ class BaseLabel(SchematicItem):
         return self.proto.spin_style
 
     @spin_style.setter
-    def spin_style(self, value: SchematicLabelSpinStyle.ValueType):
+    def spin_style(self, value: SchematicLabelSpinStyle.ValueType) -> None:
         self.proto.spin_style = value
 
     @property
@@ -854,7 +854,7 @@ class BaseLabel(SchematicItem):
         return MutableWrapperSequence(self.proto.fields, SchematicField)
 
     @fields.setter
-    def fields(self, value: Sequence[SchematicField]):
+    def fields(self, value: Sequence[SchematicField]) -> None:
         del self.proto.fields[:]
         self.proto.fields.extend(field.proto for field in value)
 
@@ -863,7 +863,7 @@ class BaseLabel(SchematicItem):
         return self.proto.fields_autoplaced
 
     @fields_autoplaced.setter
-    def fields_autoplaced(self, value: bool):
+    def fields_autoplaced(self, value: bool) -> None:
         self.proto.fields_autoplaced = value
 
     @property
@@ -872,7 +872,7 @@ class BaseLabel(SchematicItem):
         return MutableWrapperSequence(self.proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, value: Sequence[CustomProperty]):
+    def custom_properties(self, value: Sequence[CustomProperty]) -> None:
         del self.proto.custom_properties[:]
         self.proto.custom_properties.extend(prop.proto for prop in value)
 
@@ -886,7 +886,7 @@ class LabelText(Text):
         return _LabelAttributes(proto_ref=self._proto.attributes)
 
     @attributes.setter
-    def attributes(self, attributes: TextAttributes):
+    def attributes(self, attributes: TextAttributes) -> None:
         self._proto.attributes.CopyFrom(attributes.proto)
 
 
@@ -899,7 +899,7 @@ class _LabelAttributes(TextAttributes):
         return self._proto.angle.value_degrees
 
     @angle.setter
-    def angle(self, angle: float):
+    def angle(self, angle: float) -> None:
         raise AttributeError(
             "Labels do not support setting text.attributes.angle: KiCad sets label angle and "
             "justification from spin_style, and any angle set here is overwritten.  "
@@ -918,7 +918,7 @@ class ShapeLabel(BaseLabel):
         return self.proto.shape
 
     @shape.setter
-    def shape(self, value: SchematicLabelShape.ValueType):
+    def shape(self, value: SchematicLabelShape.ValueType) -> None:
         self.proto.shape = value
 
 
@@ -933,7 +933,7 @@ class LocalLabel(BaseLabel):
         self,
         proto: schematic_types_pb2.LocalLabel | None = None,
         proto_ref: schematic_types_pb2.LocalLabel | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.LocalLabel()
 
         if proto is not None:
@@ -954,7 +954,7 @@ class GlobalLabel(ShapeLabel):
         self,
         proto: schematic_types_pb2.GlobalLabel | None = None,
         proto_ref: schematic_types_pb2.GlobalLabel | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.GlobalLabel()
 
         if proto is not None:
@@ -968,7 +968,7 @@ class GlobalLabel(ShapeLabel):
         return SchematicField(proto_ref=self._proto.intersheet_refs_field)
 
     @intersheet_refs_field.setter
-    def intersheet_refs_field(self, value: SchematicField):
+    def intersheet_refs_field(self, value: SchematicField) -> None:
         self._proto.intersheet_refs_field.CopyFrom(value.proto)
 
 
@@ -985,7 +985,7 @@ class HierarchicalLabel(ShapeLabel):
         self,
         proto: schematic_types_pb2.HierarchicalLabel | None = None,
         proto_ref: schematic_types_pb2.HierarchicalLabel | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else schematic_types_pb2.HierarchicalLabel()
         )
@@ -1010,7 +1010,7 @@ class DirectiveLabel(ShapeLabel):
         self,
         proto: schematic_types_pb2.DirectiveLabel | None = None,
         proto_ref: schematic_types_pb2.DirectiveLabel | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.DirectiveLabel()
 
         if proto is not None:
@@ -1033,7 +1033,7 @@ class Group(SchematicItem):
         self,
         proto: schematic_types_pb2.Group | None = None,
         proto_ref: schematic_types_pb2.Group | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.Group()
 
         if proto is not None:
@@ -1051,7 +1051,7 @@ class Group(SchematicItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -1062,7 +1062,7 @@ class Group(SchematicItem):
         return self._proto.name
 
     @name.setter
-    def name(self, value: str):
+    def name(self, value: str) -> None:
         self._proto.name = value
 
     @property
@@ -1071,7 +1071,7 @@ class Group(SchematicItem):
         return self._item_ids
 
     @item_ids.setter
-    def item_ids(self, ids: Sequence[KIID]):
+    def item_ids(self, ids: Sequence[KIID]) -> None:
         """Setting this property will invalidate the cache of concrete items
         returned by the :attr:`items` property."""
         del self._proto.items[:]
@@ -1094,7 +1094,7 @@ class Group(SchematicItem):
         return self._unwrapped_items if self._unwrapped_items is not None else []
 
     @items.setter
-    def items(self, value: Sequence[SchematicItem]):
+    def items(self, value: Sequence[SchematicItem]) -> None:
         """Sets the items in the group, replacing any existing items"""
         del self._proto.items[:]
         self._unwrapped_items = value
@@ -1107,7 +1107,7 @@ class Group(SchematicItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, value: Sequence[CustomProperty]):
+    def custom_properties(self, value: Sequence[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(prop.proto for prop in value)
 
@@ -1123,7 +1123,7 @@ class SheetPin(ShapeLabel):
         self,
         proto: schematic_types_pb2.SheetPin | None = None,
         proto_ref: schematic_types_pb2.SheetPin | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.SheetPin()
 
         if proto is not None:
@@ -1137,7 +1137,7 @@ class SheetPin(ShapeLabel):
         return self._proto.side
 
     @side.setter
-    def side(self, value: SheetSide.ValueType):
+    def side(self, value: SheetSide.ValueType) -> None:
         self._proto.side = value
 
 
@@ -1153,7 +1153,7 @@ class SheetSymbol(SchematicItem):
         self,
         proto: schematic_types_pb2.SheetSymbol | None = None,
         proto_ref: schematic_types_pb2.SheetSymbol | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.SheetSymbol()
 
         if proto is not None:
@@ -1171,7 +1171,7 @@ class SheetSymbol(SchematicItem):
         return SheetPath(proto_ref=self._proto.path)
 
     @path.setter
-    def path(self, path: SheetPath):
+    def path(self, path: SheetPath) -> None:
         self._proto.path.CopyFrom(path.proto)
 
     @property
@@ -1180,7 +1180,7 @@ class SheetSymbol(SchematicItem):
         return self._proto.page_number
 
     @page_number.setter
-    def page_number(self, page_number: str):
+    def page_number(self, page_number: str) -> None:
         self._proto.page_number = page_number
 
     @property
@@ -1188,7 +1188,7 @@ class SheetSymbol(SchematicItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -1199,7 +1199,7 @@ class SheetSymbol(SchematicItem):
         return Vector2(proto_ref=self._proto.position)
 
     @position.setter
-    def position(self, value: Vector2):
+    def position(self, value: Vector2) -> None:
         self._proto.position.CopyFrom(value.proto)
 
     @property
@@ -1207,7 +1207,7 @@ class SheetSymbol(SchematicItem):
         return Vector2(proto_ref=self._proto.size)
 
     @size.setter
-    def size(self, value: Vector2):
+    def size(self, value: Vector2) -> None:
         self._proto.size.CopyFrom(value.proto)
 
     @property
@@ -1215,7 +1215,7 @@ class SheetSymbol(SchematicItem):
         return StrokeAttributes(proto_ref=self._proto.border_stroke)
 
     @border_stroke.setter
-    def border_stroke(self, value: StrokeAttributes):
+    def border_stroke(self, value: StrokeAttributes) -> None:
         self._proto.border_stroke.CopyFrom(value.proto)
 
     @property
@@ -1223,7 +1223,7 @@ class SheetSymbol(SchematicItem):
         return GraphicFillAttributes(proto_ref=self._proto.fill)
 
     @fill.setter
-    def fill(self, value: GraphicFillAttributes):
+    def fill(self, value: GraphicFillAttributes) -> None:
         self._proto.fill.CopyFrom(value.proto)
 
     @property
@@ -1231,7 +1231,7 @@ class SheetSymbol(SchematicItem):
         return SchematicField(proto_ref=self._proto.name_field)
 
     @name_field.setter
-    def name_field(self, value: SchematicField):
+    def name_field(self, value: SchematicField) -> None:
         self._proto.name_field.CopyFrom(value.proto)
 
     @property
@@ -1239,7 +1239,7 @@ class SheetSymbol(SchematicItem):
         return SchematicField(proto_ref=self._proto.filename_field)
 
     @filename_field.setter
-    def filename_field(self, value: SchematicField):
+    def filename_field(self, value: SchematicField) -> None:
         self._proto.filename_field.CopyFrom(value.proto)
 
     @property
@@ -1247,7 +1247,7 @@ class SheetSymbol(SchematicItem):
         return MutableWrapperSequence(self._proto.user_fields, SchematicField)
 
     @user_fields.setter
-    def user_fields(self, value: Sequence[SchematicField]):
+    def user_fields(self, value: Sequence[SchematicField]) -> None:
         del self._proto.user_fields[:]
         self._proto.user_fields.extend(field.proto for field in value)
 
@@ -1256,7 +1256,7 @@ class SheetSymbol(SchematicItem):
         return MutableWrapperSequence(self._proto.pins, SheetPin)
 
     @pins.setter
-    def pins(self, value: Sequence[SheetPin]):
+    def pins(self, value: Sequence[SheetPin]) -> None:
         del self._proto.pins[:]
         self._proto.pins.extend(pin.proto for pin in value)
 
@@ -1265,7 +1265,7 @@ class SheetSymbol(SchematicItem):
         return self._proto.exclude_from_sim
 
     @exclude_from_sim.setter
-    def exclude_from_sim(self, value: bool):
+    def exclude_from_sim(self, value: bool) -> None:
         self._proto.exclude_from_sim = value
 
     @property
@@ -1273,7 +1273,7 @@ class SheetSymbol(SchematicItem):
         return self._proto.exclude_from_bom
 
     @exclude_from_bom.setter
-    def exclude_from_bom(self, value: bool):
+    def exclude_from_bom(self, value: bool) -> None:
         self._proto.exclude_from_bom = value
 
     @property
@@ -1281,7 +1281,7 @@ class SheetSymbol(SchematicItem):
         return self._proto.exclude_from_board
 
     @exclude_from_board.setter
-    def exclude_from_board(self, value: bool):
+    def exclude_from_board(self, value: bool) -> None:
         self._proto.exclude_from_board = value
 
     @property
@@ -1289,7 +1289,7 @@ class SheetSymbol(SchematicItem):
         return self._proto.dnp
 
     @dnp.setter
-    def dnp(self, value: bool):
+    def dnp(self, value: bool) -> None:
         self._proto.dnp = value
 
     @property
@@ -1297,7 +1297,7 @@ class SheetSymbol(SchematicItem):
         return self._proto.fields_autoplaced
 
     @fields_autoplaced.setter
-    def fields_autoplaced(self, value: bool):
+    def fields_autoplaced(self, value: bool) -> None:
         self._proto.fields_autoplaced = value
 
     @property
@@ -1306,7 +1306,7 @@ class SheetSymbol(SchematicItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, value: Sequence[CustomProperty]):
+    def custom_properties(self, value: Sequence[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(prop.proto for prop in value)
 
@@ -1316,7 +1316,7 @@ class SheetSymbol(SchematicItem):
         return MutableWrapperSequence(self._proto.variants.variants, SheetVariant)
 
     @variants.setter
-    def variants(self, value: Sequence[SheetVariant]):
+    def variants(self, value: Sequence[SheetVariant]) -> None:
         del self._proto.variants.variants[:]
         self._proto.variants.variants.extend(v.proto for v in value)
 
@@ -1335,7 +1335,7 @@ class SchematicPinAlternate(Wrapper):
         self,
         proto: schematic_types_pb2.SchematicPinAlternate | None = None,
         proto_ref: schematic_types_pb2.SchematicPinAlternate | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else schematic_types_pb2.SchematicPinAlternate()
         )
@@ -1348,7 +1348,7 @@ class SchematicPinAlternate(Wrapper):
         return self._proto.name
 
     @name.setter
-    def name(self, value: str):
+    def name(self, value: str) -> None:
         self._proto.name = value
 
     @property
@@ -1356,7 +1356,7 @@ class SchematicPinAlternate(Wrapper):
         return self._proto.shape
 
     @shape.setter
-    def shape(self, value: SchematicPinShape.ValueType):
+    def shape(self, value: SchematicPinShape.ValueType) -> None:
         self._proto.shape = value
 
     @property
@@ -1364,7 +1364,7 @@ class SchematicPinAlternate(Wrapper):
         return self._proto.electrical_type
 
     @electrical_type.setter
-    def electrical_type(self, value: ElectricalPinType.ValueType):
+    def electrical_type(self, value: ElectricalPinType.ValueType) -> None:
         self._proto.electrical_type = value
 
 
@@ -1380,7 +1380,7 @@ class SchematicPin(SchematicItem):
         self,
         proto: schematic_types_pb2.SchematicPin | None = None,
         proto_ref: schematic_types_pb2.SchematicPin | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.SchematicPin()
 
         if proto is not None:
@@ -1395,7 +1395,7 @@ class SchematicPin(SchematicItem):
         return self._proto.name
 
     @name.setter
-    def name(self, value: str):
+    def name(self, value: str) -> None:
         self._proto.name = value
 
     @property
@@ -1404,7 +1404,7 @@ class SchematicPin(SchematicItem):
         return self._proto.number
 
     @number.setter
-    def number(self, value: str):
+    def number(self, value: str) -> None:
         self._proto.number = value
 
     @property
@@ -1414,7 +1414,7 @@ class SchematicPin(SchematicItem):
         return Vector2(proto_ref=self._proto.position)
 
     @position.setter
-    def position(self, value: Vector2):
+    def position(self, value: Vector2) -> None:
         self._proto.position.CopyFrom(value.proto)
 
     @property
@@ -1422,7 +1422,7 @@ class SchematicPin(SchematicItem):
         return self._proto.length.value_nm
 
     @length.setter
-    def length(self, value: int):
+    def length(self, value: int) -> None:
         self._proto.length.value_nm = value
 
     @property
@@ -1434,7 +1434,7 @@ class SchematicPin(SchematicItem):
         return self._proto.orientation
 
     @orientation.setter
-    def orientation(self, value: SchematicPinOrientation.ValueType):
+    def orientation(self, value: SchematicPinOrientation.ValueType) -> None:
         self._proto.orientation = value
 
     @property
@@ -1442,7 +1442,7 @@ class SchematicPin(SchematicItem):
         return self._proto.electrical_type
 
     @electrical_type.setter
-    def electrical_type(self, value: ElectricalPinType.ValueType):
+    def electrical_type(self, value: ElectricalPinType.ValueType) -> None:
         self._proto.electrical_type = value
 
     @property
@@ -1450,7 +1450,7 @@ class SchematicPin(SchematicItem):
         return self._proto.shape
 
     @shape.setter
-    def shape(self, value: SchematicPinShape.ValueType):
+    def shape(self, value: SchematicPinShape.ValueType) -> None:
         self._proto.shape = value
 
     @property
@@ -1458,7 +1458,7 @@ class SchematicPin(SchematicItem):
         return self._proto.visible
 
     @visible.setter
-    def visible(self, value: bool):
+    def visible(self, value: bool) -> None:
         self._proto.visible = value
 
     @property
@@ -1466,7 +1466,7 @@ class SchematicPin(SchematicItem):
         return self._proto.name_text_size.value_nm
 
     @name_text_size.setter
-    def name_text_size(self, value: int):
+    def name_text_size(self, value: int) -> None:
         self._proto.name_text_size.value_nm = value
 
     @property
@@ -1474,7 +1474,7 @@ class SchematicPin(SchematicItem):
         return self._proto.number_text_size.value_nm
 
     @number_text_size.setter
-    def number_text_size(self, value: int):
+    def number_text_size(self, value: int) -> None:
         self._proto.number_text_size.value_nm = value
 
     @property
@@ -1482,7 +1482,7 @@ class SchematicPin(SchematicItem):
         return MutableWrapperSequence(self._proto.alternates, SchematicPinAlternate)
 
     @alternates.setter
-    def alternates(self, value: Sequence[SchematicPinAlternate]):
+    def alternates(self, value: Sequence[SchematicPinAlternate]) -> None:
         del self._proto.alternates[:]
         self._proto.alternates.extend(alt.proto for alt in value)
 
@@ -1492,7 +1492,7 @@ class SchematicPin(SchematicItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, value: Sequence[CustomProperty]):
+    def custom_properties(self, value: Sequence[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(prop.proto for prop in value)
 
@@ -1501,7 +1501,7 @@ class SchematicPin(SchematicItem):
         return self._proto.active_alternate if self._proto.HasField("active_alternate") else None
 
     @active_alternate.setter
-    def active_alternate(self, value: str | None):
+    def active_alternate(self, value: str | None) -> None:
         if value is not None:
             self._proto.active_alternate = value
         else:
@@ -1560,7 +1560,7 @@ class SchematicSymbolChild(Wrapper):
         self,
         proto: schematic_types_pb2.SchematicSymbolChild | None = None,
         proto_ref: schematic_types_pb2.SchematicSymbolChild | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else schematic_types_pb2.SchematicSymbolChild()
         )
@@ -1569,8 +1569,8 @@ class SchematicSymbolChild(Wrapper):
 
         self._unwrapped_item: Wrapper | Any | None = None
 
-    def _pack(self):
-        if self._unwrapped_item is not None and self._unwrapped_item is not self._proto.item:
+    def _pack(self) -> None:
+        if isinstance(self._unwrapped_item, Wrapper):
             self._proto.item.Pack(self._unwrapped_item.proto)
 
     @property
@@ -1594,7 +1594,7 @@ class SchematicSymbolChild(Wrapper):
         )
 
     @item.setter
-    def item(self, value: Wrapper):
+    def item(self, value: Wrapper) -> None:
         if not isinstance(value, _child_item_types):
             allowed = ", ".join(t.__name__ for t in _child_item_types)
             raise TypeError(
@@ -1610,7 +1610,7 @@ class SchematicSymbolChild(Wrapper):
         return self._proto.unit.unit if self._proto.HasField("unit") else None
 
     @unit.setter
-    def unit(self, value: int | None):
+    def unit(self, value: int | None) -> None:
         if value is not None:
             self._proto.unit.unit = value
         else:
@@ -1629,7 +1629,7 @@ class SchematicSymbolChild(Wrapper):
         return self._proto.is_private
 
     @is_private.setter
-    def is_private(self, value: bool):
+    def is_private(self, value: bool) -> None:
         self._proto.is_private = value
 
 
@@ -1642,7 +1642,7 @@ class SchematicSymbolAttributes(Wrapper):
         self,
         proto: schematic_types_pb2.SchematicSymbolAttributes | None = None,
         proto_ref: schematic_types_pb2.SchematicSymbolAttributes | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else schematic_types_pb2.SchematicSymbolAttributes()
         )
@@ -1655,7 +1655,7 @@ class SchematicSymbolAttributes(Wrapper):
         return self._proto.exclude_from_simulation
 
     @exclude_from_simulation.setter
-    def exclude_from_simulation(self, value: bool):
+    def exclude_from_simulation(self, value: bool) -> None:
         self._proto.exclude_from_simulation = value
 
     @property
@@ -1663,7 +1663,7 @@ class SchematicSymbolAttributes(Wrapper):
         return self._proto.exclude_from_bill_of_materials
 
     @exclude_from_bill_of_materials.setter
-    def exclude_from_bill_of_materials(self, value: bool):
+    def exclude_from_bill_of_materials(self, value: bool) -> None:
         self._proto.exclude_from_bill_of_materials = value
 
     @property
@@ -1671,7 +1671,7 @@ class SchematicSymbolAttributes(Wrapper):
         return self._proto.exclude_from_board
 
     @exclude_from_board.setter
-    def exclude_from_board(self, value: bool):
+    def exclude_from_board(self, value: bool) -> None:
         self._proto.exclude_from_board = value
 
     @property
@@ -1679,7 +1679,7 @@ class SchematicSymbolAttributes(Wrapper):
         return self._proto.exclude_from_position_files
 
     @exclude_from_position_files.setter
-    def exclude_from_position_files(self, value: bool):
+    def exclude_from_position_files(self, value: bool) -> None:
         self._proto.exclude_from_position_files = value
 
     @property
@@ -1687,7 +1687,7 @@ class SchematicSymbolAttributes(Wrapper):
         return self._proto.do_not_populate
 
     @do_not_populate.setter
-    def do_not_populate(self, value: bool):
+    def do_not_populate(self, value: bool) -> None:
         self._proto.do_not_populate = value
 
 
@@ -1700,7 +1700,7 @@ class SchematicSymbolVariant(Wrapper):
         self,
         proto: schematic_types_pb2.SchematicSymbolVariant | None = None,
         proto_ref: schematic_types_pb2.SchematicSymbolVariant | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else schematic_types_pb2.SchematicSymbolVariant()
         )
@@ -1713,7 +1713,7 @@ class SchematicSymbolVariant(Wrapper):
         return self._proto.name
 
     @name.setter
-    def name(self, value: str):
+    def name(self, value: str) -> None:
         self._proto.name = value
 
     @property
@@ -1721,7 +1721,7 @@ class SchematicSymbolVariant(Wrapper):
         return self._proto.description
 
     @description.setter
-    def description(self, value: str):
+    def description(self, value: str) -> None:
         self._proto.description = value
 
     @property
@@ -1730,7 +1730,7 @@ class SchematicSymbolVariant(Wrapper):
         return SchematicSymbolAttributes(proto_ref=self._proto.attributes)
 
     @attributes.setter
-    def attributes(self, value: SchematicSymbolAttributes):
+    def attributes(self, value: SchematicSymbolAttributes) -> None:
         self._proto.attributes.CopyFrom(value.proto)
 
     @property
@@ -1738,7 +1738,7 @@ class SchematicSymbolVariant(Wrapper):
         return dict(self._proto.fields)
 
     @fields.setter
-    def fields(self, value: dict[str, str]):
+    def fields(self, value: dict[str, str]) -> None:
         self._proto.fields.clear()
         self._proto.fields.update(value)
 
@@ -1750,7 +1750,7 @@ class SchematicSymbolVariant(Wrapper):
         return None
 
     @symbol_override.setter
-    def symbol_override(self, value: LibraryIdentifier | None):
+    def symbol_override(self, value: LibraryIdentifier | None) -> None:
         if value is not None:
             self._proto.symbol_override.CopyFrom(value.proto)
         else:
@@ -1764,7 +1764,7 @@ class SchematicSymbolVariant(Wrapper):
         return None
 
     @pin_map_override.setter
-    def pin_map_override(self, value: PinMapInstanceOverride | None):
+    def pin_map_override(self, value: PinMapInstanceOverride | None) -> None:
         if value is not None:
             self._proto.pin_map_override.CopyFrom(value.proto)
         else:
@@ -1778,7 +1778,7 @@ class PinMapEntry(Wrapper):
         self,
         proto: schematic_types_pb2.PinMapEntry | None = None,
         proto_ref: schematic_types_pb2.PinMapEntry | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.PinMapEntry()
 
         if proto is not None:
@@ -1789,7 +1789,7 @@ class PinMapEntry(Wrapper):
         return self._proto.pin_number
 
     @pin_number.setter
-    def pin_number(self, value: str):
+    def pin_number(self, value: str) -> None:
         self._proto.pin_number = value
 
     @property
@@ -1798,7 +1798,7 @@ class PinMapEntry(Wrapper):
         return self._proto.pad_number
 
     @pad_number.setter
-    def pad_number(self, value: str):
+    def pad_number(self, value: str) -> None:
         self._proto.pad_number = value
 
 
@@ -1809,7 +1809,7 @@ class PinMap(Wrapper):
         self,
         proto: schematic_types_pb2.PinMap | None = None,
         proto_ref: schematic_types_pb2.PinMap | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.PinMap()
 
         if proto is not None:
@@ -1820,7 +1820,7 @@ class PinMap(Wrapper):
         return self._proto.name
 
     @name.setter
-    def name(self, value: str):
+    def name(self, value: str) -> None:
         self._proto.name = value
 
     @property
@@ -1828,7 +1828,7 @@ class PinMap(Wrapper):
         return MutableWrapperSequence(self._proto.entries, PinMapEntry)
 
     @entries.setter
-    def entries(self, value: Sequence[PinMapEntry]):
+    def entries(self, value: Sequence[PinMapEntry]) -> None:
         del self._proto.entries[:]
         self._proto.entries.extend(entry.proto for entry in value)
 
@@ -1840,7 +1840,7 @@ class AssociatedFootprint(Wrapper):
         self,
         proto: schematic_types_pb2.AssociatedFootprint | None = None,
         proto_ref: schematic_types_pb2.AssociatedFootprint | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else schematic_types_pb2.AssociatedFootprint()
         )
@@ -1853,7 +1853,7 @@ class AssociatedFootprint(Wrapper):
         return LibraryIdentifier(proto_ref=self._proto.footprint)
 
     @footprint.setter
-    def footprint(self, value: LibraryIdentifier):
+    def footprint(self, value: LibraryIdentifier) -> None:
         self._proto.footprint.CopyFrom(value.proto)
 
     @property
@@ -1861,7 +1861,7 @@ class AssociatedFootprint(Wrapper):
         return self._proto.map_name
 
     @map_name.setter
-    def map_name(self, value: str):
+    def map_name(self, value: str) -> None:
         self._proto.map_name = value
 
 
@@ -1872,7 +1872,7 @@ class SymbolPinMaps(Wrapper):
         self,
         proto: schematic_types_pb2.SymbolPinMaps | None = None,
         proto_ref: schematic_types_pb2.SymbolPinMaps | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.SymbolPinMaps()
 
         if proto is not None:
@@ -1883,7 +1883,7 @@ class SymbolPinMaps(Wrapper):
         return MutableWrapperSequence(self._proto.associated_footprints, AssociatedFootprint)
 
     @associated_footprints.setter
-    def associated_footprints(self, value: Sequence[AssociatedFootprint]):
+    def associated_footprints(self, value: Sequence[AssociatedFootprint]) -> None:
         del self._proto.associated_footprints[:]
         self._proto.associated_footprints.extend(fp.proto for fp in value)
 
@@ -1892,7 +1892,7 @@ class SymbolPinMaps(Wrapper):
         return MutableWrapperSequence(self._proto.pin_maps, PinMap)
 
     @pin_maps.setter
-    def pin_maps(self, value: Sequence[PinMap]):
+    def pin_maps(self, value: Sequence[PinMap]) -> None:
         del self._proto.pin_maps[:]
         self._proto.pin_maps.extend(pin_map.proto for pin_map in value)
 
@@ -1904,7 +1904,7 @@ class PinMapInstanceOverride(Wrapper):
         self,
         proto: schematic_types_pb2.PinMapInstanceOverride | None = None,
         proto_ref: schematic_types_pb2.PinMapInstanceOverride | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else schematic_types_pb2.PinMapInstanceOverride()
         )
@@ -1917,7 +1917,7 @@ class PinMapInstanceOverride(Wrapper):
         return self._proto.mode
 
     @mode.setter
-    def mode(self, value: PinMapOverrideMode.ValueType):
+    def mode(self, value: PinMapOverrideMode.ValueType) -> None:
         self._proto.mode = value
 
     @property
@@ -1925,7 +1925,7 @@ class PinMapInstanceOverride(Wrapper):
         return self._proto.active_map_name
 
     @active_map_name.setter
-    def active_map_name(self, value: str):
+    def active_map_name(self, value: str) -> None:
         self._proto.active_map_name = value
 
     @property
@@ -1933,7 +1933,7 @@ class PinMapInstanceOverride(Wrapper):
         return MutableWrapperSequence(self._proto.edits, PinMapEntry)
 
     @edits.setter
-    def edits(self, value: Sequence[PinMapEntry]):
+    def edits(self, value: Sequence[PinMapEntry]) -> None:
         del self._proto.edits[:]
         self._proto.edits.extend(edit.proto for edit in value)
 
@@ -1945,7 +1945,7 @@ class JumperGroup(Wrapper):
         self,
         proto: schematic_types_pb2.JumperGroup | None = None,
         proto_ref: schematic_types_pb2.JumperGroup | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.JumperGroup()
 
         if proto is not None:
@@ -1956,7 +1956,7 @@ class JumperGroup(Wrapper):
         return list(self._proto.pin_numbers)
 
     @pin_numbers.setter
-    def pin_numbers(self, value: Sequence[str]):
+    def pin_numbers(self, value: Sequence[str]) -> None:
         del self._proto.pin_numbers[:]
         self._proto.pin_numbers.extend(value)
 
@@ -1968,7 +1968,7 @@ class JumperSettings(Wrapper):
         self,
         proto: schematic_types_pb2.JumperSettings | None = None,
         proto_ref: schematic_types_pb2.JumperSettings | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.JumperSettings()
 
         if proto is not None:
@@ -1980,7 +1980,7 @@ class JumperSettings(Wrapper):
         return self._proto.duplicate_names_are_jumpered
 
     @duplicate_names_are_jumpered.setter
-    def duplicate_names_are_jumpered(self, value: bool):
+    def duplicate_names_are_jumpered(self, value: bool) -> None:
         self._proto.duplicate_names_are_jumpered = value
 
     @property
@@ -1988,7 +1988,7 @@ class JumperSettings(Wrapper):
         return MutableWrapperSequence(self._proto.groups, JumperGroup)
 
     @groups.setter
-    def groups(self, value: Sequence[JumperGroup]):
+    def groups(self, value: Sequence[JumperGroup]) -> None:
         del self._proto.groups[:]
         self._proto.groups.extend(group.proto for group in value)
 
@@ -2000,7 +2000,7 @@ class SchematicUnitDisplayName(Wrapper):
         self,
         proto: schematic_types_pb2.SchematicUnitDisplayName | None = None,
         proto_ref: schematic_types_pb2.SchematicUnitDisplayName | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else schematic_types_pb2.SchematicUnitDisplayName()
         )
@@ -2013,7 +2013,7 @@ class SchematicUnitDisplayName(Wrapper):
         return self._proto.unit
 
     @unit.setter
-    def unit(self, value: int):
+    def unit(self, value: int) -> None:
         self._proto.unit = value
 
     @property
@@ -2021,7 +2021,7 @@ class SchematicUnitDisplayName(Wrapper):
         return self._proto.name
 
     @name.setter
-    def name(self, value: str):
+    def name(self, value: str) -> None:
         self._proto.name = value
 
 
@@ -2032,7 +2032,7 @@ class SchematicBodyStyle(Wrapper):
         self,
         proto: schematic_types_pb2.SchematicBodyStyle | None = None,
         proto_ref: schematic_types_pb2.SchematicBodyStyle | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else schematic_types_pb2.SchematicBodyStyle()
         )
@@ -2045,7 +2045,7 @@ class SchematicBodyStyle(Wrapper):
         return self._proto.name
 
     @name.setter
-    def name(self, value: str):
+    def name(self, value: str) -> None:
         self._proto.name = value
 
 
@@ -2062,7 +2062,7 @@ class SchematicSymbol(Wrapper):
         self,
         proto: schematic_types_pb2.SchematicSymbol | None = None,
         proto_ref: schematic_types_pb2.SchematicSymbol | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.SchematicSymbol()
 
         if proto is not None:
@@ -2071,7 +2071,7 @@ class SchematicSymbol(Wrapper):
         self._unwrapped_items: list[SchematicSymbolChild] = []
         self._items_dirty = False
 
-    def _pack(self):
+    def _pack(self) -> None:
         """Packs wrapper-held child items back into the proto, if the wrapper owns any"""
         if self._items_dirty:
             del self._proto.items[:]
@@ -2079,7 +2079,7 @@ class SchematicSymbol(Wrapper):
             self._items_dirty = False
 
     @property
-    def proto(self):
+    def proto(self) -> schematic_types_pb2.SchematicSymbol:
         self._pack()
         return self.__dict__["_proto"]
 
@@ -2094,7 +2094,7 @@ class SchematicSymbol(Wrapper):
         return LibraryIdentifier(proto_ref=self._proto.id)
 
     @id.setter
-    def id(self, value: LibraryIdentifier):
+    def id(self, value: LibraryIdentifier) -> None:
         self._proto.id.CopyFrom(value.proto)
 
     @property
@@ -2110,7 +2110,7 @@ class SchematicSymbol(Wrapper):
         return self._proto.type
 
     @type.setter
-    def type(self, value: SchematicSymbolType.ValueType):
+    def type(self, value: SchematicSymbolType.ValueType) -> None:
         self._proto.type = value
 
     @property
@@ -2118,7 +2118,7 @@ class SchematicSymbol(Wrapper):
         return SchematicSymbolAttributes(proto_ref=self._proto.attributes)
 
     @attributes.setter
-    def attributes(self, value: SchematicSymbolAttributes):
+    def attributes(self, value: SchematicSymbolAttributes) -> None:
         self._proto.attributes.CopyFrom(value.proto)
 
     @property
@@ -2126,7 +2126,7 @@ class SchematicSymbol(Wrapper):
         return SchematicField(proto_ref=self._proto.reference_field)
 
     @reference_field.setter
-    def reference_field(self, value: SchematicField):
+    def reference_field(self, value: SchematicField) -> None:
         self._proto.reference_field.CopyFrom(value.proto)
 
     @property
@@ -2134,7 +2134,7 @@ class SchematicSymbol(Wrapper):
         return SchematicField(proto_ref=self._proto.value_field)
 
     @value_field.setter
-    def value_field(self, value: SchematicField):
+    def value_field(self, value: SchematicField) -> None:
         self._proto.value_field.CopyFrom(value.proto)
 
     @property
@@ -2142,7 +2142,7 @@ class SchematicSymbol(Wrapper):
         return SchematicField(proto_ref=self._proto.footprint_field)
 
     @footprint_field.setter
-    def footprint_field(self, value: SchematicField):
+    def footprint_field(self, value: SchematicField) -> None:
         self._proto.footprint_field.CopyFrom(value.proto)
 
     @property
@@ -2150,7 +2150,7 @@ class SchematicSymbol(Wrapper):
         return SchematicField(proto_ref=self._proto.datasheet_field)
 
     @datasheet_field.setter
-    def datasheet_field(self, value: SchematicField):
+    def datasheet_field(self, value: SchematicField) -> None:
         self._proto.datasheet_field.CopyFrom(value.proto)
 
     @property
@@ -2158,7 +2158,7 @@ class SchematicSymbol(Wrapper):
         return SchematicField(proto_ref=self._proto.description_field)
 
     @description_field.setter
-    def description_field(self, value: SchematicField):
+    def description_field(self, value: SchematicField) -> None:
         self._proto.description_field.CopyFrom(value.proto)
 
     @property
@@ -2170,7 +2170,7 @@ class SchematicSymbol(Wrapper):
         return self._unwrapped_items
 
     @items.setter
-    def items(self, value: Sequence[SchematicSymbolChild]):
+    def items(self, value: Sequence[SchematicSymbolChild]) -> None:
         self._unwrapped_items = list(value)
         self._items_dirty = True
 
@@ -2184,7 +2184,7 @@ class SchematicSymbol(Wrapper):
         | SchematicTextBox,
         unit: int | None = None,
         is_private: bool = False,
-    ):
+    ) -> None:
         """Adds an item to the symbol definition.
 
         Accepts a :class:`SchematicSymbolChild` or a concrete child item (a
@@ -2226,7 +2226,7 @@ class SchematicSymbol(Wrapper):
         return self._proto.unit_count
 
     @unit_count.setter
-    def unit_count(self, value: int):
+    def unit_count(self, value: int) -> None:
         self._proto.unit_count = value
 
     @property
@@ -2238,7 +2238,7 @@ class SchematicSymbol(Wrapper):
         return self._proto.keywords
 
     @keywords.setter
-    def keywords(self, value: str):
+    def keywords(self, value: str) -> None:
         self._proto.keywords = value
 
     @property
@@ -2266,7 +2266,7 @@ class SchematicSymbol(Wrapper):
         return list(self._proto.footprint_filters)
 
     @footprint_filters.setter
-    def footprint_filters(self, value: Sequence[str]):
+    def footprint_filters(self, value: Sequence[str]) -> None:
         del self._proto.footprint_filters[:]
         self._proto.footprint_filters.extend(value)
 
@@ -2276,7 +2276,7 @@ class SchematicSymbol(Wrapper):
         return MutableWrapperSequence(self._proto.body_style, SchematicBodyStyle)
 
     @body_style.setter
-    def body_style(self, value: Sequence[SchematicBodyStyle]):
+    def body_style(self, value: Sequence[SchematicBodyStyle]) -> None:
         del self._proto.body_style[:]
         self._proto.body_style.extend(style.proto for style in value)
 
@@ -2286,7 +2286,7 @@ class SchematicSymbol(Wrapper):
         return SymbolPinMaps(proto_ref=self._proto.pin_maps)
 
     @pin_maps.setter
-    def pin_maps(self, value: SymbolPinMaps):
+    def pin_maps(self, value: SymbolPinMaps) -> None:
         self._proto.pin_maps.CopyFrom(value.proto)
 
     @property
@@ -2295,7 +2295,7 @@ class SchematicSymbol(Wrapper):
         return JumperSettings(proto_ref=self._proto.jumpers)
 
     @jumpers.setter
-    def jumpers(self, value: JumperSettings):
+    def jumpers(self, value: JumperSettings) -> None:
         self._proto.jumpers.CopyFrom(value.proto)
 
     @property
@@ -2303,7 +2303,7 @@ class SchematicSymbol(Wrapper):
         return self._proto.units_locked
 
     @units_locked.setter
-    def units_locked(self, value: bool):
+    def units_locked(self, value: bool) -> None:
         self._proto.units_locked = value
 
     @property
@@ -2311,7 +2311,7 @@ class SchematicSymbol(Wrapper):
         return MutableWrapperSequence(self._proto.unit_display_names, SchematicUnitDisplayName)
 
     @unit_display_names.setter
-    def unit_display_names(self, value: Sequence[SchematicUnitDisplayName]):
+    def unit_display_names(self, value: Sequence[SchematicUnitDisplayName]) -> None:
         del self._proto.unit_display_names[:]
         self._proto.unit_display_names.extend(name.proto for name in value)
 
@@ -2320,7 +2320,7 @@ class SchematicSymbol(Wrapper):
         return self._proto.embedded_fonts
 
     @embedded_fonts.setter
-    def embedded_fonts(self, value: bool):
+    def embedded_fonts(self, value: bool) -> None:
         self._proto.embedded_fonts = value
 
     @property
@@ -2329,7 +2329,7 @@ class SchematicSymbol(Wrapper):
         return self._proto.show_pin_numbers
 
     @show_pin_numbers.setter
-    def show_pin_numbers(self, value: bool):
+    def show_pin_numbers(self, value: bool) -> None:
         self._proto.show_pin_numbers = value
 
     @property
@@ -2338,7 +2338,7 @@ class SchematicSymbol(Wrapper):
         return self._proto.show_pin_names
 
     @show_pin_names.setter
-    def show_pin_names(self, value: bool):
+    def show_pin_names(self, value: bool) -> None:
         self._proto.show_pin_names = value
 
     @property
@@ -2347,7 +2347,7 @@ class SchematicSymbol(Wrapper):
         return self._proto.pin_name_offset.value_nm
 
     @pin_name_offset.setter
-    def pin_name_offset(self, value: int):
+    def pin_name_offset(self, value: int) -> None:
         self._proto.pin_name_offset.value_nm = value
 
 
@@ -2360,7 +2360,7 @@ class SchematicSymbolTransform(Wrapper):
         self,
         proto: schematic_types_pb2.SchematicSymbolTransform | None = None,
         proto_ref: schematic_types_pb2.SchematicSymbolTransform | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else schematic_types_pb2.SchematicSymbolTransform()
         )
@@ -2373,7 +2373,7 @@ class SchematicSymbolTransform(Wrapper):
         return self._proto.orientation
 
     @orientation.setter
-    def orientation(self, value: SchematicSymbolOrientation.ValueType):
+    def orientation(self, value: SchematicSymbolOrientation.ValueType) -> None:
         self._proto.orientation = value
 
     @property
@@ -2381,7 +2381,7 @@ class SchematicSymbolTransform(Wrapper):
         return self._proto.mirror_x
 
     @mirror_x.setter
-    def mirror_x(self, value: bool):
+    def mirror_x(self, value: bool) -> None:
         self._proto.mirror_x = value
 
     @property
@@ -2389,7 +2389,7 @@ class SchematicSymbolTransform(Wrapper):
         return self._proto.mirror_y
 
     @mirror_y.setter
-    def mirror_y(self, value: bool):
+    def mirror_y(self, value: bool) -> None:
         self._proto.mirror_y = value
 
 
@@ -2408,7 +2408,7 @@ class SchematicSymbolInstance(SchematicItem):
         self,
         proto: schematic_types_pb2.SchematicSymbolInstance | None = None,
         proto_ref: schematic_types_pb2.SchematicSymbolInstance | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else schematic_types_pb2.SchematicSymbolInstance()
         )
@@ -2419,7 +2419,7 @@ class SchematicSymbolInstance(SchematicItem):
         self._definition = SchematicSymbol(proto_ref=self._proto.definition)
 
     @property
-    def proto(self):
+    def proto(self) -> schematic_types_pb2.SchematicSymbolInstance:
         self._definition._pack()
         return self.__dict__["_proto"]
 
@@ -2442,7 +2442,7 @@ class SchematicSymbolInstance(SchematicItem):
         return SheetPath(proto_ref=self._proto.path)
 
     @path.setter
-    def path(self, value: SheetPath):
+    def path(self, value: SheetPath) -> None:
         self._proto.path.CopyFrom(value.proto)
 
     @property
@@ -2450,7 +2450,7 @@ class SchematicSymbolInstance(SchematicItem):
         return Vector2(proto_ref=self._proto.position)
 
     @position.setter
-    def position(self, value: Vector2):
+    def position(self, value: Vector2) -> None:
         self._proto.position.CopyFrom(value.proto)
 
     @property
@@ -2458,7 +2458,7 @@ class SchematicSymbolInstance(SchematicItem):
         return SchematicSymbolTransform(proto_ref=self._proto.transform)
 
     @transform.setter
-    def transform(self, value: SchematicSymbolTransform):
+    def transform(self, value: SchematicSymbolTransform) -> None:
         self._proto.transform.CopyFrom(value.proto)
 
     @property
@@ -2466,7 +2466,7 @@ class SchematicSymbolInstance(SchematicItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -2477,7 +2477,7 @@ class SchematicSymbolInstance(SchematicItem):
         return self._definition
 
     @definition.setter
-    def definition(self, value: SchematicSymbol):
+    def definition(self, value: SchematicSymbol) -> None:
         self._proto.definition.CopyFrom(value.proto)
         self._definition = SchematicSymbol(proto_ref=self._proto.definition)
 
@@ -2486,7 +2486,7 @@ class SchematicSymbolInstance(SchematicItem):
         return SchematicField(proto_ref=self._proto.reference_field)
 
     @reference_field.setter
-    def reference_field(self, value: SchematicField):
+    def reference_field(self, value: SchematicField) -> None:
         self._proto.reference_field.CopyFrom(value.proto)
 
     @property
@@ -2495,7 +2495,7 @@ class SchematicSymbolInstance(SchematicItem):
         return self.reference_field.text.value
 
     @reference.setter
-    def reference(self, value: str):
+    def reference(self, value: str) -> None:
         self.reference_field.text.value = value
 
     @property
@@ -2504,7 +2504,7 @@ class SchematicSymbolInstance(SchematicItem):
         return self.value_field.text.value
 
     @value.setter
-    def value(self, value: str):
+    def value(self, value: str) -> None:
         self.value_field.text.value = value
 
     @property
@@ -2512,7 +2512,7 @@ class SchematicSymbolInstance(SchematicItem):
         return SchematicField(proto_ref=self._proto.value_field)
 
     @value_field.setter
-    def value_field(self, value: SchematicField):
+    def value_field(self, value: SchematicField) -> None:
         self._proto.value_field.CopyFrom(value.proto)
 
     @property
@@ -2520,7 +2520,7 @@ class SchematicSymbolInstance(SchematicItem):
         return SchematicField(proto_ref=self._proto.footprint_field)
 
     @footprint_field.setter
-    def footprint_field(self, value: SchematicField):
+    def footprint_field(self, value: SchematicField) -> None:
         self._proto.footprint_field.CopyFrom(value.proto)
 
     @property
@@ -2528,7 +2528,7 @@ class SchematicSymbolInstance(SchematicItem):
         return SchematicField(proto_ref=self._proto.datasheet_field)
 
     @datasheet_field.setter
-    def datasheet_field(self, value: SchematicField):
+    def datasheet_field(self, value: SchematicField) -> None:
         self._proto.datasheet_field.CopyFrom(value.proto)
 
     @property
@@ -2536,7 +2536,7 @@ class SchematicSymbolInstance(SchematicItem):
         return SchematicField(proto_ref=self._proto.description_field)
 
     @description_field.setter
-    def description_field(self, value: SchematicField):
+    def description_field(self, value: SchematicField) -> None:
         self._proto.description_field.CopyFrom(value.proto)
 
     @property
@@ -2546,7 +2546,7 @@ class SchematicSymbolInstance(SchematicItem):
         return SchematicSymbolAttributes(proto_ref=self._proto.attributes)
 
     @attributes.setter
-    def attributes(self, value: SchematicSymbolAttributes):
+    def attributes(self, value: SchematicSymbolAttributes) -> None:
         self._proto.attributes.CopyFrom(value.proto)
 
     @property
@@ -2554,7 +2554,7 @@ class SchematicSymbolInstance(SchematicItem):
         return self._proto.unit.unit
 
     @unit.setter
-    def unit(self, value: int):
+    def unit(self, value: int) -> None:
         self._proto.unit.unit = value
 
     @property
@@ -2562,7 +2562,7 @@ class SchematicSymbolInstance(SchematicItem):
         return self._proto.body_style.style if self._proto.HasField("body_style") else None
 
     @body_style.setter
-    def body_style(self, value: int | None):
+    def body_style(self, value: int | None) -> None:
         if value is not None:
             self._proto.body_style.style = value
         else:
@@ -2573,7 +2573,7 @@ class SchematicSymbolInstance(SchematicItem):
         return self._proto.show_pin_names
 
     @show_pin_names.setter
-    def show_pin_names(self, value: bool):
+    def show_pin_names(self, value: bool) -> None:
         self._proto.show_pin_names = value
 
     @property
@@ -2581,7 +2581,7 @@ class SchematicSymbolInstance(SchematicItem):
         return self._proto.show_pin_numbers
 
     @show_pin_numbers.setter
-    def show_pin_numbers(self, value: bool):
+    def show_pin_numbers(self, value: bool) -> None:
         self._proto.show_pin_numbers = value
 
     @property
@@ -2589,7 +2589,7 @@ class SchematicSymbolInstance(SchematicItem):
         return self._proto.pin_name_offset.value_nm
 
     @pin_name_offset.setter
-    def pin_name_offset(self, value: int):
+    def pin_name_offset(self, value: int) -> None:
         self._proto.pin_name_offset.value_nm = value
 
     @property
@@ -2597,7 +2597,7 @@ class SchematicSymbolInstance(SchematicItem):
         return MutableWrapperSequence(self._proto.variants.variants, SchematicSymbolVariant)
 
     @variants.setter
-    def variants(self, value: Sequence[SchematicSymbolVariant]):
+    def variants(self, value: Sequence[SchematicSymbolVariant]) -> None:
         del self._proto.variants.variants[:]
         self._proto.variants.variants.extend(v.proto for v in value)
 
@@ -2606,7 +2606,7 @@ class SchematicSymbolInstance(SchematicItem):
         return MutableWrapperSequence(self._proto.user_fields, SchematicField)
 
     @user_fields.setter
-    def user_fields(self, value: Sequence[SchematicField]):
+    def user_fields(self, value: Sequence[SchematicField]) -> None:
         del self._proto.user_fields[:]
         self._proto.user_fields.extend(f.proto for f in value)
 
@@ -2619,7 +2619,7 @@ class SchematicSymbolInstance(SchematicItem):
         return self._proto.fields_autoplaced
 
     @fields_autoplaced.setter
-    def fields_autoplaced(self, value: bool):
+    def fields_autoplaced(self, value: bool) -> None:
         self._proto.fields_autoplaced = value
 
     @property
@@ -2627,7 +2627,7 @@ class SchematicSymbolInstance(SchematicItem):
         return self._proto.passthrough
 
     @passthrough.setter
-    def passthrough(self, value: SchematicPassthroughMode.ValueType):
+    def passthrough(self, value: SchematicPassthroughMode.ValueType) -> None:
         self._proto.passthrough = value
 
     @property
@@ -2636,7 +2636,7 @@ class SchematicSymbolInstance(SchematicItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, value: Sequence[CustomProperty]):
+    def custom_properties(self, value: Sequence[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(prop.proto for prop in value)
 
@@ -2652,7 +2652,7 @@ class SheetInstance(Wrapper):
         self,
         proto: schematic_types_pb2.SheetInstance | None = None,
         proto_ref: schematic_types_pb2.SheetInstance | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.SheetInstance()
 
         if proto is not None:
@@ -2660,7 +2660,7 @@ class SheetInstance(Wrapper):
 
     def __repr__(self) -> str:
 
-        def repr_child(c: SheetInstance, d: int):
+        def repr_child(c: SheetInstance, d: int) -> str:
             r = f"{'  ' * d}SheetInstance([{c.page_number}] {c.name} ({c.filename}))"
 
             if len(c.children) > 0:
@@ -2704,7 +2704,7 @@ class SchematicHierarchy:
 
     .. versionadded:: 0.x.y (KiCad 11)"""
 
-    def __init__(self, top_level_sheets: Sequence[SheetInstance]):
+    def __init__(self, top_level_sheets: Sequence[SheetInstance]) -> None:
         self._top_level_sheets = list(top_level_sheets)
 
     @property
@@ -2718,8 +2718,8 @@ class SchematicHierarchy:
         additional sheets in multi-root hierarchies."""
         return self._top_level_sheets
 
-    def __iter__(self):
-        def walk(sheet: SheetInstance):
+    def __iter__(self) -> Iterator[SheetInstance]:
+        def walk(sheet: SheetInstance) -> Iterator[SheetInstance]:
             yield sheet
             for child in sheet.children:
                 yield from walk(child)
@@ -2742,7 +2742,7 @@ class SchematicNetSheetContents(Wrapper):
         self,
         proto: schematic_types_pb2.SchematicNetSheetContents | None = None,
         proto_ref: schematic_types_pb2.SchematicNetSheetContents | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else schematic_types_pb2.SchematicNetSheetContents()
         )
@@ -2773,7 +2773,7 @@ class SchematicNet(Wrapper):
         self,
         proto: schematic_types_pb2.SchematicNet | None = None,
         proto_ref: schematic_types_pb2.SchematicNet | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.SchematicNet()
 
         if proto is not None:
@@ -2781,7 +2781,7 @@ class SchematicNet(Wrapper):
 
     def __repr__(self) -> str:
 
-        def repr_sheet(s: SchematicNetSheetContents, d: int):
+        def repr_sheet(s: SchematicNetSheetContents, d: int) -> str:
             return f"{'  ' * d}{s.path} ({len(s.items)} items)"
 
         r = f"SchematicNet({self.name})"
@@ -2808,7 +2808,7 @@ class SheetVariant(Wrapper):
         self,
         proto: schematic_types_pb2.SheetVariant | None = None,
         proto_ref: schematic_types_pb2.SheetVariant | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.SheetVariant()
 
         if proto is not None:
@@ -2819,7 +2819,7 @@ class SheetVariant(Wrapper):
         return self._proto.name
 
     @name.setter
-    def name(self, value: str):
+    def name(self, value: str) -> None:
         self._proto.name = value
 
     @property
@@ -2829,7 +2829,7 @@ class SheetVariant(Wrapper):
         return None
 
     @description.setter
-    def description(self, value: str | None):
+    def description(self, value: str | None) -> None:
         if value is not None:
             self._proto.description = value
         else:
@@ -2842,7 +2842,7 @@ class SheetVariant(Wrapper):
         return None
 
     @exclude_from_sim.setter
-    def exclude_from_sim(self, value: bool | None):
+    def exclude_from_sim(self, value: bool | None) -> None:
         if value is not None:
             self._proto.exclude_from_sim = value
         else:
@@ -2855,7 +2855,7 @@ class SheetVariant(Wrapper):
         return None
 
     @exclude_from_bom.setter
-    def exclude_from_bom(self, value: bool | None):
+    def exclude_from_bom(self, value: bool | None) -> None:
         if value is not None:
             self._proto.exclude_from_bom = value
         else:
@@ -2868,7 +2868,7 @@ class SheetVariant(Wrapper):
         return None
 
     @dnp.setter
-    def dnp(self, value: bool | None):
+    def dnp(self, value: bool | None) -> None:
         if value is not None:
             self._proto.dnp = value
         else:
@@ -2880,7 +2880,7 @@ class SheetVariant(Wrapper):
         return dict(self._proto.fields)
 
     @fields.setter
-    def fields(self, value: dict[str, str]):
+    def fields(self, value: dict[str, str]) -> None:
         self._proto.fields.clear()
         self._proto.fields.update(value)
 
@@ -2890,7 +2890,7 @@ class SheetVariants(Wrapper):
         self,
         proto: schematic_types_pb2.SheetVariants | None = None,
         proto_ref: schematic_types_pb2.SheetVariants | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.SheetVariants()
 
         if proto is not None:
@@ -2901,7 +2901,7 @@ class SheetVariants(Wrapper):
         return MutableWrapperSequence(self._proto.variants, SheetVariant)
 
     @variants.setter
-    def variants(self, value: Sequence[SheetVariant]):
+    def variants(self, value: Sequence[SheetVariant]) -> None:
         del self._proto.variants[:]
         self._proto.variants.extend(variant.proto for variant in value)
 
@@ -2911,7 +2911,7 @@ class SchematicRuleArea(SchematicItem):
         self,
         proto: schematic_types_pb2.SchematicRuleArea | None = None,
         proto_ref: schematic_types_pb2.SchematicRuleArea | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else schematic_types_pb2.SchematicRuleArea()
         )
@@ -2927,7 +2927,7 @@ class SchematicRuleArea(SchematicItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -2939,7 +2939,7 @@ class SchematicRuleArea(SchematicItem):
         return to_concrete_shape(GraphicShape(self._proto.shape))
 
     @shape.setter
-    def shape(self, value: GraphicShape):
+    def shape(self, value: GraphicShape) -> None:
         """Sets the rule area outline shape.  Polygon outlines are forced closed
         regardless of the source polygon's :class:`kipy.geometry.PolygonWithHoles`
         ``auto_close`` flag; KiCad requires rule areas to be closed polygons."""
@@ -2959,7 +2959,7 @@ class SchematicRuleArea(SchematicItem):
         return self._proto.exclude_from_sim
 
     @exclude_from_sim.setter
-    def exclude_from_sim(self, value: bool):
+    def exclude_from_sim(self, value: bool) -> None:
         self._proto.exclude_from_sim = value
 
     @property
@@ -2967,7 +2967,7 @@ class SchematicRuleArea(SchematicItem):
         return self._proto.exclude_from_bom
 
     @exclude_from_bom.setter
-    def exclude_from_bom(self, value: bool):
+    def exclude_from_bom(self, value: bool) -> None:
         self._proto.exclude_from_bom = value
 
     @property
@@ -2975,7 +2975,7 @@ class SchematicRuleArea(SchematicItem):
         return self._proto.exclude_from_board
 
     @exclude_from_board.setter
-    def exclude_from_board(self, value: bool):
+    def exclude_from_board(self, value: bool) -> None:
         self._proto.exclude_from_board = value
 
     @property
@@ -2983,7 +2983,7 @@ class SchematicRuleArea(SchematicItem):
         return self._proto.dnp
 
     @dnp.setter
-    def dnp(self, value: bool):
+    def dnp(self, value: bool) -> None:
         self._proto.dnp = value
 
     @property
@@ -2992,7 +2992,7 @@ class SchematicRuleArea(SchematicItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, value: Sequence[CustomProperty]):
+    def custom_properties(self, value: Sequence[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(prop.proto for prop in value)
 
@@ -3004,7 +3004,7 @@ class SchematicTableCell(Wrapper):
         self,
         proto: schematic_types_pb2.SchematicTableCell | None = None,
         proto_ref: schematic_types_pb2.SchematicTableCell | None = None,
-    ):
+    ) -> None:
         self._proto = (
             proto_ref if proto_ref is not None else schematic_types_pb2.SchematicTableCell()
         )
@@ -3023,7 +3023,7 @@ class SchematicTableCell(Wrapper):
         return SchematicTextBox(proto_ref=self._proto.text_box)
 
     @text_box.setter
-    def text_box(self, value: SchematicTextBox):
+    def text_box(self, value: SchematicTextBox) -> None:
         self._proto.text_box.CopyFrom(value.proto)
 
     @property
@@ -3031,7 +3031,7 @@ class SchematicTableCell(Wrapper):
         return self._proto.column_span
 
     @column_span.setter
-    def column_span(self, value: int):
+    def column_span(self, value: int) -> None:
         self._proto.column_span = value
 
     @property
@@ -3039,7 +3039,7 @@ class SchematicTableCell(Wrapper):
         return self._proto.row_span
 
     @row_span.setter
-    def row_span(self, value: int):
+    def row_span(self, value: int) -> None:
         self._proto.row_span = value
 
     @property
@@ -3048,7 +3048,7 @@ class SchematicTableCell(Wrapper):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, value: Sequence[CustomProperty]):
+    def custom_properties(self, value: Sequence[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(prop.proto for prop in value)
 
@@ -3060,7 +3060,7 @@ class SchematicTable(SchematicItem):
         self,
         proto: schematic_types_pb2.SchematicTable | None = None,
         proto_ref: schematic_types_pb2.SchematicTable | None = None,
-    ):
+    ) -> None:
         self._proto = proto_ref if proto_ref is not None else schematic_types_pb2.SchematicTable()
 
         if proto is not None:
@@ -3074,7 +3074,7 @@ class SchematicTable(SchematicItem):
         return self._proto.locked == LockedState.LS_LOCKED
 
     @locked.setter
-    def locked(self, locked: bool):
+    def locked(self, locked: bool) -> None:
         self._proto.locked = {
             True: LockedState.LS_LOCKED,
             False: LockedState.LS_UNLOCKED,
@@ -3085,7 +3085,7 @@ class SchematicTable(SchematicItem):
         return self._proto.column_count
 
     @column_count.setter
-    def column_count(self, value: int):
+    def column_count(self, value: int) -> None:
         self._proto.column_count = value
 
     @property
@@ -3093,7 +3093,7 @@ class SchematicTable(SchematicItem):
         return [width.value_nm for width in self._proto.column_widths]
 
     @column_widths.setter
-    def column_widths(self, value: Sequence[int]):
+    def column_widths(self, value: Sequence[int]) -> None:
         del self._proto.column_widths[:]
         for width in value:
             self._proto.column_widths.add().value_nm = width
@@ -3103,7 +3103,7 @@ class SchematicTable(SchematicItem):
         return [height.value_nm for height in self._proto.row_heights]
 
     @row_heights.setter
-    def row_heights(self, value: Sequence[int]):
+    def row_heights(self, value: Sequence[int]) -> None:
         del self._proto.row_heights[:]
         for height in value:
             self._proto.row_heights.add().value_nm = height
@@ -3113,7 +3113,7 @@ class SchematicTable(SchematicItem):
         return MutableWrapperSequence(self._proto.cells, SchematicTableCell)
 
     @cells.setter
-    def cells(self, value: Sequence[SchematicTableCell]):
+    def cells(self, value: Sequence[SchematicTableCell]) -> None:
         del self._proto.cells[:]
         self._proto.cells.extend(cell.proto for cell in value)
 
@@ -3122,7 +3122,7 @@ class SchematicTable(SchematicItem):
         return self._proto.external_border
 
     @external_border.setter
-    def external_border(self, value: TableStrokeMode.ValueType):
+    def external_border(self, value: TableStrokeMode.ValueType) -> None:
         self._proto.external_border = value
 
     @property
@@ -3130,7 +3130,7 @@ class SchematicTable(SchematicItem):
         return self._proto.header_separator
 
     @header_separator.setter
-    def header_separator(self, value: TableStrokeMode.ValueType):
+    def header_separator(self, value: TableStrokeMode.ValueType) -> None:
         self._proto.header_separator = value
 
     @property
@@ -3138,7 +3138,7 @@ class SchematicTable(SchematicItem):
         return self._proto.row_separators
 
     @row_separators.setter
-    def row_separators(self, value: TableStrokeMode.ValueType):
+    def row_separators(self, value: TableStrokeMode.ValueType) -> None:
         self._proto.row_separators = value
 
     @property
@@ -3146,7 +3146,7 @@ class SchematicTable(SchematicItem):
         return self._proto.column_separators
 
     @column_separators.setter
-    def column_separators(self, value: TableStrokeMode.ValueType):
+    def column_separators(self, value: TableStrokeMode.ValueType) -> None:
         self._proto.column_separators = value
 
     @property
@@ -3154,7 +3154,7 @@ class SchematicTable(SchematicItem):
         return StrokeAttributes(proto_ref=self._proto.border_stroke)
 
     @border_stroke.setter
-    def border_stroke(self, value: StrokeAttributes):
+    def border_stroke(self, value: StrokeAttributes) -> None:
         self._proto.border_stroke.CopyFrom(value.proto)
 
     @property
@@ -3162,7 +3162,7 @@ class SchematicTable(SchematicItem):
         return StrokeAttributes(proto_ref=self._proto.separators_stroke)
 
     @separators_stroke.setter
-    def separators_stroke(self, value: StrokeAttributes):
+    def separators_stroke(self, value: StrokeAttributes) -> None:
         self._proto.separators_stroke.CopyFrom(value.proto)
 
     @property
@@ -3171,7 +3171,7 @@ class SchematicTable(SchematicItem):
         return MutableWrapperSequence(self._proto.custom_properties, CustomProperty)
 
     @custom_properties.setter
-    def custom_properties(self, value: Sequence[CustomProperty]):
+    def custom_properties(self, value: Sequence[CustomProperty]) -> None:
         del self._proto.custom_properties[:]
         self._proto.custom_properties.extend(prop.proto for prop in value)
 

@@ -25,7 +25,7 @@ from kipy.proto.common.types.library_types_pb2 import LibraryCommandStatus
 class KiCadError(Exception):
     """Base class for all exceptions raised by kicad-python"""
 
-    def __init__(self, message: str, raw_message: str = ""):
+    def __init__(self, message: str, raw_message: str = "") -> None:
         super().__init__(message)
         self._raw_message = raw_message
 
@@ -48,7 +48,7 @@ class ApiError(KiCadError):
         message: str,
         raw_message: str = "",
         code: ApiStatusCode.ValueType = ApiStatusCode.AS_BAD_REQUEST,
-    ):
+    ) -> None:
         super().__init__(message, raw_message)
         self._code = code
 
@@ -70,7 +70,7 @@ class LibraryCommandError(ApiError):
         message: str,
         raw_message: str = "",
         code: LibraryCommandStatus.Code.ValueType = LibraryCommandStatus.Code.LCS_ERROR,
-    ):
+    ) -> None:
         super().__init__(message, raw_message)
         self._code = code  # type: ignore[assignment]
 

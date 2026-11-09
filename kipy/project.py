@@ -42,7 +42,7 @@ from kipy.proto.common.types import (
 
 
 class Project:
-    def __init__(self, kicad: KiCadClient, document: DocumentSpecifier):
+    def __init__(self, kicad: KiCadClient, document: DocumentSpecifier) -> None:
         self._kicad = kicad
         self._doc = DocumentSpecifier()
         self._doc.CopyFrom(document)
@@ -77,7 +77,7 @@ class Project:
         self,
         net_classes: list[NetClass],
         merge_mode: MapMergeMode.ValueType = MapMergeMode.MMM_MERGE,
-    ):
+    ) -> None:
         """Sets the project net classes, merging with existing classes by default
 
         :param net_classes: the net classes to set
@@ -108,7 +108,7 @@ class Project:
         self,
         assignments: NetClassAssignments,
         merge_mode: MapMergeMode.ValueType = MapMergeMode.MMM_MERGE,
-    ):
+    ) -> None:
         """Sets the project netclass membership assignments, merging with existing
         assignments by default
 
@@ -172,7 +172,7 @@ class Project:
 
     def set_text_variables(
         self, variables: TextVariables, merge_mode: MapMergeMode.ValueType = MapMergeMode.MMM_MERGE
-    ):
+    ) -> None:
         command = project_commands_pb2.SetTextVariables()
         command.document.CopyFrom(self._doc)
         command.merge_mode = merge_mode
