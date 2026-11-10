@@ -25,8 +25,6 @@ import sys
 from collections.abc import Sequence
 from pathlib import Path
 
-import zstandard
-
 from kipy.geometry import (
     Angle,
     Box2,
@@ -68,6 +66,11 @@ from kipy.proto.common.types.enums_pb2 import (  # noqa
 )
 from kipy.util.units import to_mm
 from kipy.wrapper import MutableWrapperSequence, Wrapper
+
+if sys.version_info >= (3, 14):
+    from compression import zstd
+else:
+    import zstandard as zstd
 
 if sys.version_info >= (3, 13):
     from warnings import deprecated
@@ -1441,7 +1444,7 @@ class EmbeddedFile(Wrapper):
         file = cls()
         file.name = name
         file.type = type
-        file.data = base64.b64encode(zstandard.compress(data, level=15))
+        file.data = base64.b64encode(zstd.compress(data, level=15))
         # Will be filled in by KiCad when the file is added
         file.data_hash = ""
         return file
